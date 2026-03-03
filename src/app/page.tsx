@@ -1,4 +1,4 @@
-import { client } from "@/libs/client";
+import { client } from "../libs/client";
 import styles from "./Home.module.css";
 
 export default async function Home() {
