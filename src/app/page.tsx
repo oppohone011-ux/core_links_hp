@@ -25,7 +25,7 @@ export default async function Home() {
       <div className={styles.mainVisual}>
         <div className={styles.heroText}>
           <h1>高火力・たたき上げマルチ技術</h1>
-          <p>皿洗い、現場仕事からITまで器用貧乏を突き詰めたら『高火力』になった。</p>
+          <p>皿洗い、現場仕事から ITまで器用貧乏を突き詰めたら『高火力』になった。</p>
         </div>
       </div>
 
