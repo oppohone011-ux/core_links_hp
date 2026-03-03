@@ -1,0 +1,113 @@
+/* --- ヘッダー --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 4px solid #000; /* コミックの枠線風に太く */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+}
+
+.nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.nav a {
+  font-weight: 800;
+  color: #000;
+  text-decoration: none;
+  border: 2px solid transparent;
+  padding: 5px 10px;
+}
+
+.nav a:hover {
+  background: #fbbf24; /* ホバーで黄色くなるアメコミ感 */
+  border: 2px solid #000;
+}
+
+/* --- メインビジュアル（ここが重要！） --- */
+.mainVisual {
+  width: 100%;
+  height: clamp(400px, 60vh, 600px);
+  /* ファイル名を hed.gif に合わせています */
+  background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3)), 
+              url('/hed.gif'); 
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 0 20px;
+  border-bottom: 8px solid #000;
+}
+
+/* --- メインビジュアル内の文字調整 --- */
+
+.mainVisual h1 {
+  /* ...他の設定はそのまま... */
+
+  font-size: clamp(2.5rem, 10vw, 5rem);
+  font-weight: 900;
+  line-height: 0.9;
+
+  /* ↓ ここを 16px から 40px くらいに増やします */
+  margin-bottom: 40px; 
+
+  color: #fbbf24;
+  text-shadow: 5px 5px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000;
+  transform: rotate(-2deg) skew(-5deg);
+}
+
+.mainVisual p {
+  /* キャッチコピー（黒背景の文字）も一緒に下へ */
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 800;
+  background: #000;
+  padding: 5px 15px;
+  transform: rotate(1deg);
+}
+
+/* --- コンテンツエリア --- */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+/* --- カード --- */
+.card {
+  background: white;
+  border: 4px solid #000; /* カードもコミック風に黒枠を */
+  border-radius: 0px;      /* あえて角を丸めないのもアメコミ風 */
+  overflow: hidden;
+  box-shadow: 10px 10px 0px #000; /* 影もボカさず黒く！ */
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 14px 14px 0px #000;
+}
