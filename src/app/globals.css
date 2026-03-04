@@ -31,3 +31,20 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* サイト全体のはみ出し防止 */
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box; /* 余白を幅に含める設定 */
+}
+
+img {
+  max-width: 100%; /* 画像が親要素より大きくならない */
+  height: auto;
+}
