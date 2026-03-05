@@ -1,0 +1,222 @@
+.container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/* タイトルエリアを一つの「デザイン」として整える */
+.messageBox {
+  margin-bottom: 4rem; 
+  padding-left: 1.5rem;
+  /* ラインを14px→8pxに。細くする方が今のトレンドで洗練されて見えます */
+  border-left: 8px solid #fbbf24; 
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* 隙間は個別のmarginで制御 */
+}
+
+/* 追加：お問い合わせの上の小さな英語 */
+.coreLinksText {
+  font-size: 0.85rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  color: #000;
+  margin: 0;
+  line-height: 1;
+}
+
+.mainTitle {
+  font-size: 2.2rem; /* PCでの迫力を出しつつ、読みやすく */
+  font-weight: 900;
+  color: #000;
+  line-height: 1.2;
+  margin: 0.2rem 0; /* CORE LINKSとの距離を調整 */
+}
+
+.subTitle {
+  font-size: 11px; /* あえて小さくして「飾り」にする */
+  font-weight: 800;
+  color: #fbbf24;
+  margin-top: 0.5rem;
+  letter-spacing: 0.4em; /* 文字の間をガッツリ開けるのがおしゃれ */
+  text-transform: uppercase;
+}
+
+/* スマホ対応：文字がはみ出さないように */
+@media (max-width: 768px) {
+  .mainTitle {
+    font-size: 1.8rem;
+  }
+  .messageBox {
+    border-left-width: 6px;
+  }
+}
+
+/* --- フォームカード --- */
+.formCard {
+  background: #ffffff;
+  border: 6px solid #000;
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem 5rem;
+  box-shadow: 24px 24px 0px 0px #000;
+  position: relative;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.label {
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #e77000;
+  font-style: italic;
+}
+
+/* 入力欄のPCベースサイズを少し下げて安定させました */
+.input, .select, .textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 4px solid #f3f4f6;
+  padding: 0.5rem 0;
+  font-weight: 900;
+  font-size: 1.4rem; /* 1.6から微調整 */
+  color: #000;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  border-bottom-color: #000;
+}
+
+.textarea {
+  border: 4px solid #000;
+  padding: 1.5rem;
+  font-size: 1.1rem;
+  background: #fff;
+  min-height: 160px;
+}
+
+/* --- ボタン：メンテナンス中（無効） --- */
+.submitBtn {
+  grid-column: 1 / -1;
+  height: 110px;
+  background: #666;      /* 無効色（グレー） */
+  position: relative;
+  cursor: not-allowed;  /* 禁止マーク */
+  overflow: hidden;
+  border: none;
+  margin-top: 1rem;
+  opacity: 0.6;         /* 無効感を演出 */
+}
+
+.submitBtnText {
+  position: relative;
+  z-index: 10;
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.submitBtnBg {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fbbf24;
+  transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+/* ホバー時の動きを抑制（メンテナンス中のため） */
+.submitBtn:hover .submitBtnBg {
+  transform: translateY(0); 
+}
+
+.submitBtn:hover .submitBtnText {
+  color: #fff; 
+}
+
+.footerText {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.8em;
+  opacity: 0.2;
+  margin-top: 1.5rem;
+  text-transform: uppercase;
+}
+
+/* --- レスポンシブ対応 (768px以下) スマホ最適化 --- */
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+
+  .messageBox {
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    border-left-width: 8px;
+  }
+
+  /* カードの余白と影をスマホ用に絞る */
+  .formCard {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;   /* デカすぎ回避 */
+    gap: 1.5rem;       /* デカすぎ回避 */
+    box-shadow: 12px 12px 0px 0px #000;
+  }
+
+  .label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  /* 入力文字を「デカすぎ」から「適切」な1rem(16px)へ */
+  .input {
+    font-size: 1rem; 
+  }
+
+  .textarea {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+    min-height: 120px;
+  }
+
+  /* ボタンの高さをスマホに合わせる */
+  .submitBtn {
+    height: 60px; 
+  }
+
+  .submitBtnText {
+    font-size: 1.1rem;
+    gap: 0.5rem;
+  }
+}
+
+/* --- PC版のみのタイトルサイズ調整 --- */
+@media (min-width: 769px) {
+  .mainTitle {
+    font-size: 2.8rem;
+    line-height: 0.9;
+  }
+}
