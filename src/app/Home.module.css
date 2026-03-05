@@ -46,12 +46,13 @@
   transform: rotate(-3deg);
 }
 
-/* --- メインビジュアル：はみ出しを完全封印 --- */
+/* --- メインビジュアル：デバイスごとに画像を切り替え --- */
 .mainVisual {
   width: 100%;
   min-height: 500px;
-  height: auto; /* コンテンツ量に合わせて伸びる */
+  height: auto;
   padding: 60px 20px 80px;
+  /* デフォルト：PC用画像 */
   background: 
     linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)),
     url('/hed.gif') center/cover no-repeat;
@@ -92,7 +93,6 @@
 /* --- 実績タグ：究極のレスポンシブ・グリッド --- */
 .statsContainer {
   display: grid;
-  /* 画面幅に合わせて自動で列数を変える（150px以上のカードを隙間なく埋める） */
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
   width: 100%;
@@ -148,7 +148,17 @@
   box-shadow: 12px 12px 0 #fbbf24;
 }
 
-/* --- レスポンシブ調整（スマホ特化） --- */
+/* --- タブレット用（1024px以下）：Tablet.gif --- */
+@media (max-width: 1024px) {
+  .mainVisual {
+    background-image: 
+      linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3)),
+      url('/Tablet.gif');
+    min-height: 480px;
+  }
+}
+
+/* --- スマホ特化（600px以下）：smartphone.gif --- */
 @media (max-width: 600px) {
   .header {
     flex-direction: column;
@@ -159,9 +169,13 @@
   }
   .mainVisual {
     padding-top: 30px;
+    background-image: 
+      linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3)),
+      url('/smartphone.gif');
+    min-height: 400px;
   }
   .statsContainer {
-    grid-template-columns: repeat(2, 1fr); /* スマホでもしっかり2列 */
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
   .statTag {
