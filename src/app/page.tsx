@@ -42,7 +42,7 @@ export default async function Home() {
             <div className={styles.statTag}>製造業<br />工程管理システム作成</div>
             <div className={styles.statTag}>ガテン系現場で<br />内業システム作成</div>
             <div className={styles.statTag}>その他多数<br />業務効率化...</div>
-          </div>z
+          </div>
         </div>
       </div>
 
