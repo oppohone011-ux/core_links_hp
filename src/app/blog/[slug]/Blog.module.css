@@ -1,104 +1,161 @@
+/* --- ページ全体 --- */
 .articleWrapper {
-  background-color: #ffffff;
+  background-color: #f0f2f5;
   min-height: 100vh;
-  color: #1a1a1a;
+  color: #000;
+  overflow-x: hidden;
+  font-family: "Segoe UI", Meiryo, sans-serif;
 }
 
-/* ヒーローセクション：グラデーションでモダンに */
+/* --- ヘッダー：斜めカット × 濃紺ベース --- */
 .articleHeader {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  padding: 8rem 2rem 10rem;
+  background: #0f172a; /* 濃い紺色 */
+  padding: clamp(5rem, 12vw, 10rem) 1.5rem clamp(7rem, 15vw, 12rem);
   text-align: center;
-  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); /* 下部を斜めにしてモダンに */
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  border-bottom: 8px solid #000;
 }
 
 .headerInner {
-  max-width: 900px;
+  max-width: 950px;
   margin: 0 auto;
 }
 
+/* カテゴリタグ：黄色×黒枠の回転スタイル */
 .categoryTag {
   display: inline-block;
-  background: #2563eb;
-  color: white;
-  padding: 0.5rem 1.5rem;
-  border-radius: 99px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  letter-spacing: 0.1em;
+  background: #fbbf24;
+  color: #000;
+  padding: 8px 24px;
+  border: 4px solid #000;
+  font-size: 0.9rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  transform: rotate(-2deg);
+  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.2);
 }
 
+/* タイトル：レスポンシブな巨大フォント */
 .articleTitle {
-  font-size: clamp(2rem, 5vw, 3.5rem); /* 画面サイズに合わせて自動調整 */
-  font-weight: 800;
-  color: white;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.8rem, 6vw, 3.8rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.25;
+  text-shadow: 5px 5px 0 #000;
+  margin-bottom: 2rem;
 }
 
-/* 本文エリア：浮き上がるカードデザイン */
+/* --- 日付：新設のリボン風デザイン --- */
+.articleDate {
+  display: inline-block;
+  position: relative;
+  background: #fbbf24; /* 黄色 */
+  color: #000;
+  padding: 6px 25px;
+  font-weight: 900;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  margin-top: 1rem;
+  border: 3px solid #000;
+  /* 両端を「くの字」にカット */
+  clip-path: polygon(100% 0%, 95% 50%, 100% 100%, 0 100%, 5% 50%, 0 0);
+  box-shadow: 5px 5px 0 #000;
+  transform: rotate(1.5deg);
+}
+
+/* --- 本文カード：浮き上がる太枠ホワイトボード --- */
 .articleMain {
-  max-width: 800px;
-  margin: -6rem auto 8rem;
-  padding: 4rem;
+  max-width: 850px;
+  margin: -6rem auto 10rem;
+  padding: clamp(1.5rem, 6vw, 5rem);
   background: white;
-  border-radius: 24px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+  border: 6px solid #000;
+  box-shadow: 18px 18px 0 rgba(0,0,0,0.1);
   position: relative;
   z-index: 10;
 }
 
+/* アイキャッチ画像：影付きコミックフレーム */
 .eyecatchFull {
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: 16px;
-  margin-bottom: 3rem;
+  border: 4px solid #000;
+  border-radius: 4px;
+  margin-bottom: 4rem;
+  box-shadow: 10px 10px 0 #fbbf24;
 }
 
-/* 本文のタイポグラフィ：読みやすさを追求 */
+/* --- 本文タイポグラフィ：圧倒的読みやすさ --- */
 .contentBody {
-  line-height: 2;
-  font-size: 1.125rem;
-  color: #374151;
+  line-height: 2.2; /* 以前の2.1からさらに向上 */
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: #1a1a1a;
+  font-weight: 500;
 }
 
+/* 中見出し：ガテン系極太スタイル */
 .contentBody h2 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 4rem 0 1.5rem;
-  color: #111827;
-  display: flex;
-  align-items: center;
+  font-size: clamp(1.4rem, 4vw, 2.3rem);
+  font-weight: 900;
+  margin: 5rem 0 2rem;
+  padding: 12px 20px;
+  background: #f3f4f6;
+  border-left: 12px solid #0f172a;
+  border-bottom: 4px solid #000;
 }
 
-.contentBody h2::before {
-  content: "";
-  width: 24px;
-  height: 4px;
-  background: #2563eb;
-  margin-right: 12px;
-  border-radius: 2px;
+.contentBody p {
+  margin-bottom: 2.5rem;
 }
 
-/* 戻るボタン：ホバーアニメーション */
+.contentBody img {
+  max-width: 100%;
+  height: auto;
+  border: 3px solid #000;
+  margin: 2rem 0;
+}
+
+/* --- 戻るボタン：弾むようなインタラクション --- */
 .backBtn {
   display: inline-flex;
   align-items: center;
-  margin-top: 5rem;
-  padding: 1rem 2.5rem;
-  background: #111827;
-  color: white;
-  border-radius: 12px;
+  justify-content: center;
+  margin-top: 6rem;
+  padding: 18px 45px;
+  background: #fbbf24;
+  color: #000;
+  border: 5px solid #000;
+  font-weight: 900;
+  font-size: 1.3rem;
   text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  box-shadow: 8px 8px 0 #000;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .backBtn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  background: #2563eb;
+  transform: scale(1.08) rotate(-2deg);
+  background: #fff;
+  box-shadow: 12px 12px 0 #000;
+}
+
+/* --- レスポンシブ：スマホ・タブレット対応 --- */
+@media (max-width: 768px) {
+  .articleHeader {
+    padding: 6rem 1rem 8rem;
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+  }
+  .articleMain {
+    margin: -4rem 15px 6rem;
+    padding: 2.5rem 1.5rem;
+    border-width: 4px;
+  }
+  .contentBody h2 {
+    font-size: 1.5rem;
+    padding: 8px 12px;
+  }
+  .articleDate {
+    clip-path: polygon(100% 0%, 97% 50%, 100% 100%, 0 100%, 3% 50%, 0 0);
+    padding: 5px 15px;
+  }
 }
