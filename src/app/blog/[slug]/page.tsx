@@ -15,7 +15,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
     <div className={styles.articleWrapper}>
       <header className={styles.articleHeader}>
         <div className={styles.headerInner}>
-          <span className={styles.categoryTag}>器用ボンビーブログ</span>
+          <span className={styles.categoryTag}>高火力！！器用ボンビーブログ。</span>
           <h1 className={styles.articleTitle}>{post.title}</h1>
           <p style={{ color: '#94a3b8', marginTop: '2rem' }}>
             {new Date(post.publishedAt || post.createdAt).toLocaleDateString('ja-JP', {

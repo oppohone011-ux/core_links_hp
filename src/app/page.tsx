@@ -25,7 +25,7 @@ export default async function Home() {
       {/* 2. ヘッダー画像（メインビジュアル） */}
       <div className={styles.mainVisual}>
         <div className={styles.heroText}>
-          <h1>高火力・たたき上げMULTIスキル</h1>
+          <h1>高火力・たたき上げスキル</h1>
 
           <p className={styles.heroDescription}>
             <span className={styles.highlightBlue}>皿洗い、現場仕事</span>から 
@@ -42,13 +42,13 @@ export default async function Home() {
             <div className={styles.statTag}>製造業<br />工程管理システム作成</div>
             <div className={styles.statTag}>ガテン系現場で<br />内業システム作成</div>
             <div className={styles.statTag}>その他多数<br />業務効率化...</div>
-          </div>
+          </div>z
         </div>
       </div>
 
       {/* 3. ブログ記事一覧 */}
       <main className={styles.container}>
-        <h2 className={styles.sectionTitle}>Latest News</h2>
+        <h2 className={styles.sectionTitle}>気づけば高火力 器用ボンビーブログ</h2>
         <div className={styles.grid}>
           {data.contents.map((post: any) => (
             <Link href={`/blog/${post.id}`} key={post.id} className={styles.cardLink}>
