@@ -1,6 +1,6 @@
-import { client } from "../libs/client";
+import { client } from "@/libs/client";
 import styles from "./Home.module.css";
-import Link from "next/link"; // 1. リンク機能を追加
+import Link from "next/link"; 
 
 export default async function Home() {
   const data = await client.get({ 
@@ -51,10 +51,8 @@ export default async function Home() {
         <h2 className={styles.sectionTitle}>Latest News</h2>
         <div className={styles.grid}>
           {data.contents.map((post: any) => (
-            /* 2. 各カード全体をリンクにする。hrefは[slug]フォルダに合わせて設定 */
             <Link href={`/blog/${post.id}`} key={post.id} className={styles.cardLink}>
               <article className={styles.card}>
-                {/* アイキャッチ画像があれば表示 */}
                 {post.eyecatch && (
                   <div className={styles.cardImage}>
                     <img src={post.eyecatch.url} alt="" />

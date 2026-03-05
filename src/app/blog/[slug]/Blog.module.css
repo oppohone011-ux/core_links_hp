@@ -1,0 +1,104 @@
+.articleWrapper {
+  background-color: #ffffff;
+  min-height: 100vh;
+  color: #1a1a1a;
+}
+
+/* ヒーローセクション：グラデーションでモダンに */
+.articleHeader {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  padding: 8rem 2rem 10rem;
+  text-align: center;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); /* 下部を斜めにしてモダンに */
+}
+
+.headerInner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.categoryTag {
+  display: inline-block;
+  background: #2563eb;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.1em;
+}
+
+.articleTitle {
+  font-size: clamp(2rem, 5vw, 3.5rem); /* 画面サイズに合わせて自動調整 */
+  font-weight: 800;
+  color: white;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* 本文エリア：浮き上がるカードデザイン */
+.articleMain {
+  max-width: 800px;
+  margin: -6rem auto 8rem;
+  padding: 4rem;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.eyecatchFull {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 3rem;
+}
+
+/* 本文のタイポグラフィ：読みやすさを追求 */
+.contentBody {
+  line-height: 2;
+  font-size: 1.125rem;
+  color: #374151;
+}
+
+.contentBody h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 4rem 0 1.5rem;
+  color: #111827;
+  display: flex;
+  align-items: center;
+}
+
+.contentBody h2::before {
+  content: "";
+  width: 24px;
+  height: 4px;
+  background: #2563eb;
+  margin-right: 12px;
+  border-radius: 2px;
+}
+
+/* 戻るボタン：ホバーアニメーション */
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 5rem;
+  padding: 1rem 2.5rem;
+  background: #111827;
+  color: white;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.backBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  background: #2563eb;
+}
