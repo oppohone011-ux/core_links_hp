@@ -25,7 +25,7 @@ export default async function Home() {
       {/* 2. ヘッダー画像（メインビジュアル） */}
       <div className={styles.mainVisual}>
         <div className={styles.heroText}>
-          <h1>高火力・たたき上げスキル</h1>
+          <h1>高火力・たたき上げマルチポテンシャル</h1>
 
           <p className={styles.heroDescription}>
             <span className={styles.highlightBlue}>皿洗い、現場仕事</span>から 
