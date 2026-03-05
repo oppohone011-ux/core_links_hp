@@ -5,19 +5,12 @@ export default function ContactForm() {
   return (
     <div className={styles.container}>
       <div className={styles.messageBox}>
-        {/* CORE LINKS を独立させることで、小さく・斜体に制御しやすくなります */}
         <p className={styles.coreLinksText}>CORE LINKS</p>
-        
-        <h2 className={styles.mainTitle}>
-          お問い合わせ
-        </h2>
-        
-        <p className={styles.subTitle}>
-          // OFFICIAL CONTACT FORM
-        </p>
+        <h2 className={styles.mainTitle}>お問い合わせ</h2>
+        <p className={styles.subTitle}>// OFFICIAL CONTACT FORM</p>
       </div>
 
-      <form className={styles.formCard}>
+      <form className={styles.formCard} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.fieldGroup}>
           <label className={styles.label}>01. お名前 / 会社名</label>
           <input type="text" className={styles.input} placeholder="株式会社〇〇 / 氏名" />
@@ -43,10 +36,18 @@ export default function ContactForm() {
           <textarea rows={4} className={styles.textarea} placeholder="現状の課題や、実現したい野望を教えてください。" />
         </div>
 
-        <button type="submit" className={styles.submitBtn}>
+        {/* メンテナンス中のため送信ボタンを無効化 */}
+        <button type="button" disabled className={styles.submitBtn}>
           <div className={styles.submitBtnBg} />
-          <span className={styles.submitBtnText}>この内容で相談する →</span>
+          <span className={styles.submitBtnText}>現在メンテナンス中です ⚠️</span>
         </button>
+
+        {/* ホームへ戻るための導線 */}
+        <div className={styles.homeBackWrapper}>
+          <a href="/" className={styles.homeBackBtn}>
+            ← ホームへ戻る
+          </a>
+        </div>
 
         <div className={styles.footerText}>
           CORE LINKS STUDIO

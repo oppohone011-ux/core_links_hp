@@ -9,11 +9,10 @@
 .messageBox {
   margin-bottom: 4rem; 
   padding-left: 1.5rem;
-  /* ラインを14px→8pxに。細くする方が今のトレンドで洗練されて見えます */
   border-left: 8px solid #fbbf24; 
   display: flex;
   flex-direction: column;
-  gap: 0; /* 隙間は個別のmarginで制御 */
+  gap: 0; 
 }
 
 /* 追加：お問い合わせの上の小さな英語 */
@@ -28,30 +27,20 @@
 }
 
 .mainTitle {
-  font-size: 2.2rem; /* PCでの迫力を出しつつ、読みやすく */
+  font-size: 2.2rem;
   font-weight: 900;
   color: #000;
   line-height: 1.2;
-  margin: 0.2rem 0; /* CORE LINKSとの距離を調整 */
+  margin: 0.2rem 0;
 }
 
 .subTitle {
-  font-size: 11px; /* あえて小さくして「飾り」にする */
+  font-size: 11px;
   font-weight: 800;
   color: #fbbf24;
   margin-top: 0.5rem;
-  letter-spacing: 0.4em; /* 文字の間をガッツリ開けるのがおしゃれ */
+  letter-spacing: 0.4em;
   text-transform: uppercase;
-}
-
-/* スマホ対応：文字がはみ出さないように */
-@media (max-width: 768px) {
-  .mainTitle {
-    font-size: 1.8rem;
-  }
-  .messageBox {
-    border-left-width: 6px;
-  }
 }
 
 /* --- フォームカード --- */
@@ -85,7 +74,6 @@
   font-style: italic;
 }
 
-/* 入力欄のPCベースサイズを少し下げて安定させました */
 .input, .select, .textarea {
   width: 100%;
   background: transparent;
@@ -93,7 +81,7 @@
   border-bottom: 4px solid #f3f4f6;
   padding: 0.5rem 0;
   font-weight: 900;
-  font-size: 1.4rem; /* 1.6から微調整 */
+  font-size: 1.4rem;
   color: #000;
   outline: none;
   transition: border-color 0.3s;
@@ -115,13 +103,13 @@
 .submitBtn {
   grid-column: 1 / -1;
   height: 110px;
-  background: #666;      /* 無効色（グレー） */
+  background: #666;
   position: relative;
-  cursor: not-allowed;  /* 禁止マーク */
+  cursor: not-allowed;
   overflow: hidden;
   border: none;
   margin-top: 1rem;
-  opacity: 0.6;         /* 無効感を演出 */
+  opacity: 0.6;
 }
 
 .submitBtnText {
@@ -146,13 +134,39 @@
   transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
 }
 
-/* ホバー時の動きを抑制（メンテナンス中のため） */
 .submitBtn:hover .submitBtnBg {
   transform: translateY(0); 
 }
 
 .submitBtn:hover .submitBtnText {
   color: #fff; 
+}
+
+/* --- 追加：ホームへ戻るボタンエリア --- */
+.homeBackWrapper {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.homeBackBtn {
+  display: inline-block;
+  padding: 1.2rem 2.5rem;
+  background: #fff;
+  border: 4px solid #000;
+  color: #000;
+  font-weight: 900;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 8px 8px 0px 0px #000;
+  transition: all 0.2s;
+}
+
+.homeBackBtn:hover {
+  background: #fbbf24;
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0px 0px #000;
 }
 
 .footerText {
@@ -166,7 +180,7 @@
   text-transform: uppercase;
 }
 
-/* --- レスポンシブ対応 (768px以下) スマホ最適化 --- */
+/* --- レスポンシブ対応 (768px以下) --- */
 @media (max-width: 768px) {
   .container {
     padding: 2rem 1rem;
@@ -175,14 +189,17 @@
   .messageBox {
     margin-bottom: 2rem;
     padding-left: 1rem;
-    border-left-width: 8px;
+    border-left-width: 6px;
   }
 
-  /* カードの余白と影をスマホ用に絞る */
+  .mainTitle {
+    font-size: 1.8rem;
+  }
+
   .formCard {
     grid-template-columns: 1fr;
-    padding: 1.5rem;   /* デカすぎ回避 */
-    gap: 1.5rem;       /* デカすぎ回避 */
+    padding: 1.5rem;
+    gap: 1.5rem;
     box-shadow: 12px 12px 0px 0px #000;
   }
 
@@ -191,7 +208,6 @@
     letter-spacing: 0.1em;
   }
 
-  /* 入力文字を「デカすぎ」から「適切」な1rem(16px)へ */
   .input {
     font-size: 1rem; 
   }
@@ -202,7 +218,6 @@
     min-height: 120px;
   }
 
-  /* ボタンの高さをスマホに合わせる */
   .submitBtn {
     height: 60px; 
   }
@@ -210,6 +225,13 @@
   .submitBtnText {
     font-size: 1.1rem;
     gap: 0.5rem;
+  }
+
+  /* スマホでは「戻る」を横いっぱいに */
+  .homeBackBtn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.9rem;
   }
 }
 
