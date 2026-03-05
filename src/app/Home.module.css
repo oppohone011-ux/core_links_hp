@@ -39,26 +39,28 @@
   border: 2px solid #000;
 }
 
-/* --- メインビジュアル（ここが重要！） --- */
+/* --- メインビジュアル --- */
 .mainVisual {
   width: 100%;
   height: clamp(400px, 60vh, 600px);
-  /* ファイル名を hed.gif に合わせています */
-  background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3)), 
-              url('/hed.gif'); 
+  background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3)), url('/hed.gif'); 
   background-size: cover;
   background-position: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+
+  /* 1. center から flex-start に変更（これで上詰めになります） */
+  justify-content: flex-start; 
+
   align-items: center;
   color: white;
   text-align: center;
-  padding: 0 20px;
+
+  /* 2. 0 から 40px（お好みで）に変更（これで一番上との距離を決めます） */
+  padding: 40px 20px; 
+
   border-bottom: 8px solid #000;
 }
-
-/* --- メインビジュアル内の文字調整 --- */
 
 .mainVisual h1 {
   /* ...他の設定はそのまま... */
@@ -75,13 +77,38 @@
   transform: rotate(-2deg) skew(-5deg);
 }
 
+/* --- キャッチコピー（視認性向上版） --- */
 .mainVisual p {
-  /* キャッチコピー（黒背景の文字）も一緒に下へ */
-  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  display: inline-block;
+  font-size: clamp(0.9rem, 2.5vw, 1.4rem); /* 文字サイズを微調整 */
   font-weight: 800;
-  background: #000;
-  padding: 5px 15px;
-  transform: rotate(1deg);
+  color: #000; /* 文字色を黒に */
+  /* ↓ ここがポイント：背景を白に、枠線を太く */
+  background: #fff; 
+  border: 3px solid #000; 
+  padding: 8px 18px;
+  transform: rotate(1deg); /* 傾きはキープ */
+  /* タイトルとタグ群との距離を調整 */
+  margin-top: 10px;
+  margin-bottom: 40px; 
+}
+
+/* 文字の色を部分的に変えるクラス（.mainVisual p のすぐ下に配置） */
+.highlightBlue {
+  color: #28a502 !important; /* 強制的に青にする */
+  font-weight: 900;
+}
+
+.highlightRed {
+  color: #ff0000 !important; /* 強制的に赤にする */
+  font-weight: 900;
+}
+
+.highlightYellow {
+  color: #f70000 !important; /* 濃いめの黄色（オレンジ寄り） */
+  font-weight: 900;
+  /* 白背景で見えにくい場合は、細い黒縁をつけるとバキッとします */
+  text-shadow: 1px 1px 0 #000;
 }
 
 /* --- コンテンツエリア --- */
@@ -97,49 +124,64 @@
   gap: 32px;
 }
 
-/* --- カード --- */
-.card {
-  background: white;
-  border: 4px solid #000; /* カードもコミック風に黒枠を */
-  border-radius: 0px;      /* あえて角を丸めないのもアメコミ風 */
-  overflow: hidden;
-  box-shadow: 10px 10px 0px #000; /* 影もボカさず黒く！ */
-  transition: 0.2s;
+/* --- 実績タグ（整列・4列対応版） --- */
+.statsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px; /* タグ同士の隙間 */
+  margin-top: 30px;
+  max-width: 1100px; /* 4つ並ぶのに十分な幅に広げる */
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.card:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 14px 14px 0px #000;
+.statTag {
+  background: #fff;
+  color: #032c03;
+  border: 3px solid #000000;
+  padding: 2.0px 15px;
+  font-weight: 900;
+  font-size: 1.3rem; /* 4つ並べやすくするため少しだけ小さく */
+  box-shadow: 5px 5px 0px #fbbf24;
+  transition: 0.3s;
+  
+  /* ↓ ここがポイント：4列に収まるように計算 */
+  flex: 0 1 calc(25% - 12px); 
+  min-width: 200px; /* 文字が入り切る最小幅 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  transform: rotate(-1deg);
 }
 
-/* --- スマホ・タブレット用の調整 --- */
+.statTag:hover {
+  transform: scale(1.05) rotate(0deg);
+  background: #fbbf24;
+  box-shadow: 8px 8px 0px #000;
+  z-index: 10;
+}
+
+.cardLink {
+  text-decoration: none; /* 下線を消す */
+  color: inherit;       /* 文字色を親要素から引き継ぐ */
+  display: block;       /* リンクの範囲をカード全体に広げる */
+}
+
+/* --- スマホ・タブレット用：良い感じに配置 --- */
+@media (max-width: 1024px) {
+  .statTag {
+    flex: 0 1 calc(33.33% - 12px); /* タブレットでは3列 */
+  }
+}
+
 @media (max-width: 768px) {
-  /* ヘッダーを縦並びにする */
-  .header {
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  /* ロゴの文字を少し小さく */
-  .logo {
-    font-size: 1.2rem;
-  }
-
-  /* メニューの隙間を詰め、文字を小さくする */
-  .nav ul {
-    gap: 10px;
-    padding: 0;
-  }
-
-  .nav a {
-    font-size: 0.9rem;
-    padding: 5px 8px;
-  }
-
-  /* メインビジュアルの文字位置などを微調整 */
-  .mainVisual h1 {
-    transform: none; /* スマホでは斜めを解除すると読みやすい */
-    margin-bottom: 20px;
+  .statTag {
+    flex: 0 1 calc(50% - 10px); /* スマホでは2列 */
+    font-size: 0.75rem;
+    padding: 8px;
+    min-width: auto;
+    transform: none; /* スマホは真っ直ぐ */
   }
 }
