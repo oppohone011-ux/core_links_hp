@@ -1,6 +1,37 @@
 import { client } from "@/libs/client";
 import styles from "./Home.module.css";
 import Link from "next/link"; 
+import { Metadata } from 'next';
+
+// --- 追加・修正：SEO設定（Metadata） ---
+export const metadata: Metadata = {
+  title: '気づけば高火力 器用ボンビーブログ | コアリンクス Corelinks Studio',
+  description: 'コアリンクス（Corelinks Studio）代表が送る、現場仕事からIT・システム開発までの記録。器用貧乏を突き詰めて「高火力」になった男の業務効率化ブログ。',
+  keywords: ['コアリンクス', 'Corelinks Studio', '業務効率化', 'システム開発', '器用貧乏', '高火力'],
+  // ★ ここからアイコン設定を追加
+  icons: {
+    icon: [
+      { url: '/icons/favicon.ico?v=1' },
+      { url: '/icons/favicon-96x96.png?v=1', sizes: '96x96', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/icons/apple-touch-icon.png?v=1' },
+    ],
+  },
+  // ★ ここまで
+  openGraph: {
+    title: '気づけば高火力 器用ボンビーブログ | コアリンクス',
+    description: '皿洗いからシステム開発まで。コアリンクスが提案する「高火力」なマルチポテンシャルへの道。',
+    siteName: '気づけば高火力 器用ボンビーブログ',
+    images: [{ url: '/hed.gif' }],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '気づけば高火力 器用ボンビーブログ | コアリンクス',
+    images: ['/hed.gif'],
+  },
+};
 
 export default async function Home() {
   const data = await client.get({ 
@@ -14,10 +45,11 @@ export default async function Home() {
         <div className={styles.logo}>Corelinks Studio</div>
         <nav className={styles.nav}>
           <ul>
-            <li><a href="#">Home</a></li>
+            <li><Link href="/">Home</Link></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Service</a></li>
-            <li><a href="#">Contact</a></li>
+            {/* ContactをLinkコンポーネントに差し替え */}
+            <li><Link href="/contact">Contact</Link></li>
           </ul>
         </nav>
       </header>
@@ -33,7 +65,7 @@ export default async function Home() {
             器用貧乏を突き詰めたら『<span className={styles.highlightYellow}>高火力</span>』になった。
           </p>
           
-          {/* 実績タグをすべて投入！ */}
+          {/* 実績タグ */}
           <div className={styles.statsContainer}>
             <div className={styles.statTag}>EC会社RPA<br />システム作成</div>
             <div className={styles.statTag}>Amazon最高月収<br />250万(過去)</div>
@@ -70,6 +102,18 @@ export default async function Home() {
           ))}
         </div>
       </main>
+
+      {/* --- 修正：コピーライトとリンク（フッター） --- */}
+      <footer className={styles.footer}>
+        <div className={styles.footerContent}>
+          <p>© 2026 気づけば高火力 器用ボンビーブログ</p>
+          <div className="mt-2">
+            <Link href="/privacy" className="text-xs text-gray-500 hover:underline">
+              プライバシーポリシー
+            </Link>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
