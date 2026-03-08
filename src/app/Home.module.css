@@ -5,7 +5,7 @@
   padding: 40px 20px;
 }
 
-/* --- ヘッダー：スマホでも重ならない --- */
+/* --- ヘッダー --- */
 .header {
   display: flex;
   justify-content: space-between;
@@ -21,7 +21,6 @@
 .logo {
   font-size: clamp(1rem, 4vw, 1.6rem);
   font-weight: 900;
-  letter-spacing: -1px;
 }
 
 .nav ul {
@@ -36,23 +35,19 @@
   text-decoration: none;
   color: #000;
   padding: 5px 10px;
-  border: 3px solid transparent;
   transition: 0.2s;
 }
 
 .nav a:hover {
   background: #fbbf24;
-  border-color: #000;
   transform: rotate(-3deg);
 }
 
-/* --- メインビジュアル：デバイスごとに画像を切り替え --- */
+/* --- メインビジュアル --- */
 .mainVisual {
   width: 100%;
   min-height: 500px;
-  height: auto;
   padding: 60px 20px 80px;
-  /* デフォルト：PC用画像 */
   background: 
     linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)),
     url('/hed.gif') center/cover no-repeat;
@@ -61,43 +56,38 @@
   align-items: center;
   text-align: center;
   border-bottom: 8px solid #000;
-  overflow: hidden;
 }
 
 .mainVisual h1 {
   font-size: clamp(2.5rem, 8vw, 6rem);
   font-weight: 900;
   color: #fbbf24;
-  text-shadow: 6px 6px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000;
-  line-height: 1;
+  text-shadow: 6px 6px 0 #000;
   margin-bottom: 30px;
   transform: rotate(-1deg) skew(-2deg);
 }
 
-/* --- キャッチコピー：漫画の吹き出し風 --- */
-.mainVisual p {
-  display: inline-block;
+.heroDescription {
   background: #fff;
   border: 4px solid #000;
   padding: 12px 24px;
   font-weight: 900;
   font-size: clamp(0.9rem, 3vw, 1.4rem);
   transform: rotate(1deg);
-  margin-bottom: 50px;
   box-shadow: 8px 8px 0 rgba(0,0,0,0.2);
 }
 
 .highlightBlue { color: #059669 !important; }
 .highlightRed { color: #e11d48 !important; }
 
-/* --- 実績タグ：究極のレスポンシブ・グリッド --- */
+/* --- 実績タグ --- */
 .statsContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
   width: 100%;
   max-width: 1100px;
-  margin: 0 auto;
+  margin: 40px auto 0;
 }
 
 .statTag {
@@ -105,203 +95,33 @@
   border: 4px solid #000;
   padding: 15px 10px;
   font-weight: 900;
-  font-size: clamp(0.8rem, 2vw, 1.1rem);
   box-shadow: 6px 6px 0px #fbbf24;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  cursor: default;
 }
 
-.statTag:hover {
-  transform: scale(1.05) translateY(-5px);
-  background: #fbbf24;
-  box-shadow: 10px 10px 0px #000;
-}
-
-/* --- 記事一覧：Latest News (日本語タイトル高火力Ver) --- */
+/* --- カテゴリータイル（今回のメイン） --- */
 .sectionTitle {
-  font-family: "Noto Sans JP", "Hiragino Sans", "Meiryo", sans-serif;
-  font-size: clamp(1.4rem, 5vw, 2.5rem); /* サイズを柔軟に */
+  font-size: clamp(1.4rem, 5vw, 2.5rem);
   font-weight: 900;
-  color: #000;
-  
-  /* 黄色の極太バー */
   border-left: 15px solid #fbbf24;
   padding: 8px 20px;
   margin: 60px 0 30px;
-  
   background: #fff;
   border-bottom: 5px solid #000;
-  display: inline-block; /* 文字幅に合わせる */
-  
-  /* 勢いを出す傾きと影 */
+  display: inline-block;
   transform: rotate(-1.5deg);
-  box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
-  letter-spacing: -0.02em;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
-}
-
-.cardLink {
-  text-decoration: none;
-  color: inherit;
-}
-
-.card {
-  background: #fff;
-  border: 4px solid #000;
-  padding: 0; /* 画像を端まで出すため一旦0に */
-  box-shadow: 8px 8px 0 #000;
-  transition: 0.2s;
-  overflow: hidden;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.card:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 12px 12px 0 #fbbf24;
-}
-
-.cardImage img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-bottom: 4px solid #000;
-  display: block;
-}
-
-.cardContent {
-  padding: 20px;
-}
-
-/* 記事タイトル：日本語に合う極太設定 */
-.articleTitle {
-  font-size: 1.25rem;
-  font-weight: 900;
-  line-height: 1.4;
-  margin-bottom: 12px;
-  color: #000;
-  /* 2行制限 */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.excerpt {
-  font-size: 0.9rem;
-  color: #4b5563;
-  line-height: 1.6;
-}
-
-/* --- タブレット用（1024px以下）：Tablet.gif --- */
-@media (max-width: 1024px) {
-  .mainVisual {
-    background-image: 
-      linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3)),
-      url('/Tablet.gif');
-    min-height: 480px;
-  }
-}
-
-/* --- スマホ特化（600px以下）：smartphone.gif --- */
-@media (max-width: 600px) {
-  .header {
-    flex-direction: column;
-    padding: 10px;
-  }
-  .nav ul {
-    margin-top: 10px;
-  }
-  .mainVisual {
-    padding-top: 30px;
-    background-image: 
-      linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3)),
-      url('/smartphone.gif');
-    min-height: 400px;
-  }
-  .sectionTitle {
-    font-size: 1.2rem;
-    border-left-width: 10px;
-    padding: 5px 12px;
-    transform: rotate(-1deg);
-  }
-  .statsContainer {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  .statTag {
-    padding: 10px 5px;
-    box-shadow: 4px 4px 0px #fbbf24;
-  }
-}
-
-.footer {
-  background: #000;
-  color: #fff;
-  padding: 60px 20px;
-  margin-top: 100px;
-  border-top: 10px solid #fbbf24;
-  text-align: center;
-}
-
-.footerContent p {
-  font-family: "Noto Sans JP", sans-serif;
-  font-weight: 900;
-  letter-spacing: 0.15em;
-}
-
-
-/* 3Dカテゴリの設定 */
-.tileBack {
-  background: rgba(17, 24, 39, 0.8); /* 少し透かす */
-  backdrop-filter: blur(12px); /* 背景をぼかす */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-}
-
-/* 光が走るアニメーション */
-.tileBack::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent,
-    rgba(255, 69, 0, 0.1),
-    transparent
-  );
-  transform: rotate(45deg);
-  transition: 0.8s;
-}
-
-.categoryTile:hover .tileBack::before {
-  left: 100%;
-  top: 100%;
-}
-
-/* 3. カテゴリータイル一覧（全体のグリッド） */
 .categoryGrid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-  gap: 24px !important;
-  padding: 2rem 0 !important;
+  display: grid;
+  /* タイルの最小幅を 360px に広げて「デカいカード」を維持 */
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 30px;
+  padding: 40px 0;
 }
 
 .categoryTile {
-  height: 320px;
-  perspective: 1200px; /* 3D効果 */
+  height: 480px; /* 記事リストがゆったり入る高さ */
+  perspective: 1200px;
 }
 
 .tileInner {
@@ -318,60 +138,43 @@
 
 .tileFront, .tileBack {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   backface-visibility: hidden;
   border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border: 4px solid #000; /* 高火力な黒枠 */
 }
 
 /* 表面 */
 .tileFront {
-  background: #ffffff;
-  border: 1px solid #eaeaea;
+  background-size: cover;
+  background-position: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 2;
 }
 
-.tileNumber {
+.tileOverlay {
   position: absolute;
-  top: 1rem;
-  left: 1.5rem;
-  font-size: 4rem;
-  font-weight: 900;
-  color: #f0f0f0;
-  z-index: -1;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .tileTitle {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: #1a1a1a;
-  letter-spacing: 0.05em;
-  margin: 0;
+  position: relative;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  z-index: 2;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.8);
 }
 
-.viewLabel {
-  margin-top: 1rem;
-  font-size: 0.8rem;
-  color: #ff4500;
-  font-weight: bold;
-}
-
-/* 裏面（高火力ダーク） */
+/* 裏面（記事リスト） */
 .tileBack {
-  background: #111827;
-  color: #ffffff;
   transform: rotateY(180deg);
-  display: flex;
-  flex-direction: column;
-  z-index: 1;
+  background: #111;
+  color: #fff;
+  padding: 30px;
 }
 
 .backContent {
@@ -381,11 +184,12 @@
 }
 
 .backHeading {
-  font-size: 1.1rem;
-  border-left: 3px solid #ff4500;
-  padding-left: 0.75rem;
-  margin-bottom: 1.5rem;
-  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #fbbf24;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #fbbf24;
+  padding-bottom: 5px;
 }
 
 .articleList {
@@ -396,35 +200,74 @@
 }
 
 .articleItem {
-  margin-bottom: 0.75rem;
-  font-size: 0.85rem;
-  border-bottom: 1px solid #374151;
-  padding-bottom: 0.5rem;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
 }
 
 .articleItem a {
-  color: #e5e7eb;
+  color: #eee;
   text-decoration: none;
+  font-size: 1rem;
+  line-height: 1.4;
+  display: block;
 }
 
 .articleItem a:hover {
-  color: #ff4500;
+  color: #fbbf24;
+  text-decoration: underline;
 }
 
 .allLink {
   display: block;
   text-align: center;
-  font-size: 0.9rem;
-  font-weight: bold;
-  padding: 0.5rem;
-  border: 1px solid #ff4500;
-  border-radius: 8px;
-  color: #ff4500;
+  padding: 10px;
+  background: #fbbf24;
+  color: #000;
+  font-weight: 900;
   text-decoration: none;
-  transition: all 0.3s;
+  border-radius: 4px;
 }
 
-.allLink:hover {
-  background: #ff4500;
-  color: white;
+/* --- レスポンシブ --- */
+@media (max-width: 600px) {
+  .categoryGrid {
+    grid-template-columns: 1fr; /* スマホでは1列でドカンと */
+  }
+  .categoryTile {
+    height: 420px;
+  }
+}
+
+/* --- フッター --- */
+.footer {
+  background: #000;
+  color: #fff;
+  padding: 40px;
+  text-align: center;
+  border-top: 10px solid #fbbf24;
+  margin-top: 80px;
+}
+
+/* キャッチコピー（白い枠）の調整 */
+.heroDescription {
+  background-color: #fff;
+  border: 4px solid #000;
+  padding: 15px 40px; /* 適切な余白 */
+  font-weight: bold;
+  font-size: 1.2rem; /* 読みやすいサイズに */
+  
+  /* ↓ これが「枠を文字に合わせる」正解の記述です */
+  display: inline-block;
+  width: auto;
+  margin: 0 auto;
+}
+
+/* タイトルのデカさを復活させる */
+.heroText h1 {
+  font-size: 5.5rem; /* イラストに負けない高火力サイズ */
+  font-weight: 900;
+  margin-bottom: 30px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
