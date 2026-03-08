@@ -78,28 +78,52 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 3. ブログ記事一覧 */}
+      {/* 3. カテゴリータイル一覧 */}
       <main className={styles.container}>
-        <h2 className={styles.sectionTitle}>気づけば高火力 器用ボンビーブログ</h2>
-        <div className={styles.grid}>
-          {data.contents.map((post: any) => (
-            <Link href={`/blog/${post.id}`} key={post.id} className={styles.cardLink}>
-              <article className={styles.card}>
-                {post.eyecatch && (
-                  <div className={styles.cardImage}>
-                    <img src={post.eyecatch.url} alt="" />
+        <h2 className={styles.sectionTitle}>Explore Categories</h2>
+        <div className={styles.categoryGrid}>
+          {["System", "FX", "Lifestyle", "RPA"].map((catName, index) => {
+            const filteredPosts = data.contents
+              .filter((post: any) => post.category?.name === catName)
+              .slice(0, 3);
+
+            return (
+              <div key={catName} className={styles.categoryTile}>
+                <div className={styles.tileInner}>
+                  
+                  {/* 表面：雑誌風デザイン */}
+                  <div className={styles.tileFront}>
+                    <span className={styles.tileNumber}>0{index + 1}</span>
+                    <h3 className={styles.tileTitle}>{catName}</h3>
+                    <div className={styles.viewLabel}>View Posts →</div>
                   </div>
-                )}
-                <div className={styles.cardContent}>
-                  <h3 className={styles.articleTitle}>{post.title}</h3>
-                  <div 
-                    className={styles.excerpt}
-                    dangerouslySetInnerHTML={{ __html: post.content.substring(0, 50) + "..." }} 
-                  />
+
+                  {/* 裏面：高火力ダークデザイン */}
+                  <div className={styles.tileBack}>
+                    <div className={styles.backContent}>
+                      <h4 className={styles.backHeading}>Recent {catName}</h4>
+                      <ul className={styles.articleList}>
+                        {filteredPosts.map((post: any) => (
+                          <li key={post.id} className={styles.articleItem}>
+                            <Link href={`/blog/${post.id}`}>
+                              {post.title.length > 25 ? post.title.substring(0, 25) + "..." : post.title}
+                            </Link>
+                          </li>
+                        ))}
+                        {filteredPosts.length === 0 && (
+                           <li className={styles.articleItem}>No posts yet.</li>
+                        )}
+                      </ul>
+                      <Link href={`/category/${catName}`} className={styles.allLink}>
+                        View All
+                      </Link>
+                    </div>
+                  </div>
+
                 </div>
-              </article>
-            </Link>
-          ))}
+              </div>
+            );
+          })}
         </div>
       </main>
 

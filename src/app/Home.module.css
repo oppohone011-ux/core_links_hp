@@ -258,3 +258,173 @@
   font-weight: 900;
   letter-spacing: 0.15em;
 }
+
+
+/* 3Dカテゴリの設定 */
+.tileBack {
+  background: rgba(17, 24, 39, 0.8); /* 少し透かす */
+  backdrop-filter: blur(12px); /* 背景をぼかす */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+/* 光が走るアニメーション */
+.tileBack::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 69, 0, 0.1),
+    transparent
+  );
+  transform: rotate(45deg);
+  transition: 0.8s;
+}
+
+.categoryTile:hover .tileBack::before {
+  left: 100%;
+  top: 100%;
+}
+
+/* 3. カテゴリータイル一覧（全体のグリッド） */
+.categoryGrid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 24px !important;
+  padding: 2rem 0 !important;
+}
+
+.categoryTile {
+  height: 320px;
+  perspective: 1200px; /* 3D効果 */
+}
+
+.tileInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.categoryTile:hover .tileInner {
+  transform: rotateY(180deg);
+}
+
+.tileFront, .tileBack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* 表面 */
+.tileFront {
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.tileNumber {
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  font-size: 4rem;
+  font-weight: 900;
+  color: #f0f0f0;
+  z-index: -1;
+}
+
+.tileTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.viewLabel {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #ff4500;
+  font-weight: bold;
+}
+
+/* 裏面（高火力ダーク） */
+.tileBack {
+  background: #111827;
+  color: #ffffff;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.backContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.backHeading {
+  font-size: 1.1rem;
+  border-left: 3px solid #ff4500;
+  padding-left: 0.75rem;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+
+.articleList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.articleItem {
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #374151;
+  padding-bottom: 0.5rem;
+}
+
+.articleItem a {
+  color: #e5e7eb;
+  text-decoration: none;
+}
+
+.articleItem a:hover {
+  color: #ff4500;
+}
+
+.allLink {
+  display: block;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  border: 1px solid #ff4500;
+  border-radius: 8px;
+  color: #ff4500;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.allLink:hover {
+  background: #ff4500;
+  color: white;
+}
