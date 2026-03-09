@@ -194,20 +194,21 @@
   z-index: 1;
 }
 
-/* --- カテゴリーカード表面のボタン（View All） --- */
+/* --- カテゴリーカード表面のボタン（文字と一緒に中央配置） --- */
 .viewLabel {
   position: relative;
   z-index: 2;
-  /* カードの下側に押し込む */
-  margin-top: auto; 
-  margin-bottom: 20px;
   
-  /* ボタンの見た目：画像のデザインを再現 */
-  background-color: #fbbf24; /* 高火力イエロー */
+  /* 中央寄せを維持するため、autoを排除しタイトルとの間隔(15px)を指定 */
+  margin-top: 15px; 
+  margin-bottom: 0;
+
+  /* ボタンの見た目：高火力イエロー */
+  background-color: #fbbf24;
   color: #000 !important; /* 文字は絶対黒 */
-  padding: 12px 32px;
+  padding: 10px 24px;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 900;
   text-decoration: none;
   letter-spacing: 0.05em;
@@ -237,8 +238,9 @@
   color: #fff;
   z-index: 2;
   text-shadow: 0 4px 15px rgba(0,0,0,0.9);
-  /* タイトルの位置を少し上に調整 */
-  margin-top: 40px; 
+  
+  /* 余計なマージンを消して完全中央に固定 */
+  margin: 0; 
 }
 
 /* --- カード裏面（記事リスト） --- */
