@@ -194,40 +194,81 @@
   z-index: 1;
 }
 
-/* もし .viewLabel の設定がまだなければ、これも追加してください */
+/* --- カテゴリーカード表面のボタン（View All） --- */
 .viewLabel {
   position: relative;
   z-index: 2;
-  margin-top: 12px;
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: #fbbf24; /* 高火力イエロー */
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  /* ぼんやり光らせる */
-  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  /* カードの下側に押し込む */
+  margin-top: auto; 
+  margin-bottom: 20px;
+  
+  /* ボタンの見た目：画像のデザインを再現 */
+  background-color: #fbbf24; /* 高火力イエロー */
+  color: #000 !important; /* 文字は絶対黒 */
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  
+  /* 立体感とアニメーション */
+  box-shadow: 0 4px 0 #b45309; 
+  transition: all 0.2s ease;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.viewLabel:hover {
+  background-color: #fcd34d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #b45309;
+}
+
+.viewLabel:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #b45309;
 }
 
 .tileTitle {
   position: relative;
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 900;
   color: #fff;
   z-index: 2;
-  text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+  text-shadow: 0 4px 15px rgba(0,0,0,0.9);
+  /* タイトルの位置を少し上に調整 */
+  margin-top: 40px; 
 }
 
+/* --- カード裏面（記事リスト） --- */
 .tileBack {
   transform: rotateY(180deg);
   background: #111;
   color: #fff;
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+  /* 絶対配置にしてカード全体を覆う */
+  position: absolute;
+  inset: 0;
+  /* 裏返った時に確実に「表面」より前に出す */
+  z-index: 5;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  border: 4px solid #000;
+  overflow: hidden;
 }
 
 .backContent {
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+  /* コンテンツを背景画像より前に出す */
+  z-index: 10;
+  /* クリックを確実に通す設定 */
+  pointer-events: auto;
 }
 
 .backHeading {
@@ -244,6 +285,9 @@
   padding: 0;
   margin: 0;
   flex-grow: 1;
+  overflow-y: auto;
+  position: relative;
+  z-index: 15;
 }
 
 .articleItem {
@@ -258,12 +302,18 @@
   font-size: 0.95rem;
   line-height: 1.4;
   display: block;
+  transition: color 0.2s;
+  /* クリック判定を最優先にする */
+  position: relative;
+  z-index: 20;
+  padding: 4px 0;
 }
 
 .articleItem a:hover {
   color: #fbbf24;
 }
 
+/* 裏面の「全記事を見る」ボタン */
 .allLink {
   display: block;
   text-align: center;
@@ -274,9 +324,14 @@
   text-decoration: none;
   border-radius: 8px;
   transition: 0.2s;
+  margin-top: 10px;
+  /* ボタンのクリック判定を確実にする */
+  position: relative;
+  z-index: 20;
 }
 
 .allLink:hover {
+  background: #fcd34d;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
 }
