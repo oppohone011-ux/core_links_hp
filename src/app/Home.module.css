@@ -356,13 +356,25 @@
 
 .footerBgText {
   position: absolute;
-  bottom: -30px;
-  right: -20px;
-  font-size: clamp(6rem, 15vw, 14rem);
+  /* 垂直方向の調整 */
+  bottom: 0px; 
+  
+  /* 水平方向を完全中央にする設定 */
+  left: 50%;
+  transform: translateX(-50%); /* 自身の幅の半分だけ左に戻して中央へ */
+  
+  /* フォントと色の設定 */
+  font-size: clamp(6rem, 20vw, 15rem); 
   font-weight: 900;
-  color: #f1f5f9;
+  color: #f1f5f9; 
+  line-height: 1;
+  letter-spacing: -0.05em;
+  white-space: nowrap; /* 改行させずに横一列に保つ */
+  
+  /* 重なりと操作の設定 */
   z-index: 1;
   pointer-events: none;
+  user-select: none;
 }
 
 /* ==========================================================================
