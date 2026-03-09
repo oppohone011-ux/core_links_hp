@@ -79,12 +79,28 @@ export default async function CategoryPage({ params }: { params: Promise<{ id: s
           })}
         </div>
 
-        {/* 記事がない場合 */}
-        {blogs.contents.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '80px 0', border: '2px dashed #e5e7eb', borderRadius: '20px' }}>
-            <p style={{ fontSize: '16px', color: '#9ca3af', fontWeight: '600' }}>まだ記事が投稿されていません。</p>
-          </div>
-        )}
+        {/* 記事がない場合：もっと「やばい」感じに */}
+{blogs.contents.length === 0 && (
+  <div style={{ 
+    textAlign: 'center', 
+    padding: '60px 20px', 
+    border: '4px dashed #000', 
+    borderRadius: '20px',
+    backgroundColor: '#f8fafc' 
+  }}>
+    <p style={{ 
+      fontSize: '24px', 
+      color: '#e11d48', // 警告っぽい赤
+      fontWeight: '900',
+      textShadow: '2px 2px 0 #fff' 
+    }}>
+      NO CONTENT FOUND!
+    </p>
+    <p style={{ color: '#64748b', fontWeight: 'bold' }}>
+      まだこのカテゴリーにはお宝（記事）が眠っていないようです...。
+    </p>
+  </div>
+)}
         
         {/* ホームへ戻るボタン：面白い動きを追加 */}
         <div style={{ marginTop: '80px', textAlign: 'center' }}>
