@@ -1,126 +1,155 @@
-/* --- 全体・基本設定 --- */
+/* ==========================================================================
+   1. 全体・基本設定
+   ========================================================================== */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-/* --- ヘッダー --- */
+/* ==========================================================================
+   2. ヘッダー（モダン・ミニマル仕様）
+   ========================================================================== */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 5%;
-  background: #fff;
-  border-bottom: 5px solid #000;
+  padding: 18px 5%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #e5e7eb;
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .logo {
-  font-size: clamp(1rem, 4vw, 1.6rem);
-  font-weight: 900;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #111;
+  text-transform: uppercase;
+  flex-shrink: 0;
 }
 
 .nav ul {
   display: flex;
   list-style: none;
-  gap: clamp(10px, 3vw, 25px);
+  gap: 24px;
 }
 
 .nav a {
-  font-weight: 900;
-  font-size: clamp(0.7rem, 2vw, 1rem);
+  font-weight: 700;
+  font-size: 0.85rem;
   text-decoration: none;
-  color: #000;
-  padding: 5px 10px;
-  transition: 0.2s;
+  color: #4b5563;
+  transition: color 0.2s;
 }
 
 .nav a:hover {
-  background: #fbbf24;
-  transform: rotate(-3deg);
+  color: #3b82f6;
 }
 
-/* --- メインビジュアル --- */
-.mainVisual {
-  width: 100%;
-  min-height: 500px;
-  padding: 60px 20px 80px;
-  background: 
-    linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)),
-    url('/hed.gif') center/cover no-repeat;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* ==========================================================================
+   3. サイトタイトルエリア（Dynamic Hero）
+   ========================================================================== */
+.heroSection {
+  padding: 160px 20px 100px;
+  background-color: #ffffff;
   text-align: center;
-  border-bottom: 8px solid #000;
+  overflow: hidden;
+  perspective: 1200px;
 }
 
-.mainVisual h1 {
-  font-size: clamp(2.5rem, 8vw, 6rem);
+.heroInner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.subTitle {
+  display: block;
+  margin-bottom: 32px;
+}
+
+.char {
+  display: inline-block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: charRise 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+}
+
+.mainTitle {
+  font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: clamp(2.2rem, 9vw, 4.2rem);
   font-weight: 900;
-  color: #fbbf24;
-  text-shadow: 6px 6px 0 #000;
-  margin-bottom: 30px;
-  transform: rotate(-1deg) skew(-2deg);
+  color: #000;
+  line-height: 1.2;
+  margin-bottom: 60px;
+  letter-spacing: -0.04em;
 }
 
-.heroDescription {
-  background: #fff;
-  border: 4px solid #000;
-  padding: 12px 24px;
+.line1, .line2 {
+  display: block;
+  opacity: 0;
+  transform: translateY(50px) rotateX(-30deg);
+  animation: titleRise 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+}
+
+.line1 { animation-delay: 0.4s; }
+.line2 { animation-delay: 0.7s; }
+
+.fireText {
+  display: inline-block;
+  background: linear-gradient(90deg, #000 0%, #fbbf24 50%, #000 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
   font-weight: 900;
-  font-size: clamp(0.9rem, 3vw, 1.4rem);
-  transform: rotate(1deg);
-  box-shadow: 8px 8px 0 rgba(0,0,0,0.2);
 }
 
-.highlightBlue { color: #059669 !important; }
-.highlightRed { color: #e11d48 !important; }
-
-/* --- 実績タグ --- */
-.statsContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 15px;
-  width: 100%;
-  max-width: 1100px;
-  margin: 40px auto 0;
+.heroLine {
+  width: 180px;
+  height: 4px;
+  background: #fbbf24;
+  margin: 0 auto;
+  border-radius: 10px;
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: lineGrow 1.2s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+  animation-delay: 1.6s;
 }
 
-.statTag {
-  background: #fff;
-  border: 4px solid #000;
-  padding: 15px 10px;
-  font-weight: 900;
-  box-shadow: 6px 6px 0px #fbbf24;
-}
-
-/* --- カテゴリータイル（今回のメイン） --- */
+/* ==========================================================================
+   4. カテゴリータイル（メインコンテンツ）
+   ========================================================================== */
 .sectionTitle {
   font-size: clamp(1.4rem, 5vw, 2.5rem);
   font-weight: 900;
-  border-left: 15px solid #fbbf24;
+  border-left: 12px solid #fbbf24;
   padding: 8px 20px;
-  margin: 60px 0 30px;
+  margin: 20px 0 40px;
   background: #fff;
-  border-bottom: 5px solid #000;
   display: inline-block;
-  transform: rotate(-1.5deg);
+  transform: rotate(-1deg);
 }
 
 .categoryGrid {
   display: grid;
-  /* タイルの最小幅を 360px に広げて「デカいカード」を維持 */
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
   gap: 30px;
-  padding: 40px 0;
+  padding: 20px 0 60px;
 }
 
 .categoryTile {
-  height: 480px; /* 記事リストがゆったり入る高さ */
+  height: 480px;
   perspective: 1200px;
 }
 
@@ -141,10 +170,9 @@
   inset: 0;
   backface-visibility: hidden;
   border-radius: 16px;
-  border: 4px solid #000; /* 高火力な黒枠 */
+  border: 4px solid #000;
 }
 
-/* 表面 */
 .tileFront {
   background-size: cover;
   background-position: center;
@@ -157,7 +185,27 @@
 .tileOverlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  /* 上は透明、下（文字がある方）に向かって黒を濃くする */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  z-index: 1;
+}
+
+/* もし .viewLabel の設定がまだなければ、これも追加してください */
+.viewLabel {
+  position: relative;
+  z-index: 2;
+  margin-top: 12px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #fbbf24; /* 高火力イエロー */
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  /* ぼんやり光らせる */
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
 }
 
 .tileTitle {
@@ -169,7 +217,6 @@
   text-shadow: 0 4px 10px rgba(0,0,0,0.8);
 }
 
-/* 裏面（記事リスト） */
 .tileBack {
   transform: rotateY(180deg);
   background: #111;
@@ -184,12 +231,12 @@
 }
 
 .backHeading {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 900;
   color: #fbbf24;
   margin-bottom: 20px;
   border-bottom: 2px solid #fbbf24;
-  padding-bottom: 5px;
+  padding-bottom: 8px;
 }
 
 .articleList {
@@ -200,7 +247,7 @@
 }
 
 .articleItem {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 8px;
 }
@@ -208,66 +255,142 @@
 .articleItem a {
   color: #eee;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.4;
   display: block;
 }
 
 .articleItem a:hover {
   color: #fbbf24;
-  text-decoration: underline;
 }
 
 .allLink {
   display: block;
   text-align: center;
-  padding: 10px;
+  padding: 12px;
   background: #fbbf24;
   color: #000;
   font-weight: 900;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 8px;
+  transition: 0.2s;
 }
 
-/* --- レスポンシブ --- */
-@media (max-width: 600px) {
-  .categoryGrid {
-    grid-template-columns: 1fr; /* スマホでは1列でドカンと */
-  }
-  .categoryTile {
-    height: 420px;
-  }
+.allLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
 }
 
-/* --- フッター --- */
+/* ==========================================================================
+   5. フッター
+   ========================================================================== */
 .footer {
-  background: #000;
-  color: #fff;
-  padding: 40px;
-  text-align: center;
-  border-top: 10px solid #fbbf24;
-  margin-top: 80px;
+  background-color: #f8fafc;
+  padding: 120px 20px 60px;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid #e2e8f0;
 }
 
-/* キャッチコピー（白い枠）の調整 */
-.heroDescription {
-  background-color: #fff;
-  border: 4px solid #000;
-  padding: 15px 40px; /* 適切な余白 */
-  font-weight: bold;
-  font-size: 1.2rem; /* 読みやすいサイズに */
-  
-  /* ↓ これが「枠を文字に合わせる」正解の記述です */
-  display: inline-block;
-  width: auto;
+.footerInner {
+  max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-/* タイトルのデカさを復活させる */
-.heroText h1 {
-  font-size: 5.5rem; /* イラストに負けない高火力サイズ */
+.footerLogo {
+  font-size: 1.6rem;
   font-weight: 900;
-  margin-bottom: 30px;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  color: #111;
+  margin-bottom: 16px;
+}
+
+.footerCatchphrase {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 48px;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 80px;
+}
+
+.footerLinks a {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-decoration: none;
+  position: relative;
+}
+
+.footerLinks a::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #fbbf24;
+  transition: width 0.3s ease;
+}
+
+.footerLinks a:hover::after { width: 100%; }
+
+.footerBottom {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 40px;
+  width: 100%;
+}
+
+.copyright {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.footerBgText {
+  position: absolute;
+  bottom: -30px;
+  right: -20px;
+  font-size: clamp(6rem, 15vw, 14rem);
+  font-weight: 900;
+  color: #f1f5f9;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   6. アニメーション Keyframes
+   ========================================================================== */
+@keyframes charRise { to { opacity: 1; transform: translateY(0); } }
+@keyframes titleRise { to { opacity: 1; transform: translateY(0) rotateX(0); } }
+@keyframes shine { to { background-position: 200% center; } }
+@keyframes lineGrow { to { transform: scaleX(1); } }
+
+/* ==========================================================================
+   7. レスポンシブ調整（最後にまとめて記述）
+   ========================================================================== */
+@media (max-width: 600px) {
+  .header { padding: 12px 15px; }
+  .logo { font-size: 1rem; }
+  .nav ul { gap: 12px; }
+  .nav a { font-size: 0.75rem; }
+
+  .heroSection { padding: 100px 20px 60px; }
+  .mainTitle { font-size: 2.1rem; line-height: 1.3; }
+  .char { letter-spacing: 0.2em; font-size: 0.7rem; }
+  .heroLine { width: 120px; }
+
+  .sectionTitle { font-size: 1.5rem; margin-top: 10px; }
+  .categoryGrid { grid-template-columns: 1fr; gap: 20px; padding: 10px 0 40px; }
+  .categoryTile { height: 400px; }
+
+  .footer { padding: 80px 20px 40px; }
+  .footerLinks { flex-direction: column; gap: 24px; margin-bottom: 60px; }
 }

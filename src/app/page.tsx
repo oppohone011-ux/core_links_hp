@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 // --- SEO設定（Metadata） ---
 export const metadata: Metadata = {
-  metadataBase: new URL('http://localhost:3000'), 
+  metadataBase: new URL('https://core-links-hp.vercel.app'),
   title: '気づけば高火力 器用ボンビーブログ | コアリンクス Corelinks Studio',
   description: 'コアリンクス（Corelinks Studio）代表が送る、現場仕事からIT・システム開発までの記録。器用貧乏を突き詰めて「高火力」になった男の業務効率化ブログ。',
   keywords: ['コアリンクス', 'Corelinks Studio', '業務効率化', 'システム開発', '器用貧乏', '高火力'],
@@ -33,61 +33,62 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const blogsData = await client.get({ endpoint: "blogs" });
+  const blogsData = await client.get({ 
+    endpoint: "blogs",
+    queries: { limit: 50 } 
+  });
   const categoriesData = await client.get({ endpoint: "categories" });
 
   return (
     <div className="bg-white min-h-screen">
-      {/* 1. ヘッダー */}
+      {/* 1. ヘッダー：極限までシンプルに。ナビゲーションも最小限 */}
       <header className={styles.header}>
         <div className={styles.logo}>Corelinks Studio</div>
         <nav className={styles.nav}>
           <ul>
             <li><Link href="/">Home</Link></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Service</a></li>
             <li><Link href="/contact">Contact</Link></li>
           </ul>
         </nav>
       </header>
 
-      {/* 2. メインビジュアル */}
-      <div className={styles.mainVisual}>
-        <div className={styles.heroText}>
-          <h1>高火力・たたき上げマルチポテンシャル</h1>
-          <p className={styles.heroDescription}>
-            <span className={styles.highlightBlue}>皿洗い、現場仕事</span>から 
-            <span className={styles.highlightRed}>IT</span>まで
-            器用貧乏を突き詰めたら『<span className={styles.highlightYellow}>高火力</span>』になった。
-          </p>
-          <div className={styles.statsContainer}>
-            <div className={styles.statTag}>EC会社RPA<br />システム作成</div>
-            <div className={styles.statTag}>Amazon最高月収<br />250万(過去)</div>
-            <div className={styles.statTag}>フリマ仕入<br />システム開発</div>
-            <div className={styles.statTag}>FX自動売買<br />テスト運用中...</div>
-            <div className={styles.statTag}>製造業<br />工程管理システム作成</div>
-            <div className={styles.statTag}>ガテン系現場で<br />内業システム作成</div>
-            <div className={styles.statTag}>その他多数<br />業務効率化...</div>
-          </div>
-        </div>
-      </div>
+      {/* 2. サイトタイトルエリア：画像に代わる「サイトの顔」 */}
+      <section className={styles.heroSection}>
+  <div className={styles.heroInner}>
+    <p className={styles.subTitle}>
+      {"Multi-Potential Blog".split("").map((char, i) => (
+        <span key={i} style={{ animationDelay: `${i * 0.05}s` }} className={styles.char}>
+          {char === " " ? "\u00A0" : char}
+        </span>
+      ))}
+    </p>
+    <h1 className={styles.mainTitle}>
+      <span className={styles.line1}>気づけば<span className={styles.fireText}>高火力</span>。</span>
+      <span className={styles.line2}>器用ボンビーブログ</span>
+    </h1>
+    <div className={styles.heroLine}></div>
+  </div>
+</section>
 
-      {/* 3. カテゴリータイル一覧 */}
+      {/* 3. コンテンツエリア */}
       <main className={styles.container}>
+        {/* セクションタイトル */}
         <h2 className={styles.sectionTitle}>Explore Categories</h2>
+        
         <div className={styles.categoryGrid}>
           {categoriesData.contents.map((category: any, index: number) => {
             const filteredPosts = blogsData.contents
               .filter((post: any) => post.category?.id === category.id)
               .slice(0, 5);
 
+            // カテゴリー画像設定
             let frontFileName = "default.png";
             let backFileName = "default-back.png";
 
             if (category.name === "物販日誌") {
               frontFileName = "buppan.png";
               backFileName  = "buppan-back.png";
-            } else if (category.name === "EA開発記録") {
+            } else if (category.name === "EA開発記録" || category.name === "EA開発＿実践記録") {
               frontFileName = "ea-dev.png";
               backFileName  = "ea-dev-back.png";
             } else if (category.name === "FX_実践記") {
@@ -96,9 +97,6 @@ export default async function Home() {
             } else if (category.name === "日銭稼ぎ（バイト）") {
               frontFileName = "arbeit.png";
               backFileName  = "arbeit-back.png";
-            } else if (category.name === "EA開発＿実践記録") {
-              frontFileName = "ea-dev.png";
-              backFileName  = "ea-dev-back.png";
             } else if (category.name === "更新情報") {
               frontFileName = "news.png";
               backFileName  = "news-back.png";
@@ -129,11 +127,10 @@ export default async function Home() {
                     }}
                   >
                     <div className={styles.backContent} style={{ position: 'relative', zIndex: 2 }}>
-                      <h4 className={styles.backHeading}>{category.name} の最新記事</h4>
+                      <h4 className={styles.backHeading}>{category.name}</h4>
                       <ul className={styles.articleList}>
                         {filteredPosts.map((post: any) => (
                           <li key={post.id} className={styles.articleItem}>
-                            {/* ディレクトリ構成に合わせて、個別記事へのリンクを[id]で指定 */}
                             <Link href={`/blog/${post.id}`}>
                               {post.title.length > 35 ? post.title.substring(0, 35) + "..." : post.title}
                             </Link>
@@ -155,16 +152,28 @@ export default async function Home() {
         </div>
       </main>
 
-      {/* 4. フッター */}
+      {/* 4. フッター：余白とタイポグラフィで魅せる */}
       <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <p>© 2026 気づけば高火力 器用ボンビーブログ</p>
-          <div className="mt-2">
-            <Link href="/privacy" className="text-xs text-gray-500 hover:underline">
-              プライバシーポリシー
-            </Link>
+        <div className={styles.footerInner}>
+          <div className={styles.footerBrand}>
+            <div className={styles.footerLogo}>Corelinks Studio</div>
+            <p className={styles.footerCatchphrase}>
+              器用貧乏を突き詰め、高火力な未来を実装する。
+            </p>
+          </div>
+          
+          <div className={styles.footerLinks}>
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/contact">Contact</Link>
+            <a href="https://core-links-hp.vercel.app" target="_blank" rel="noopener noreferrer">Portfolio</a>
+          </div>
+
+          <div className={styles.footerBottom}>
+            <p className={styles.copyright}>© 2026 Corelinks Studio. All Rights Reserved.</p>
           </div>
         </div>
+        {/* 背景に薄く流れる装飾テキスト */}
+        <div className={styles.footerBgText}>CORELINKS</div>
       </footer>
     </div>
   );
