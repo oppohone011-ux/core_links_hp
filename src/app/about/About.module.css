@@ -1,19 +1,20 @@
 /* --- ページ全体（About専用） --- */
 .articleWrapper {
-  background-color: #f0f2f5;
+  background-color: #f8fafc; /* 少し明るくスッキリしたグレーに */
   min-height: 100vh;
-  color: #000;
+  color: #1e293b;
   overflow-x: hidden;
-  font-family: "Segoe UI", Meiryo, sans-serif;
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
 }
 
 /* --- ヘッダー --- */
 .articleHeader {
   background: #0f172a;
-  padding: clamp(5rem, 12vw, 10rem) 1.5rem clamp(7rem, 15vw, 12rem);
+  padding: clamp(6rem, 15vw, 12rem) 1.5rem clamp(8rem, 18vw, 14rem);
   text-align: center;
-  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
-  border-bottom: 8px solid #000;
+  /* 角度を少し緩やかにして洗練させる */
+  clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+  border-bottom: none; /* 太い黒線を消してスッキリ */
 }
 
 .headerInner {
@@ -25,127 +26,151 @@
   display: inline-block;
   background: #fbbf24;
   color: #000;
-  padding: 8px 24px;
-  border: 4px solid #000;
-  font-size: 0.9rem;
+  padding: 6px 20px;
+  border: 2px solid #000; /* 線を少し細く */
+  font-size: 0.85rem;
   font-weight: 900;
   margin-bottom: 2rem;
-  transform: rotate(-2deg);
-  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.2);
+  transform: rotate(-1.5deg); /* 傾きを抑える */
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
 }
 
 .articleTitle {
-  font-size: clamp(1.8rem, 6vw, 3.8rem);
+  font-size: clamp(2.2rem, 8vw, 4.5rem);
   font-weight: 900;
   color: #fff;
-  line-height: 1.25;
-  text-shadow: 5px 5px 0 #000;
+  line-height: 1.1;
+  text-shadow: none; /* 影を消してタイポグラフィで見せる */
+  letter-spacing: 0.05em;
 }
 
 /* --- メインコンテンツ --- */
 .articleMain {
-  max-width: 850px;
-  margin: -6rem auto 10rem;
-  padding: clamp(1.5rem, 6vw, 5rem);
+  max-width: 800px; /* 少し幅を絞って読みやすく */
+  margin: -9rem auto 10rem; /* 重なりを深くして奥行きを出す */
+  padding: clamp(2.5rem, 8vw, 6rem); /* 余白を贅沢に取る */
   background: white;
-  border: 6px solid #000;
-  box-shadow: 18px 18px 0 rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.05); /* 境界線はごく薄く */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); /* 柔らかい影に */
   position: relative;
   z-index: 10;
+  border-radius: 12px;
 }
 
 .contentBody {
   line-height: 2.2;
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  color: #1a1a1a;
-  font-weight: 500;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: #334155;
+  font-weight: 400; /* 太さを抑えて圧を減らす */
 }
 
 .aboutIntro {
-  font-size: clamp(1.1rem, 3vw, 1.4rem);
-  line-height: 2.2;
-  font-weight: 800;
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  line-height: 2;
+  font-weight: 700;
   color: #000;
-  margin-bottom: 3rem;
-  padding: 20px;
-  background: #fff;
-  border: 4px solid #000;
-  box-shadow: 10px 10px 0 #fbbf24;
-  transform: rotate(-0.5deg);
+  margin-bottom: 4rem;
+  padding: 30px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0; /* 線を細く */
+  border-left: 8px solid #fbbf24; /* 左端にアクセントカラー */
+  box-shadow: none;
+  transform: none; /* まっすぐにして誠実さを出す */
+  border-radius: 4px;
 }
 
 .strongHighlight {
-  background: linear-gradient(transparent 40%, #fbbf24 40%);
-  padding: 0 4px;
-  font-weight: 900;
+  /* マーカーを細くしてオシャレに */
+  background: linear-gradient(transparent 70%, #fbbf24 70%);
+  padding: 0 2px;
+  font-weight: 800;
 }
 
 .contentBody h2 {
-  font-size: clamp(1.4rem, 4vw, 2.3rem);
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
   font-weight: 900;
-  margin: 5rem 0 2rem;
-  padding: 15px 20px;
-  background: #f3f4f6;
-  border-left: 12px solid #0f172a;
-  border-bottom: 4px solid #000;
+  margin: 6rem 0 2.5rem;
+  padding: 0 0 10px 0;
+  background: none;
+  border-left: none;
+  border-bottom: 3px solid #0f172a; /* 下線のみでシンプルに */
+  color: #0f172a;
+  letter-spacing: 0.05em;
 }
 
 .logList {
-  margin: 3rem 0;
+  margin: 3.5rem 0;
   padding: 0;
 }
 
 .logItem {
   background: #fff;
-  border: 3px solid #000;
-  padding: 20px;
-  margin-bottom: 20px;
+  border: 1px solid #e2e8f0; /* 枠線を細く */
+  padding: 25px;
+  margin-bottom: 25px;
   list-style: none;
-  transition: transform 0.2s ease;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.logItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  border-color: #fbbf24;
 }
 
 .logItem strong {
   display: block;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+  font-size: 1.25rem;
+  margin-bottom: 12px;
   color: #0f172a;
-  border-bottom: 3px solid #fbbf24;
+  border-bottom: 2px solid #fbbf24;
   width: fit-content;
 }
 
 /* --- ボタン系 --- */
 .backBtnWrapper {
   text-align: center;
-  margin-top: 4rem;
+  margin-top: 5rem;
 }
 
 .backBtn {
   display: inline-flex;
-  padding: 18px 45px;
-  background: #fbbf24;
-  color: #000;
-  border: 5px solid #000;
-  font-weight: 900;
-  font-size: 1.3rem;
+  padding: 15px 40px;
+  background: #0f172a; /* 黒ベースに変えて引き締める */
+  color: #fff;
+  border: 2px solid #0f172a;
+  font-weight: 700;
+  font-size: 1.1rem;
   text-decoration: none;
-  box-shadow: 8px 8px 0 #000;
-  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 0 #fbbf24;
+  transition: all 0.2s ease;
+  border-radius: 50px; /* 丸みを持たせてモダンに */
 }
 
 .backBtn:hover {
-  transform: scale(1.08) rotate(-2deg);
-  background: #fff;
+  transform: translateY(2px);
+  box-shadow: 0 0px 0 #fbbf24;
+  background: #fbbf24;
+  color: #000;
+  border-color: #fbbf24;
 }
 
 /* スマホ対応 */
 @media (max-width: 768px) {
+  .articleHeader {
+    padding: 5rem 1rem 7rem;
+  }
   .articleMain {
-    margin: -4rem 15px 6rem;
-    padding: 2.5rem 1.5rem;
-    border-width: 4px;
+    margin: -5rem 12px 6rem;
+    padding: 2.5rem 1.2rem;
   }
   .aboutIntro {
+    padding: 20px;
     font-size: 1rem;
-    transform: none;
+  }
+  .logItem {
+    padding: 15px;
   }
 }
