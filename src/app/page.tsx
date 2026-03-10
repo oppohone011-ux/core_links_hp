@@ -42,15 +42,16 @@ export default async function Home() {
   return (
     <div className="bg-white min-h-screen">
       {/* 1. ヘッダー：極限までシンプルに。ナビゲーションも最小限 */}
-      <header className={styles.header}>
-        <div className={styles.logo}>Corelinks Studio</div>
-        <nav className={styles.nav}>
-          <ul>
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
-          </ul>
-        </nav>
-      </header>
+<header className={styles.header}>
+  <div className={styles.logo}>Corelinks Studio</div>
+  <nav className={styles.nav}>
+    <ul>
+      <li><Link href="/">Home</Link></li>
+      <li><Link href="/about">About</Link></li> {/* ← ここに追加！ */}
+      <li><Link href="/contact">Contact</Link></li>
+    </ul>
+  </nav>
+</header>
 
       {/* 2. サイトタイトルエリア：画像に代わる「サイトの顔」 */}
       <section className={styles.heroSection}>
