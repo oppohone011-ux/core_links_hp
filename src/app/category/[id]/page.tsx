@@ -121,7 +121,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ id: s
           }}
           className="back-home-btn"
           >
-            ← BACK TO HOME
+            BACK TO HOME
           </Link>
         </div>
       </main>

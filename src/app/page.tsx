@@ -115,7 +115,7 @@ export default async function Home() {
                     <div className={styles.tileOverlay} />
                     <span className={styles.tileNumber}>0{index + 1}</span>
                     <h3 className={styles.tileTitle}>{category.name}</h3>
-                    <div className={styles.viewLabel}>View Posts →</div>
+                    <div className={styles.viewLabel}>View Posts</div>
                   </div>
 
                   <div 
@@ -141,7 +141,7 @@ export default async function Home() {
                         )}
                       </ul>
                       <Link href={`/category/${category.id}`} className={styles.allLink}>
-                        View All →
+                        View All
                       </Link>
                     </div>
                   </div>

@@ -159,3 +159,251 @@
     padding: 5px 15px;
   }
 }
+
+/* リスト（箇条書き）をカッコよくする */
+.contentBody ul, .contentBody ol {
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+}
+
+.contentBody li {
+  margin-bottom: 1rem;
+  position: relative;
+  list-style: none;
+}
+
+/* 箇条書きのドットを黄色い四角にする（高火力スタイル） */
+.contentBody ul li::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 0.7rem;
+  width: 10px;
+  height: 10px;
+  background: #fbbf24;
+  border: 2px solid #000;
+}
+
+/* 強調（太字）をマーカー風にする */
+.contentBody strong {
+  background: linear-gradient(transparent 60%, #fef08a 60%);
+  font-weight: 900;
+}
+
+/* 引用（blockquote）を現場のメモ風にする */
+.contentBody blockquote {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: #f8fafc;
+  border: 3px solid #000;
+  box-shadow: 8px 8px 0 #cbd5e1;
+  position: relative;
+}
+
+.contentBody blockquote::before {
+  content: "“";
+  font-size: 4rem;
+  color: #fbbf24;
+  position: absolute;
+  top: -1rem;
+  left: 1rem;
+  font-family: serif;
+}
+
+/* 記事内の雛形 */
+/* 本文エリア（microCMSの中身）の雛形 */
+.contentBody h2 {
+  font-size: clamp(1.4rem, 4vw, 2.3rem);
+  font-weight: 900;
+  margin: 5rem 0 2rem;
+  padding: 15px 20px;
+  background: #f3f4f6;
+  border-left: 12px solid #0f172a;
+  border-bottom: 4px solid #000;
+  position: relative;
+}
+
+/* 小見出し：黄色いアンダーバー */
+.contentBody h3 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 3rem 0 1.5rem;
+  padding-left: 10px;
+  border-bottom: 5px solid #fbbf24;
+  display: inline-block;
+}
+
+/* 箇条書き：アメコミ風ドット */
+.contentBody ul {
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+}
+
+.contentBody li {
+  margin-bottom: 0.8rem;
+  position: relative;
+  list-style: none;
+  font-weight: 700;
+}
+
+.contentBody li::before {
+  content: "▶";
+  position: absolute;
+  left: -1.5rem;
+  color: #fbbf24;
+  font-size: 0.9rem;
+}
+
+/* 強調（太字）：蛍光ペン風 */
+.contentBody strong {
+  background: linear-gradient(transparent 70%, #fef08a 70%);
+  font-weight: 900;
+}
+
+/* 画像：ポラロイド風フレーム */
+.contentBody img {
+  max-width: 100%;
+  height: auto;
+  border: 4px solid #000;
+  box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+  margin: 3rem auto;
+  display: block;
+}
+
+/* --- PC表示（1024px以下）の設定 --- */
+.profileDetailBtn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px;
+  background-color: #fbbf24;
+  color: #000;
+  border: 3px solid #000;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 900;
+  box-shadow: 4px 4px 0 #000;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* --- タブレット表示（1024px以下）の設定 --- */
+@media (max-width: 1024px) {
+  .profileDetailBtn {
+    padding: 14px 25px;    /* PCより少しコンパクトに */
+    font-size: 1rem;       /* 文字サイズを標準に */
+    display: inline-block; /* まだ横に並べる余裕はあるので、幅はいっぱいにしない */
+  }
+}
+
+/* --- スマホ表示（768px以下）の設定：先ほどの内容 --- */
+@media (max-width: 768px) {
+  .profileDetailBtn {
+    display: block;        /* スマホではドカンと100%幅に */
+    width: 100%;
+    padding: 18px 10px;    /* 指で押しやすく高くする */
+    font-size: 0.95rem;
+    text-align: center;
+  }
+}
+
+/* =============================================
+   プロフィールエリア（追加・整理分）
+============================================= */
+
+/* 区切り線 */
+.profileDivider {
+  border: 0;
+  border-top: 4px solid #000;
+  margin: clamp(3rem, 10vw, 5rem) 0 2rem;
+}
+
+/* プロフィールカード */
+.profileCard {
+  background: #fff;
+  border: 4px solid #000;
+  padding: clamp(20px, 5vw, 40px);
+  position: relative;
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+/* WRITERバッジ */
+.writerBadge {
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  background: #fbbf24;
+  color: #000;
+  padding: 2px 12px;
+  font-weight: 900;
+  border: 2px solid #000;
+  font-size: 0.8rem;
+}
+
+/* 名前 */
+.profileName {
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-bottom: 18px;
+  color: #000;
+  letter-spacing: 0.05em;
+}
+
+/* 説明文エリア */
+.profileDescription {
+  font-size: 0.95rem;
+  line-height: 2;
+  color: #333;
+  font-weight: 700;
+}
+
+.profileStatus {
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.profileCareer {
+  margin-bottom: 15px;
+}
+
+.profileMotto {
+  margin-bottom: 25px;
+}
+
+/* ボタンの配置 */
+.profileBtnWrapper {
+  width: 100%;
+  display: flex;
+}
+
+/* 戻るボタンの配置 */
+.backBtnWrapper {
+  text-align: center;
+}
+
+/* --- スマホ専用の微調整（既存のメディアクエリと競合しないよう最後に記述） --- */
+@media (max-width: 768px) {
+  .profileName {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+  
+  .profileDescription {
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .profileCareer {
+    font-size: 0.8rem;
+    color: #666; /* スマホでは存在感を少し薄める */
+    font-weight: 500;
+  }
+
+  .profileDivider {
+    margin: 2.5rem 0 1.5rem;
+  }
+  
+  .profileCard {
+    padding: 20px;
+  }
+}
