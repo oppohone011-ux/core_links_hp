@@ -1,0 +1,151 @@
+/* --- ページ全体（About専用） --- */
+.articleWrapper {
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  color: #000;
+  overflow-x: hidden;
+  font-family: "Segoe UI", Meiryo, sans-serif;
+}
+
+/* --- ヘッダー --- */
+.articleHeader {
+  background: #0f172a;
+  padding: clamp(5rem, 12vw, 10rem) 1.5rem clamp(7rem, 15vw, 12rem);
+  text-align: center;
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  border-bottom: 8px solid #000;
+}
+
+.headerInner {
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.categoryTag {
+  display: inline-block;
+  background: #fbbf24;
+  color: #000;
+  padding: 8px 24px;
+  border: 4px solid #000;
+  font-size: 0.9rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  transform: rotate(-2deg);
+  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.2);
+}
+
+.articleTitle {
+  font-size: clamp(1.8rem, 6vw, 3.8rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.25;
+  text-shadow: 5px 5px 0 #000;
+}
+
+/* --- メインコンテンツ --- */
+.articleMain {
+  max-width: 850px;
+  margin: -6rem auto 10rem;
+  padding: clamp(1.5rem, 6vw, 5rem);
+  background: white;
+  border: 6px solid #000;
+  box-shadow: 18px 18px 0 rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.contentBody {
+  line-height: 2.2;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.aboutIntro {
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  line-height: 2.2;
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 3rem;
+  padding: 20px;
+  background: #fff;
+  border: 4px solid #000;
+  box-shadow: 10px 10px 0 #fbbf24;
+  transform: rotate(-0.5deg);
+}
+
+.strongHighlight {
+  background: linear-gradient(transparent 40%, #fbbf24 40%);
+  padding: 0 4px;
+  font-weight: 900;
+}
+
+.contentBody h2 {
+  font-size: clamp(1.4rem, 4vw, 2.3rem);
+  font-weight: 900;
+  margin: 5rem 0 2rem;
+  padding: 15px 20px;
+  background: #f3f4f6;
+  border-left: 12px solid #0f172a;
+  border-bottom: 4px solid #000;
+}
+
+.logList {
+  margin: 3rem 0;
+  padding: 0;
+}
+
+.logItem {
+  background: #fff;
+  border: 3px solid #000;
+  padding: 20px;
+  margin-bottom: 20px;
+  list-style: none;
+  transition: transform 0.2s ease;
+}
+
+.logItem strong {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #0f172a;
+  border-bottom: 3px solid #fbbf24;
+  width: fit-content;
+}
+
+/* --- ボタン系 --- */
+.backBtnWrapper {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.backBtn {
+  display: inline-flex;
+  padding: 18px 45px;
+  background: #fbbf24;
+  color: #000;
+  border: 5px solid #000;
+  font-weight: 900;
+  font-size: 1.3rem;
+  text-decoration: none;
+  box-shadow: 8px 8px 0 #000;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.backBtn:hover {
+  transform: scale(1.08) rotate(-2deg);
+  background: #fff;
+}
+
+/* スマホ対応 */
+@media (max-width: 768px) {
+  .articleMain {
+    margin: -4rem 15px 6rem;
+    padding: 2.5rem 1.5rem;
+    border-width: 4px;
+  }
+  .aboutIntro {
+    font-size: 1rem;
+    transform: none;
+  }
+}
