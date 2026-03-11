@@ -86,7 +86,10 @@ export default async function Home() {
             let frontFileName = "default.png";
             let backFileName = "default-back.png";
 
-            if (category.name === "物販日誌") {
+            if (category.name === "IT現場実録日誌") {
+              frontFileName = "it-genba.png";
+              backFileName  = "it-genba-back.png";
+            } else if (category.name === "物販日誌") {
               frontFileName = "buppan.png";
               backFileName  = "buppan-back.png";
             } else if (category.name === "EA開発記録" || category.name === "EA開発＿実践記録") {
@@ -102,6 +105,8 @@ export default async function Home() {
               frontFileName = "news.png";
               backFileName  = "news-back.png";
             }
+
+            
 
             const frontUrl = `/${frontFileName}`;
             const backUrl  = `/${backFileName}`;
