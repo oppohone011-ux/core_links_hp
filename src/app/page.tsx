@@ -138,7 +138,7 @@ export default async function Home() {
                         {filteredPosts.map((post: any) => (
                           <li key={post.id} className={styles.articleItem}>
                             <Link href={`/blog/${post.id}`}>
-                              {post.title.length > 35 ? post.title.substring(0, 35) + "..." : post.title}
+                              {post.title?.length > 35 ? post.title.substring(0, 35) + "..." : (post.title || "Untitled")}
                             </Link>
                           </li>
                         ))}
