@@ -2,71 +2,115 @@ import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Resend } from 'resend';
 
-// APIキーの読み込み
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email, domain, budget, detail } = body;
-    
-    let aiResponse = "AI解析が実行できませんでした。";
 
-    // 1. AI門番（Gemini）による分析
-    try {
-      // モデル指定を最も標準的な形にします
-      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-      
-      const prompt = `
-        あなたは「CORE LINKS STUDIO」のAI門番です。
-        以下のお問い合わせに対し、熱意、ビジネスインパクト、実現可能性を分析し、
-        100点満点でスコアを付けてください。また、運営に向けた短いアドバイスも書いてください。
+    // 🏎️ ユーザーには即座に成功を返す
+    const response = NextResponse.json({ success: true });
 
+    // 🕵️ バックグラウンド処理
+    (async () => {
+      try {
+        const targetEmail = process.env.CONTACT_EMAIL || 'corelinks.info.contact@gmail.com';
+        let aiReport = "";
+
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const prompt = `あなたはCORE LINKS STUDIOのシニアディレクターです。
+        以下の問い合わせを査定し、必ずこの形式で出力してください。
+        
+        ■スコア: (0-100の数値)
+        ■判定: (通過/要注意/拒絶)
+        ■要約: (結論を1行で)
+        ■理由: (箇条書き)
+        ■アドバイス: (運営への指示)
         ---
-        名前: ${name}
-        メール: ${email}
-        領域: ${domain}
-        予算: ${budget}
-        内容: ${detail}
-      `;
+        名前: ${body.name} / 予算: ${body.budget} / 内容: ${body.detail}`;
 
-      // 最新の安全な実行方法
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      aiResponse = response.text();
-      
-      console.log("--- 🤖 AI分析成功 ---");
-    } catch (aiError: any) {
-      console.error("AI解析エラー詳細:", aiError.message);
-      aiResponse = `AI解析で一時的なエラーが発生しました。内容は以下の通り転送します。`;
-    }
+        const result = await model.generateContent(prompt);
+        aiReport = (await result.response).text();
 
-    // 2. メール送信
-    await resend.emails.send({
-      from: 'CoreLinks Gate <onboarding@resend.dev>',
-      to: process.env.CONTACT_EMAIL as string,
-      subject: `【AI判定済み】${name}様よりお問い合わせ`,
-      html: `
-        <h3>お問い合わせ内容</h3>
-        <p>名前: ${name}</p>
-        <p>メール: ${email}</p>
-        <p>領域: ${domain}</p>
-        <p>予算: ${budget}</p>
-        <p>内容: ${detail}</p>
-        <hr />
-        <h3>🤖 AI門番の解析レポート</h3>
-        <div style="white-space: pre-wrap; background: #f4f4f4; padding: 20px; border-radius: 10px; border: 1px solid #ddd;">
-          ${aiResponse}
-        </div>
-      `,
-    });
+        // テキストから情報を抽出するユーティリティ
+        const extract = (key: string) => {
+          const reg = new RegExp(`■${key}[:：]?\\s*([\\s\\S]*?)(?=\\n■|$)`);
+          return aiReport.match(reg)?.[1]?.trim() || "---";
+        };
 
-    console.log("--- 📧 メール送信完了 ---");
-    return NextResponse.json({ success: true });
+        const score = extract("スコア");
+        const decision = extract("判定");
+        const summary = extract("要約");
+        const reason = extract("理由");
+        const advice = extract("アドバイス");
 
-  } catch (error: any) {
-    console.error("Critical Error:", error.message);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+        // デザイン用の色設定
+        const isPass = decision.includes("通過");
+        const isWarning = decision.includes("要注意");
+        const statusColor = isPass ? "#10b981" : (isWarning ? "#f59e0b" : "#ef4444");
+        const statusLabel = isPass ? "PASS" : (isWarning ? "HOLD" : "REJECT");
+
+        // 📧 メール送信（超美麗デザイン）
+        await resend.emails.send({
+          from: 'Gatekeeper <onboarding@resend.dev>',
+          to: targetEmail,
+          subject: `【査定報告】${statusLabel} / ${body.name}様`,
+          html: `
+            <div style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f4f7fa; padding: 40px 20px;">
+              <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
+                
+                <div style="background-color: ${statusColor}; padding: 40px 20px; text-align: center; color: white;">
+                  <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 12px; margin: 0 0 10px 0; font-weight: bold; opacity: 0.8;">AI Assessment Report</p>
+                  <h1 style="font-size: 48px; margin: 0; font-weight: 800;">${statusLabel}</h1>
+                  <div style="background: rgba(255,255,255,0.2); display: inline-block; padding: 5px 20px; border-radius: 50px; margin-top: 15px; font-weight: bold;">
+                    Score: ${score} / 100
+                  </div>
+                </div>
+
+                <div style="padding: 40px;">
+                  
+                  <div style="border-left: 4px solid ${statusColor}; padding: 15px 20px; background: #f9fafb; margin-bottom: 30px;">
+                    <strong style="display: block; font-size: 13px; color: ${statusColor}; text-transform: uppercase; margin-bottom: 5px;">Summary</strong>
+                    <div style="font-size: 18px; color: #1f2937; font-weight: bold;">${summary}</div>
+                  </div>
+
+                  <div style="margin-bottom: 30px;">
+                    <h3 style="font-size: 14px; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 5px;">分析理由</h3>
+                    <div style="color: #4b5563; font-size: 15px; line-height: 1.8; white-space: pre-wrap;">${reason}</div>
+                  </div>
+
+                  <div style="background-color: #eff6ff; border-radius: 12px; padding: 20px; border: 1px solid #dbeafe;">
+                    <h3 style="font-size: 14px; color: #1d4ed8; margin: 0 0 8px 0; display: flex; align-items: center;">💡 運営へのアドバイス</h3>
+                    <div style="color: #1e40af; font-size: 15px; line-height: 1.6;">${advice}</div>
+                  </div>
+
+                  <div style="margin-top: 40px; padding-top: 20px; border-top: 1px dashed #e5e7eb;">
+                    <h4 style="font-size: 12px; color: #9ca3af; text-transform: uppercase; margin-bottom: 15px;">Original Request Data</h4>
+                    <div style="font-size: 13px; color: #374151; background: #fdfdfd; padding: 15px; border-radius: 8px;">
+                      <strong>名前:</strong> ${body.name}<br>
+                      <strong>予算:</strong> ${body.budget}<br>
+                      <strong>内容:</strong> ${body.detail}
+                    </div>
+                  </div>
+
+                </div>
+
+                <div style="background-color: #1f2937; color: #9ca3af; padding: 15px; text-align: center; font-size: 11px;">
+                  CORE LINKS STUDIO - SECURE AI GATEWAY v2.5
+                </div>
+              </div>
+            </div>
+          `
+        });
+        console.log("✅ 美麗レポートの送信が完了しました");
+      } catch (innerError) {
+        console.error("❌ バックグラウンド処理エラー:", innerError);
+      }
+    })();
+
+    return response;
+  } catch (error) {
+    return NextResponse.json({ error: "Fatal Error" }, { status: 500 });
   }
 }
