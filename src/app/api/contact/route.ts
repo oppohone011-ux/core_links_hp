@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     // 1. AI門番（Gemini）による分析
     try {
       // モデル指定を最も標準的な形にします
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
       
       const prompt = `
         あなたは「CORE LINKS STUDIO」のAI門番です。
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     // 2. メール送信
     await resend.emails.send({
       from: 'CoreLinks Gate <onboarding@resend.dev>',
-      to: 'oppo.hone011@gmail.com', 
+      to: process.env.CONTACT_EMAIL as string,
       subject: `【AI判定済み】${name}様よりお問い合わせ`,
       html: `
         <h3>お問い合わせ内容</h3>
