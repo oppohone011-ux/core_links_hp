@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+// 追加ここから：Google Analyticsを使うための準備
+import { GoogleAnalytics } from '@next/third-parties/google'
+// 追加ここまで
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +31,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        {/* 追加ここから：測定IDを設置 */}
+        <GoogleAnalytics gaId="G-R7YCDM84C0" />
+        {/* 追加ここまで */}
       </body>
     </html>
   );
 }
+
+// update
