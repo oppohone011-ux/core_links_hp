@@ -465,25 +465,61 @@
 
 /* --- スマホで表を横スクロールできるようにする --- */
 @media (max-width: 768px) {
-  /* 1. 表の文字をさらに小さく（0.6remはかなり小さいですが、はみ出しを防ぎます） */
+  /* 1. 表本体にスクロール機能を直接持たせる */
   .contentBody table {
-    font-size: 0.65rem !important;
-    min-width: 500px !important; /* ★ここが重要：表の形を維持して横に長くする */
-    table-layout: auto !important;
-  }
-
-  /* 2. 表を囲むエリアにスクロールバーを出す */
-  .contentBody {
-    display: block !important;
-    width: 100% !important;
-    overflow-x: auto !important; /* ★横スクロールを許可 */
-    -webkit-overflow-scrolling: touch; /* 指の動きを滑らかに */
+    display: block !important;    /* tableをblock化してスクロールを有効に */
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap !important; /* 文字が勝手に折り返さないように */
+    
+    font-size: 0.75rem !important; /* 0.65よりは少し大きくして視認性を確保 */
+    min-width: 100% !important;
+    border-collapse: collapse;
     margin-bottom: 2rem;
   }
 
-  /* 3. セルの中の余白を極限まで詰める */
-  .contentBody th, .contentBody td {
-    padding: 6px 3px !important;
-    white-space: nowrap !important; /* ★文字を勝手に改行させない */
+  /* 2. セルの余白を少しだけ確保して読みやすく */
+  .contentBody th, 
+  .contentBody td {
+    padding: 10px 12px !important;
+    border: 1px solid #000;
   }
+
+  /* 3. 【重要】.contentBody側のoverflowは削除（または以下のようにリセット） */
+  .contentBody {
+    overflow-x: visible !important; /* 全体が横揺れするのを防ぐ */
+  }
+}
+
+/* --- アニメーション背景の定義 --- */
+@keyframes movingBg {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* アニメーションを適用するクラス */
+.animatedBg {
+  /* 4色をグラデーションで配置 */
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab) !important;
+  /* 背景サイズを大きくして、アニメーションで移動させる */
+  background-size: 400% 400% !important;
+  /* アニメーション：15秒で無限に繰り返す */
+  animation: movingBg 15s ease infinite !important;
+  
+  /* 太字、余白、枠線、影は維持 */
+  padding: 2.5rem 2rem;
+  border: 3px solid #000;
+  box-shadow: 8px 8px 0 #cbd5e1;
+  margin-bottom: 4rem;
+  line-height: 1.8;
+  font-weight: bold;
+  color: #fff; /* 文字色を白にして、動きのある背景とコントラストを出す */
+  letter-spacing: 0.02em;
 }
