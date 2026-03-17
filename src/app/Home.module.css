@@ -85,46 +85,92 @@
   animation: charRise 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
 }
 
+/* ==========================================================================
+   3. サイトタイトルエリア（Dynamic Hero）
+   ========================================================================== */
 .mainTitle {
   font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
   font-size: clamp(2.2rem, 9vw, 4.2rem);
   font-weight: 900;
-  color: #000;
   line-height: 1.2;
   margin-bottom: 60px;
   letter-spacing: -0.04em;
+  color: #111; /* フォールバック用 */
 }
 
 .line1, .line2 {
   display: block;
   opacity: 0;
   transform: translateY(50px) rotateX(-30deg);
-  animation: titleRise 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+  animation: 
+    titleRise 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards,
+    textShine 6s linear infinite; /* 速度を落としてゆったりと */
+
+  /* おしとやかな白金（プラチナ）の光 */
+  background: linear-gradient(
+    90deg, 
+    #111 0%, 
+    #64748b 20%, 
+    #f8fafc 50%, 
+    #64748b 80%, 
+    #111 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .line1 { animation-delay: 0.4s; }
 .line2 { animation-delay: 0.7s; }
 
-.fireText {
-  display: inline-block;
-  background: linear-gradient(90deg, #000 0%, #fbbf24 50%, #000 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 3s linear infinite;
-  font-weight: 900;
-}
-
 .heroLine {
-  width: 180px;
-  height: 4px;
-  background: #fbbf24;
+  width: 0;
+  height: 2px; /* 繊細な細さを維持 */
   margin: 0 auto;
   border-radius: 10px;
-  transform: scaleX(0);
-  transform-origin: center;
-  animation: lineGrow 1.2s cubic-bezier(0.7, 0, 0.3, 1) forwards;
-  animation-delay: 1.6s;
+  
+  /* 黒を完全に排除：プラチナシルバーとホワイトの階調 */
+  background: linear-gradient(
+    90deg, 
+    #cbd5e1 0%,   /* 明るいブルーグレー */
+    #f1f5f9 25%,  /* プラチナ */
+    #ffffff 50%,  /* 純白の光 */
+    #f1f5f9 75%,  /* プラチナ */
+    #cbd5e1 100%
+  );
+  background-size: 200% auto;
+  
+  /* 動き：溜めをより長く、伸びを滑らかに (おしとやか仕様) */
+  animation: 
+    lineGrowDramatic 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+    textShine 8s linear infinite; /* 色の変化もさらにゆったり */
+  animation-delay: 1.8s;
+  
+  /* 影も黒を避けて、ごく淡い光に */
+  box-shadow: 0 4px 15px rgba(203, 213, 225, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   6. アニメーション Keyframes（上書き・確認）
+   -------------------------------------------------------------------------- */
+@keyframes textShine {
+  0% { background-position: 200% center; }
+  100% { background-position: 0% center; }
+}
+
+@keyframes lineGrowDramatic {
+  0% { 
+    width: 0; 
+    opacity: 0; 
+  }
+  40% { 
+    width: 25px; /* 静かに溜める */
+    opacity: 1; 
+  } 
+  100% { 
+    width: 480px; /* 長く、優雅なケガキ線 */
+    opacity: 1; 
+  } 
 }
 
 /* ==========================================================================
@@ -462,4 +508,71 @@
 
   .footer { padding: 80px 20px 40px; }
   .footerLinks { flex-direction: column; gap: 24px; margin-bottom: 60px; }
+}
+
+/* ==========================================================================
+   6. アニメーション Keyframes
+   ========================================================================== */
+@keyframes charRise { to { opacity: 1; transform: translateY(0); } }
+@keyframes titleRise { to { opacity: 1; transform: translateY(0) rotateX(0); } }
+@keyframes shine { to { background-position: 200% center; } }
+@keyframes lineGrow { to { transform: scaleX(1); } }
+
+/* --- 追加：テキストの色をループさせるアニメーション --- */
+@keyframes textShine {
+  0% { background-position: 200% center; }
+  100% { background-position: 0% center; }
+}
+
+/* ==========================================================================
+   3. サイトタイトルエリア（Dynamic Hero） - ケガキ線：超・高火力エディション
+   ========================================================================== */
+.heroLine {
+  width: 0;
+  height: 2px;
+  margin: 0 auto;
+  border-radius: 10px;
+  
+  /* 黒・ネイビーを完全排除：明るいシルバー、プラチナ、ホワイトのみ */
+  background: linear-gradient(
+    90deg, 
+    #e2e8f0 0%,   /* 明るいシルバーグレー */
+    #f8fafc 25%,  /* プラチナホワイト */
+    #ffffff 50%,  /* 純白 */
+    #f8fafc 75%,  /* プラチナホワイト */
+    #e2e8f0 100%
+  );
+  background-size: 200% auto;
+  
+  /* 動き：溜めを滑らかに、時間をさらにゆったり（おしとやか仕様） */
+  animation: 
+    lineGrowDramatic 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+    textShine 10s linear infinite; /* 色の変化をさらに低速にして「揺らぎ」に */
+  animation-delay: 1.8s;
+  
+  /* 影も黒を避けて、空気のような淡い光に */
+  box-shadow: 0 4px 20px rgba(226, 232, 240, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   6. アニメーション Keyframes（ここも上書きしてください）
+   -------------------------------------------------------------------------- */
+@keyframes textShine {
+  0% { background-position: 200% center; }
+  100% { background-position: 0% center; }
+}
+
+@keyframes lineGrowDramatic {
+  0% { 
+    width: 0; 
+    opacity: 0; 
+  }
+  45% { 
+    width: 15px; /* さらに静かに溜める */
+    opacity: 1; 
+  } 
+  100% { 
+    width: 480px; /* 優雅な長さ */
+    opacity: 1; 
+  } 
 }

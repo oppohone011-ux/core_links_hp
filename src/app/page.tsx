@@ -64,17 +64,17 @@ export default async function Home() {
       ))}
     </p>
     <h1 className={styles.mainTitle}>
-      <span className={styles.line1}>気づけば<span className={styles.fireText}>高火力</span>。</span>
-      <span className={styles.line2}>器用ボンビーブログ</span>
-    </h1>
-    <div className={styles.heroLine}></div>
+  <span className={styles.line1}>直感の設計図</span>
+</h1>
+<div className={styles.heroLine}></div>
+<div className={styles.heroLine}></div>
   </div>
 </section>
 
       {/* 3. コンテンツエリア */}
       <main className={styles.container}>
         {/* セクションタイトル */}
-        <h2 className={styles.sectionTitle}>Explore Categories</h2>
+        <h2 className={styles.sectionTitle}>直感の断片</h2>
         
         <div className={styles.categoryGrid}>
           {categoriesData.contents.map((category: any, index: number) => {
