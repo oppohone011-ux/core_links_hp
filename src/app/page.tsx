@@ -57,7 +57,7 @@ export default async function Home() {
       <section className={styles.heroSection}>
   <div className={styles.heroInner}>
     <p className={styles.subTitle}>
-      {"Multi-Potential Blog".split("").map((char, i) => (
+      {"Multi-Potential LIFE".split("").map((char, i) => (
         <span key={i} style={{ animationDelay: `${i * 0.05}s` }} className={styles.char}>
           {char === " " ? "\u00A0" : char}
         </span>
