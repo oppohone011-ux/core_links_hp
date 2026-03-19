@@ -153,12 +153,29 @@ export default function DXPage() {
 
           {/* RIGHT: SIDEBAR */}
           <aside className={styles.sideCol}>
+            {/* プロフィールセクションを追加 */}
+            <div className={styles.profileBlock}>
+              <div className={styles.avatarWrapper}>
+                <img src="/HIDE.png" alt="古川 秀幸" className={styles.avatar} />
+              </div>
+              <div className={styles.profileInfo}>
+                <h3 className={styles.profileName}>Hide</h3>
+                <p className={styles.profileId}>CORELINKS-Architect</p>
+                <p className={styles.profileBio}>
+                  20 years in Field & Code. <br />
+                  JSDF Veteran | Automation Designer
+                </p>
+                <button className={styles.followBtn}>Follow</button>
+              </div>
+            </div>
+
             <div className={styles.sideBlock}>
               <h3>Core Domain</h3>
               <p className={styles.domainTag}>Field-First DX</p>
               <p className={styles.domainTag}>AI-Scoring</p>
               <p className={styles.domainTag}>Hyper-Automation</p>
             </div>
+            
             <div className={styles.sideBlock}>
               <h3>Experience Distribution</h3>
               <div className={styles.langBar}>
@@ -172,6 +189,7 @@ export default function DXPage() {
                 <li><span className={styles.dotPy}>●</span> AI/RPA Logic</li>
               </ul>
             </div>
+            
             <div className={styles.sideBlock}>
               <h3>Special Skills</h3>
               <ul className={styles.skillList}>

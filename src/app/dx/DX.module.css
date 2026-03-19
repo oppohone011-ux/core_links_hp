@@ -130,3 +130,83 @@
   .headerTop { flex-direction: column; align-items: flex-start; }
   .repoActions { align-self: flex-start; }
 }
+
+/* GitHubのあの空気感を出すためのベース設定 */
+:root {
+  --gh-border: #d0d7de;
+  --gh-bg-sub: #f6f8fa;
+  --gh-text-main: #1f2328;
+  --gh-text-link: #0969da;
+}
+
+/* READMEのコンテナ：デカい余白と太い文字 */
+.readme-container {
+  border: 1px solid var(--gh-border);
+  border-radius: 6px;
+  margin-top: 24px;
+  background-color: #fff;
+}
+
+.readme-header {
+  padding: 8px 16px;
+  background-color: var(--gh-bg-sub);
+  border-bottom: 1px solid var(--gh-border);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+/* 「現場が終われば、仕事も終わる。」をデカく見せる */
+.readme-content {
+  padding: 48px 32px; /* 縦にたっぷりの余白 */
+  color: var(--gh-text-main);
+  line-height: 1.5;
+}
+
+.readme-content h1 {
+  font-size: 42px; /* 圧倒的にデカく */
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+  border: none; /* デフォルトの境界線は消す */
+}
+
+/* 右サイドバーのラベル（Field-First DXなど） */
+.label-badge {
+  display: inline-block;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 22px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  background-color: #dafbe1; /* 薄い緑 */
+  color: #1a7f37;
+  margin-right: 4px;
+}
+
+/* 特殊スキルなどのリストを飾らない */
+.special-skills-list {
+  list-style: none;
+  padding: 0;
+  font-size: 14px;
+  line-height: 2;
+}
+
+/* --- AVATAR (追加分) --- */
+.avatar {
+  width: 48px;            /* 小さめに設定（GitHubのヘッダーやサイドバー風） */
+  height: 48px;
+  border-radius: 50%;     /* これで完全な丸になる */
+  object-fit: cover;      /* 写真が歪まないように調整 */
+  border: 1px solid #d0d7de; /* GitHub風の薄いグレーの枠線 */
+  display: block;         /* 余計な隙間を消す */
+}
+
+/* もしサイドバーで少し大きく見せたい場合はこちら */
+.sideCol .avatar {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 16px;
+}
