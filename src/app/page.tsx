@@ -48,6 +48,7 @@ export default async function Home() {
     <ul>
       <li><Link href="/">Home</Link></li>
       <li><Link href="/about">About</Link></li> {/* ← ここに追加！ */}
+      <li><Link href="/dx">DX</Link></li>
       <li><Link href="/contact">Contact</Link></li>
     </ul>
   </nav>

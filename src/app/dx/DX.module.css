@@ -1,0 +1,170 @@
+.container {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #1a1a1a;
+  background: #fff;
+  line-height: 1.6;
+  overflow-x: hidden; /* スマホでの横揺れ防止 */
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px; /* スマホで端がくっつかないよう少し広めに */
+}
+
+.section {
+  padding: 100px 0;
+}
+
+/* --- Hero Section --- */
+.hero {
+  padding: 140px 0 80px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+  text-align: center;
+}
+
+.badge {
+  color: #10b981;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.mainTitle {
+  /* スマホ 2rem 〜 PC 4rem で可変 */
+  font-size: clamp(2rem, 8vw, 4rem);
+  font-weight: 900;
+  margin-bottom: 24px;
+  line-height: 1.2;
+  word-break: keep-all; /* 日本語の変な位置での改行を防ぐ */
+  overflow-wrap: break-word;
+}
+
+.highlight {
+  color: #10b981;
+}
+
+/* --- Section Titles --- */
+.sectionTitle {
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  font-weight: 800;
+  margin-bottom: 40px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.enTitle {
+  display: block;
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
+  color: #10b981;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 0.1em;
+}
+
+/* --- Results Grid --- */
+.resultGrid {
+  display: grid;
+  /* スマホでは1列、幅があれば300px以上で並べる */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.resultCard {
+  padding: 30px;
+  background: #f9fafb;
+  border-radius: 20px;
+  border: 1px solid #f3f4f6;
+}
+
+.resultNum {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 900;
+  color: #111827;
+  margin-bottom: 10px;
+}
+
+/* --- Philosophy (Dark Section) --- */
+.bgDark {
+  background: #0f172a;
+  color: #fff;
+}
+
+.philosophyFlex {
+  display: flex;
+  flex-direction: column; /* 基本は縦並び */
+  gap: 40px;
+}
+
+.whiteTitle {
+  font-size: clamp(1.6rem, 5vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.compareCard {
+  background: rgba(255,255,255,0.05);
+  padding: 30px;
+  border-radius: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- Roadmap --- */
+.roadmap {
+  display: grid;
+  /* スマホ 2列 / PC 4列 */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.step {
+  padding: 20px 10px;
+  background: #f8fafc;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.step h4 {
+  font-size: 0.95rem;
+  margin: 8px 0;
+}
+
+.step p {
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+/* --- Media Queries (調整の仕上げ) --- */
+
+@media (min-width: 769px) {
+  .section { padding: 120px 0; }
+  
+  .philosophyFlex {
+    flex-direction: row; /* PCで横並びに */
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .compareCard {
+    min-width: 320px;
+    max-width: 400px;
+  }
+
+  .roadmap {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .roadmap {
+    grid-template-columns: 1fr; /* 非常に狭い画面ではロードマップを1列に */
+  }
+  
+  .hero {
+    padding: 100px 0 60px;
+  }
+}
