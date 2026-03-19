@@ -210,3 +210,78 @@
   height: 120px;
   margin-bottom: 16px;
 }
+
+/* --- SIDEBAR COMPONENTS --- */
+
+/* 見出し：GitHubのサイドバーらしく */
+.sideBlock h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2328;
+  margin-bottom: 12px;
+  border: none;
+}
+
+/* 言語分布のリスト設定 */
+.langList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.langList li {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1f2328;
+  margin-bottom: 6px;
+}
+
+/* 言語バー（プログレスバー） */
+.progressBar {
+  display: flex;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  margin-bottom: 12px; /* リストとの間隔 */
+}
+
+/* バーの色指定：GitHubの各言語色に準拠 */
+.barField { width: 45%; background-color: #0969da; } /* AppSheet / DX Blue */
+.barTs { width: 30%; background-color: #3178c6; }    /* TypeScript Blue */
+.barPy { width: 25%; background-color: #3572A5; }    /* Python Blue */
+
+/* リストのポッチ（バーの色と合わせる） */
+.dotField { color: #0969da; margin-right: 8px; font-size: 14px; }
+.dotTs { color: #3178c6; margin-right: 8px; font-size: 14px; }
+.dotPy { color: #3572A5; margin-right: 8px; font-size: 14px; }
+
+/* --- SPECIAL SKILLS (タグ・バッジ形式) --- */
+.skillList {
+  display: flex;
+  flex-wrap: wrap; /* 横に並べて折り返す */
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skillList li {
+  font-size: 11px;
+  font-weight: 500;
+  color: #0969da;            /* GitHubリンク色 */
+  background-color: #ddf4ff; /* 薄い青 */
+  padding: 4px 10px;
+  border-radius: 2em;        /* カプセル型 */
+  border: 1px solid rgba(9, 105, 218, 0.2);
+  line-height: 1.2;
+  transition: all 0.2s ease;
+}
+
+/* ホバーで色が反転する遊び心 */
+.skillList li:hover {
+  background-color: #0969da;
+  color: #ffffff;
+}
