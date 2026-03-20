@@ -7,25 +7,16 @@
   padding: 40px 20px;
 }
 
-/* ==========================================================================
-   2. ヘッダー（モダン・ミニマル仕様）
-   ========================================================================== */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 5%;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid #e5e7eb;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  transition: all 0.3s ease;
+.menuCheckbox {
+  display: none !important;
+}
+
+.menuBtn {
+  display: none; /* PCでは3本線を隠す */
 }
 
 /* ==========================================================================
-   2. ヘッダー（モダン・ミニマル・アニメーション仕様）
+   2. ヘッダー（ナビゲーション）
    ========================================================================== */
 .header {
   display: flex;
@@ -48,15 +39,12 @@
   color: #111;
   text-transform: uppercase;
   flex-shrink: 0;
-  display: inline-block; /* 弾む動きのために必須 */
-  
-  /* --- ロゴ：跳ねるアニメーション --- */
+  display: inline-block;
   opacity: 0;
   animation: logoBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  animation-delay: 0.2s; /* ページを読み込んで一呼吸置いてからポヨンと出す */
+  animation-delay: 0.2s;
 }
 
-/* ホバーした時に1回だけ「おかわり」で跳ねる */
 .logo:hover {
   animation: logoBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1;
 }
@@ -70,11 +58,9 @@
 .nav li {
   opacity: 0;
   transform: translateY(10px);
-  /* メニューを順番にフワッと出す設定 */
   animation: navFadeUp 0.5s ease forwards;
 }
 
-/* 各メニューを0.1秒ずつずらして表示（ディレイ設定） */
 .nav li:nth-child(1) { animation-delay: 0.5s; }
 .nav li:nth-child(2) { animation-delay: 0.6s; }
 .nav li:nth-child(3) { animation-delay: 0.7s; }
@@ -89,11 +75,8 @@
   position: relative;
 }
 
-.nav a:hover {
-  color: #3b82f6;
-}
+.nav a:hover { color: #3b82f6; }
 
-/* --- 追加：ナビゲーションの下線アニメーション（おまけ） --- */
 .nav a::after {
   content: '';
   position: absolute;
@@ -104,26 +87,8 @@
   background: #3b82f6;
   transition: width 0.3s ease;
 }
-.nav a:hover::after {
-  width: 100%;
-}
 
-/* ==========================================================================
-   追加：ヘッダー用のアニメーション定義（Keyframes）
-   ========================================================================== */
-
-/* ロゴのポヨンとした跳ね */
-@keyframes logoBounce {
-  0% { transform: translateY(-30px) scaleY(1.3); opacity: 0; }
-  60% { transform: translateY(5px) scaleY(0.8); opacity: 1; }
-  80% { transform: translateY(-3px) scaleY(1.05); }
-  100% { transform: translateY(0) scaleY(1); opacity: 1; }
-}
-
-/* ナビゲーションのフワッとした浮き上がり */
-@keyframes navFadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
+.nav a:hover::after { width: 100%; }
 
 /* ==========================================================================
    3. サイトタイトルエリア（Dynamic Hero）
@@ -159,9 +124,6 @@
   animation: charRise 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
 }
 
-/* ==========================================================================
-   3. サイトタイトルエリア（Dynamic Hero）
-   ========================================================================== */
 .mainTitle {
   font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
   font-size: clamp(2.2rem, 9vw, 4.2rem);
@@ -169,7 +131,7 @@
   line-height: 1.2;
   margin-bottom: 60px;
   letter-spacing: -0.04em;
-  color: #111; /* フォールバック用 */
+  color: #111;
 }
 
 .line1, .line2 {
@@ -178,9 +140,7 @@
   transform: translateY(50px) rotateX(-30deg);
   animation: 
     titleRise 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards,
-    textShine 6s linear infinite; /* 速度を落としてゆったりと */
-
-  /* おしとやかな白金（プラチナ）の光 */
+    textShine 6s linear infinite;
   background: linear-gradient(
     90deg, 
     #111 0%, 
@@ -197,54 +157,26 @@
 .line1 { animation-delay: 0.4s; }
 .line2 { animation-delay: 0.7s; }
 
+/* ケガキ線：最新エディションに統合 */
 .heroLine {
   width: 0;
-  height: 2px; /* 繊細な細さを維持 */
+  height: 2px;
   margin: 0 auto;
   border-radius: 10px;
-  
-  /* 黒を完全に排除：プラチナシルバーとホワイトの階調 */
   background: linear-gradient(
     90deg, 
-    #cbd5e1 0%,   /* 明るいブルーグレー */
-    #f1f5f9 25%,  /* プラチナ */
-    #ffffff 50%,  /* 純白の光 */
-    #f1f5f9 75%,  /* プラチナ */
-    #cbd5e1 100%
+    #e2e8f0 0%, 
+    #f8fafc 25%, 
+    #ffffff 50%, 
+    #f8fafc 75%, 
+    #e2e8f0 100%
   );
   background-size: 200% auto;
-  
-  /* 動き：溜めをより長く、伸びを滑らかに (おしとやか仕様) */
   animation: 
-    lineGrowDramatic 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards,
-    textShine 8s linear infinite; /* 色の変化もさらにゆったり */
+    lineGrowDramatic 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+    textShine 10s linear infinite;
   animation-delay: 1.8s;
-  
-  /* 影も黒を避けて、ごく淡い光に */
-  box-shadow: 0 4px 15px rgba(203, 213, 225, 0.2);
-}
-
-/* --------------------------------------------------------------------------
-   6. アニメーション Keyframes（上書き・確認）
-   -------------------------------------------------------------------------- */
-@keyframes textShine {
-  0% { background-position: 200% center; }
-  100% { background-position: 0% center; }
-}
-
-@keyframes lineGrowDramatic {
-  0% { 
-    width: 0; 
-    opacity: 0; 
-  }
-  40% { 
-    width: 25px; /* 静かに溜める */
-    opacity: 1; 
-  } 
-  100% { 
-    width: 480px; /* 長く、優雅なケガキ線 */
-    opacity: 1; 
-  } 
+  box-shadow: 0 4px 20px rgba(226, 232, 240, 0.3);
 }
 
 /* ==========================================================================
@@ -305,7 +237,6 @@
 .tileOverlay {
   position: absolute;
   inset: 0;
-  /* 上は透明、下（文字がある方）に向かって黒を濃くする */
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.2) 0%,
@@ -314,26 +245,18 @@
   z-index: 1;
 }
 
-/* --- カテゴリーカード表面のボタン（文字と一緒に中央配置） --- */
 .viewLabel {
   position: relative;
   z-index: 2;
-  
-  /* 中央寄せを維持するため、autoを排除しタイトルとの間隔(15px)を指定 */
   margin-top: 15px; 
-  margin-bottom: 0;
-
-  /* ボタンの見た目：高火力イエロー */
   background-color: #fbbf24;
-  color: #000 !important; /* 文字は絶対黒 */
+  color: #000 !important;
   padding: 10px 24px;
   border-radius: 8px;
   font-size: 0.85rem;
   font-weight: 900;
   text-decoration: none;
   letter-spacing: 0.05em;
-  
-  /* 立体感とアニメーション */
   box-shadow: 0 4px 0 #b45309; 
   transition: all 0.2s ease;
   display: inline-block;
@@ -358,12 +281,9 @@
   color: #fff;
   z-index: 2;
   text-shadow: 0 4px 15px rgba(0,0,0,0.9);
-  
-  /* 余計なマージンを消して完全中央に固定 */
   margin: 0; 
 }
 
-/* --- カード裏面（記事リスト） --- */
 .tileBack {
   transform: rotateY(180deg);
   background: #111;
@@ -371,10 +291,8 @@
   padding: 30px;
   display: flex;
   flex-direction: column;
-  /* 絶対配置にしてカード全体を覆う */
   position: absolute;
   inset: 0;
-  /* 裏返った時に確実に「表面」より前に出す */
   z-index: 5;
   backface-visibility: hidden;
   border-radius: 16px;
@@ -387,9 +305,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  /* コンテンツを背景画像より前に出す */
   z-index: 10;
-  /* クリックを確実に通す設定 */
   pointer-events: auto;
 }
 
@@ -408,8 +324,6 @@
   margin: 0;
   flex-grow: 1;
   overflow-y: auto;
-  position: relative;
-  z-index: 15;
 }
 
 .articleItem {
@@ -425,17 +339,11 @@
   line-height: 1.4;
   display: block;
   transition: color 0.2s;
-  /* クリック判定を最優先にする */
-  position: relative;
-  z-index: 20;
   padding: 4px 0;
 }
 
-.articleItem a:hover {
-  color: #fbbf24;
-}
+.articleItem a:hover { color: #fbbf24; }
 
-/* 裏面の「全記事を見る」ボタン */
 .allLink {
   display: block;
   text-align: center;
@@ -447,9 +355,6 @@
   border-radius: 8px;
   transition: 0.2s;
   margin-top: 10px;
-  /* ボタンのクリック判定を確実にする */
-  position: relative;
-  z-index: 20;
 }
 
 .allLink:hover {
@@ -533,121 +438,140 @@
 
 .footerBgText {
   position: absolute;
-  /* 垂直方向の調整 */
   bottom: 0px; 
-  
-  /* 水平方向を完全中央にする設定 */
   left: 50%;
-  transform: translateX(-50%); /* 自身の幅の半分だけ左に戻して中央へ */
-  
-  /* フォントと色の設定 */
+  transform: translateX(-50%);
   font-size: clamp(6rem, 20vw, 15rem); 
   font-weight: 900;
   color: #f1f5f9; 
   line-height: 1;
   letter-spacing: -0.05em;
-  white-space: nowrap; /* 改行させずに横一列に保つ */
-  
-  /* 重なりと操作の設定 */
+  white-space: nowrap;
   z-index: 1;
   pointer-events: none;
   user-select: none;
 }
 
 /* ==========================================================================
-   6. アニメーション Keyframes
+   6. アニメーション定義 (Keyframes) - 一本化
    ========================================================================== */
-@keyframes charRise { to { opacity: 1; transform: translateY(0); } }
-@keyframes titleRise { to { opacity: 1; transform: translateY(0) rotateX(0); } }
-@keyframes shine { to { background-position: 200% center; } }
-@keyframes lineGrow { to { transform: scaleX(1); } }
-
-/* ==========================================================================
-   7. レスポンシブ調整（最後にまとめて記述）
-   ========================================================================== */
-@media (max-width: 600px) {
-  .header { padding: 12px 15px; }
-  .logo { font-size: 1rem; }
-  .nav ul { gap: 12px; }
-  .nav a { font-size: 0.75rem; }
-
-  .heroSection { padding: 100px 20px 60px; }
-  .mainTitle { font-size: 2.1rem; line-height: 1.3; }
-  .char { letter-spacing: 0.2em; font-size: 0.7rem; }
-  .heroLine { width: 120px; }
-
-  .sectionTitle { font-size: 1.5rem; margin-top: 10px; }
-  .categoryGrid { grid-template-columns: 1fr; gap: 20px; padding: 10px 0 40px; }
-  .categoryTile { height: 400px; }
-
-  .footer { padding: 80px 20px 40px; }
-  .footerLinks { flex-direction: column; gap: 24px; margin-bottom: 60px; }
+@keyframes logoBounce {
+  0% { transform: translateY(-30px) scaleY(1.3); opacity: 0; }
+  60% { transform: translateY(5px) scaleY(0.8); opacity: 1; }
+  80% { transform: translateY(-3px) scaleY(1.05); }
+  100% { transform: translateY(0) scaleY(1); opacity: 1; }
 }
 
-/* ==========================================================================
-   6. アニメーション Keyframes
-   ========================================================================== */
-@keyframes charRise { to { opacity: 1; transform: translateY(0); } }
-@keyframes titleRise { to { opacity: 1; transform: translateY(0) rotateX(0); } }
-@keyframes shine { to { background-position: 200% center; } }
-@keyframes lineGrow { to { transform: scaleX(1); } }
-
-/* --- 追加：テキストの色をループさせるアニメーション --- */
-@keyframes textShine {
-  0% { background-position: 200% center; }
-  100% { background-position: 0% center; }
+@keyframes navFadeUp {
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ==========================================================================
-   3. サイトタイトルエリア（Dynamic Hero） - ケガキ線：超・高火力エディション
-   ========================================================================== */
-.heroLine {
-  width: 0;
-  height: 2px;
-  margin: 0 auto;
-  border-radius: 10px;
-  
-  /* 黒・ネイビーを完全排除：明るいシルバー、プラチナ、ホワイトのみ */
-  background: linear-gradient(
-    90deg, 
-    #e2e8f0 0%,   /* 明るいシルバーグレー */
-    #f8fafc 25%,  /* プラチナホワイト */
-    #ffffff 50%,  /* 純白 */
-    #f8fafc 75%,  /* プラチナホワイト */
-    #e2e8f0 100%
-  );
-  background-size: 200% auto;
-  
-  /* 動き：溜めを滑らかに、時間をさらにゆったり（おしとやか仕様） */
-  animation: 
-    lineGrowDramatic 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards,
-    textShine 10s linear infinite; /* 色の変化をさらに低速にして「揺らぎ」に */
-  animation-delay: 1.8s;
-  
-  /* 影も黒を避けて、空気のような淡い光に */
-  box-shadow: 0 4px 20px rgba(226, 232, 240, 0.3);
+@keyframes charRise {
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* --------------------------------------------------------------------------
-   6. アニメーション Keyframes（ここも上書きしてください）
-   -------------------------------------------------------------------------- */
+@keyframes titleRise {
+  to { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+
 @keyframes textShine {
   0% { background-position: 200% center; }
   100% { background-position: 0% center; }
 }
 
 @keyframes lineGrowDramatic {
-  0% { 
-    width: 0; 
-    opacity: 0; 
-  }
-  45% { 
-    width: 15px; /* さらに静かに溜める */
-    opacity: 1; 
-  } 
-  100% { 
-    width: 480px; /* 優雅な長さ */
-    opacity: 1; 
-  } 
+  0% { width: 0; opacity: 0; }
+  45% { width: 15px; opacity: 1; } 
+  100% { width: 480px; opacity: 1; } 
 }
 
+/* ==========================================================================
+   7. レスポンシブ調整（スマホ版3本線メニュー対応）
+   ========================================================================== */
+/* ==========================================================================
+   7. レスポンシブ調整（スマホ版3本線メニュー対応）
+   ========================================================================== */
+@media (max-width: 600px) {
+  /* --- 0. 謎の四角（チェックボックス）を確実に隠す --- */
+  .menuCheckbox {
+    display: none !important;
+  }
+
+  /* --- 1. ヘッダー周りのレイアウト調整 --- */
+  .header { padding: 12px 15px; }
+  .logo { font-size: 1rem; z-index: 1100; } /* ロゴをメニューより上に */
+
+  /* --- 2. 3本線ボタンの表示 --- */
+  .menuBtn {
+    display: block; /* スマホでボタンを表示 */
+    width: 25px;
+    height: 20px;
+    position: relative;
+    z-index: 1100;
+    cursor: pointer;
+  }
+  .menuBtn span, .menuBtn span::before, .menuBtn span::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #111;
+    transition: all 0.3s ease;
+  }
+  .menuBtn span { top: 9px; }
+  .menuBtn span::before { top: -8px; }
+  .menuBtn span::after { top: 8px; }
+
+  /* --- 3. ナビゲーションを画面外へ退避 --- */
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    display: flex;
+    /* align-items: center; を削除、または以下に変更 */
+    align-items: flex-start; /* 上寄せにする */
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1050;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+    padding-top: 100px; /* ★上からの余白を作って位置を調整★ */
+  }
+
+  .nav ul {
+    flex-direction: column;
+    gap: 25px; /* ★メニュー間の間隔を少し詰める（お好みで）★ */
+    text-align: center;
+    padding: 0;
+    width: 100%; /* 中央揃えを維持するため */
+  }
+
+  .nav a {
+    font-size: 1.2rem; /* スマホで押しやすいサイズに */
+    font-weight: 800;
+  }
+
+  /* --- 4. 【仕掛け】チェックが入ったら表示＆×印に変形 --- */
+  .menuCheckbox:checked ~ .nav {
+    right: 0; /* メニューがスッと出てくる */
+  }
+
+  /* 3本線を「×」に変形 */
+  .menuCheckbox:checked + .menuBtn span { background: transparent; }
+  .menuCheckbox:checked + .menuBtn span::before { transform: rotate(45deg); top: 0; }
+  .menuCheckbox:checked + .menuBtn span::after { transform: rotate(-45deg); top: 0; }
+
+  /* --- 5. 既存のコンテンツ調整（そのまま維持） --- */
+  .heroSection { padding: 100px 20px 60px; }
+  .mainTitle { font-size: 2.1rem; line-height: 1.3; }
+  .char { letter-spacing: 0.2em; font-size: 0.7rem; }
+  .heroLine { width: 120px !important; }
+  .sectionTitle { font-size: 1.5rem; margin-top: 10px; }
+  .categoryGrid { grid-template-columns: 1fr; gap: 20px; padding: 10px 0 40px; }
+  .categoryTile { height: 400px; }
+  .footer { padding: 80px 20px 40px; }
+  .footerLinks { flex-direction: column; gap: 24px; margin-bottom: 60px; }
+}

@@ -41,13 +41,20 @@ export default async function Home() {
 
   return (
     <div className="bg-white min-h-screen">
-      {/* 1. ヘッダー：極限までシンプルに。ナビゲーションも最小限 */}
+      {/* 1. ヘッダー：ハンバーガーメニュー対応 */}
 <header className={styles.header}>
   <div className={styles.logo}>Corelinks Studio</div>
+
+  {/* チェックボックス（隠し要素）とボタンを追加 */}
+  <input type="checkbox" id="menu-toggle" className={styles.menuCheckbox} />
+  <label htmlFor="menu-toggle" className={styles.menuBtn}>
+    <span></span>
+  </label>
+
   <nav className={styles.nav}>
     <ul>
       <li><Link href="/">Home</Link></li>
-      <li><Link href="/about">About</Link></li> {/* ← ここに追加！ */}
+      <li><Link href="/about">About</Link></li>
       <li><Link href="/dx">DX</Link></li>
       <li><Link href="/contact">Contact</Link></li>
       <li><Link href="/login" className={styles.adminLink}>Dashboard</Link></li>
