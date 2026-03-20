@@ -65,14 +65,14 @@ export default function DXPage() {
                   最新のWeb技術とAIで抹消し、真の直帰を実現することです。
                 </p>
 
-                <h2>🚀 最新技術スタック & AI実装</h2>
+                <h2>最新技術スタック & AI実装</h2>
                 <div className={styles.stackTable}>
                   <p><strong>Frontend/Backend:</strong> Node.js, Next.js 15, Vercel, microCMS</p>
                   <p><strong>AI Implementation:</strong> OpenAI連携による入力フォームデータのAIスコアリング（自動評価・ランク付け）</p>
                   <p><strong>Infrastructure/Databases:</strong> Supabase, Firebase, GitHub Action(CI/CD), GA4</p>
                 </div>
 
-                <h2>🔥 主要な開発実績と解決した課題（IMPACT）</h2>
+                <h2>主要な開発実績と解決した課題</h2>
                 
                 {/* Case 01: 製造・DX */}
                 <div className={styles.caseCard}>
@@ -107,7 +107,7 @@ export default function DXPage() {
                   <code>IMPACT: 仕入れ・投資判断の単純労働を「ゼロ」へ</code>
                 </div>
 
-                <h2>📜 プロジェクト・ログ（歩んできた道）</h2>
+                <h2>プロジェクト・ログ</h2>
                 <div className={styles.timeline}>
                   {/* --- [最新] 2025 - 2026: 自動化・EA・測量DX --- */}
                   <div className={`${styles.timeItem} ${styles.latest}`}>

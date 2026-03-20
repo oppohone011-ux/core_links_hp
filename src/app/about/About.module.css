@@ -1,176 +1,219 @@
-/* --- ページ全体（About専用） --- */
-.articleWrapper {
-  background-color: #f8fafc; /* 少し明るくスッキリしたグレーに */
-  min-height: 100vh;
-  color: #1e293b;
-  overflow-x: hidden;
-  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+/* About.module.css - Full Code */
+
+/* --- 1. アニメーション定義 --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* --- ヘッダー --- */
-.articleHeader {
-  background: #0f172a;
-  padding: clamp(6rem, 15vw, 12rem) 1.5rem clamp(8rem, 18vw, 14rem);
-  text-align: center;
-  /* 角度を少し緩やかにして洗練させる */
-  clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
-  border-bottom: none; /* 太い黒線を消してスッキリ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.headerInner {
-  max-width: 950px;
-  margin: 0 auto;
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-.categoryTag {
-  display: inline-block;
-  background: #fbbf24;
-  color: #000;
-  padding: 6px 20px;
-  border: 2px solid #000; /* 線を少し細く */
-  font-size: 0.85rem;
-  font-weight: 900;
-  margin-bottom: 2rem;
-  transform: rotate(-1.5deg); /* 傾きを抑える */
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-}
-
-.articleTitle {
-  font-size: clamp(2.2rem, 8vw, 4.5rem);
-  font-weight: 900;
-  color: #fff;
+/* --- 2. ヘッダーエリア --- */
+.aboutTitle {
+  color: #ffffff;
+  font-size: clamp(2rem, 8vw, 3.2rem); /* スマホ〜PCで可変 */
   line-height: 1.1;
-  text-shadow: none; /* 影を消してタイポグラフィで見せる */
-  letter-spacing: 0.05em;
-}
-
-/* --- メインコンテンツ --- */
-.articleMain {
-  max-width: 800px; /* 少し幅を絞って読みやすく */
-  margin: -9rem auto 10rem; /* 重なりを深くして奥行きを出す */
-  padding: clamp(2.5rem, 8vw, 6rem); /* 余白を贅沢に取る */
-  background: white;
-  border: 1px solid rgba(0,0,0,0.05); /* 境界線はごく薄く */
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); /* 柔らかい影に */
-  position: relative;
-  z-index: 10;
-  border-radius: 12px;
-}
-
-.contentBody {
-  line-height: 2.2;
-  font-size: clamp(1rem, 2vw, 1.15rem);
-  color: #334155;
-  font-weight: 400; /* 太さを抑えて圧を減らす */
-}
-
-.aboutIntro {
-  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-  line-height: 2;
-  font-weight: 700;
-  color: #000;
-  margin-bottom: 4rem;
-  padding: 30px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0; /* 線を細く */
-  border-left: 8px solid #fbbf24; /* 左端にアクセントカラー */
-  box-shadow: none;
-  transform: none; /* まっすぐにして誠実さを出す */
-  border-radius: 4px;
-}
-
-.strongHighlight {
-  /* マーカーを細くしてオシャレに */
-  background: linear-gradient(transparent 70%, #fbbf24 70%);
-  padding: 0 2px;
-  font-weight: 800;
-}
-
-.contentBody h2 {
-  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
   font-weight: 900;
-  margin: 6rem 0 2.5rem;
-  padding: 0 0 10px 0;
-  background: none;
-  border-left: none;
-  border-bottom: 3px solid #0f172a; /* 下線のみでシンプルに */
-  color: #0f172a;
-  letter-spacing: 0.05em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.logList {
-  margin: 3.5rem 0;
-  padding: 0;
-}
-
-.logItem {
-  background: #fff;
-  border: 1px solid #e2e8f0; /* 枠線を細く */
-  padding: 25px;
-  margin-bottom: 25px;
-  list-style: none;
-  transition: all 0.3s ease;
-  border-radius: 8px;
-}
-
-.logItem:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-  border-color: #fbbf24;
-}
-
-.logItem strong {
+.subTitle {
   display: block;
-  font-size: 1.25rem;
-  margin-bottom: 12px;
-  color: #0f172a;
-  border-bottom: 2px solid #fbbf24;
-  width: fit-content;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: #888;
+  margin-top: 1.5rem;
+  animation: fadeIn 1.2s ease-out forwards;
 }
 
-/* --- ボタン系 --- */
-.backBtnWrapper {
-  text-align: center;
-  margin-top: 5rem;
-}
-
-.backBtn {
-  display: inline-flex;
-  padding: 15px 40px;
-  background: #0f172a; /* 黒ベースに変えて引き締める */
-  color: #fff;
-  border: 2px solid #0f172a;
-  font-weight: 700;
-  font-size: 1.1rem;
-  text-decoration: none;
-  box-shadow: 0 4px 0 #fbbf24;
-  transition: all 0.2s ease;
-  border-radius: 50px; /* 丸みを持たせてモダンに */
-}
-
-.backBtn:hover {
-  transform: translateY(2px);
-  box-shadow: 0 0px 0 #fbbf24;
-  background: #fbbf24;
+.manifestoTag {
+  background: #ffda44; /* 高火力イエロー */
   color: #000;
-  border-color: #fbbf24;
+  padding: 4px 12px;
+  font-weight: 900;
+  font-size: 0.75rem;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  box-shadow: 3px 3px 0px #333;
+  animation: fadeIn 0.5s ease-out;
 }
 
-/* スマホ対応 */
-@media (max-width: 768px) {
-  .articleHeader {
-    padding: 5rem 1rem 7rem;
+/* --- 3. メインコンテンツ --- */
+.leadText {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  font-weight: 700;
+  border-left: 4px solid #ffda44;
+  padding-left: 1.5rem;
+  margin: 4rem 0;
+  color: #ee4c4c; /* 警告色のような赤でインパクトを */
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.statement {
+  margin: 4rem 0;
+  padding: 3rem;
+  background: #111;
+  color: #fff;
+  border-radius: 4px;
+  border: 1px solid #333;
+  position: relative;
+  overflow: hidden;
+  line-height: 1.8;
+  animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.statement::before {
+  content: "STATEMENT";
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 0.65rem;
+  color: #333;
+  letter-spacing: 0.3em;
+}
+
+.statement strong {
+  color: #ffda44;
+  font-size: 1.1em;
+}
+
+/* --- 4. スキルグリッド (4枚構成) --- */
+.skillGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 4rem 0;
+}
+
+.skillCard {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 2px;
+  box-shadow: 10px 10px 0px #1a1a1a;
+  border: 1px solid #1a1a1a;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: cardIn 0.6s ease-out both;
+}
+
+/* 順次表示アニメーション */
+.skillCard:nth-child(1) { animation-delay: 0.5s; }
+.skillCard:nth-child(2) { animation-delay: 0.65s; }
+.skillCard:nth-child(3) { animation-delay: 0.8s; }
+.skillCard:nth-child(4) { animation-delay: 0.95s; }
+
+.skillCard:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 14px 14px 0px #ffda44;
+}
+
+.skillCard h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #000;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.75rem;
+}
+
+.skillCard p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* --- 5. フッター演出 --- */
+.divider {
+  margin: 6rem 0;
+  border: none;
+  border-top: 1px solid #333;
+  position: relative;
+}
+
+.divider::after {
+  content: "END OF LINE";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #000; /* 背景が黒いことを想定 */
+  padding: 0 1.5rem;
+  font-size: 0.65rem;
+  color: #555;
+  letter-spacing: 0.2em;
+}
+
+.closing {
+  margin: 6rem 0 4rem;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 2;
+  color: #999;
+  font-style: italic;
+  animation: fadeIn 2s ease-out 1.2s both;
+}
+
+/* --- 6. モバイル最適化 --- */
+@media (max-width: 640px) {
+  .aboutTitle {
+    font-size: 2rem;
+    line-height: 1.2;
   }
-  .articleMain {
-    margin: -5rem 12px 6rem;
-    padding: 2.5rem 1.2rem;
+
+  .leadText {
+    font-size: 1.15rem;
+    margin: 3rem 0;
+    padding-left: 1rem;
   }
-  .aboutIntro {
-    padding: 20px;
-    font-size: 1rem;
+
+  .statement {
+    padding: 2rem 1.5rem;
+    font-size: 0.95rem;
   }
-  .logItem {
-    padding: 15px;
+
+  .skillGrid {
+    gap: 1.5rem;
+  }
+
+  .skillCard {
+    padding: 1.5rem;
+    box-shadow: 6px 6px 0px #1a1a1a;
+  }
+
+  /* スマホでのタップ時の反応 */
+  .skillCard:active {
+    transform: scale(0.98);
+    box-shadow: 2px 2px 0px #1a1a1a;
+    transition: 0.1s;
+  }
+
+  .divider {
+    margin: 4rem 0;
   }
 }
