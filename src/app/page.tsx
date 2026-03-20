@@ -50,6 +50,7 @@ export default async function Home() {
       <li><Link href="/about">About</Link></li> {/* ← ここに追加！ */}
       <li><Link href="/dx">DX</Link></li>
       <li><Link href="/contact">Contact</Link></li>
+      <li><Link href="/login" className={styles.adminLink}>Dashboard</Link></li>
     </ul>
   </nav>
 </header>
