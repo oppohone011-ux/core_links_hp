@@ -43,8 +43,8 @@ export default function DashboardPage() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.welcomeText}>こんにちは！</h1>
-        <p className={styles.subText}>今日の予定を確認しましょう</p>
+        <h1 className={styles.welcomeText}>CORELINKS</h1>
+        <p className={styles.subText}>直感的に形にしましょう。</p>
       </header>
 
       <div className={styles.menuGrid}>
