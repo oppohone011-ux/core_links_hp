@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { supabase } from '../../libs/supabase' // 修正しました
+import { supabase } from '../../libs/supabase'
 import { useRouter } from 'next/navigation'
 import styles from './Login.module.css'
 
@@ -17,13 +17,21 @@ export default function LoginPage() {
     setError(null)
     setLoading(true)
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password })
 
-    if (error) {
-      setError('メールアドレスまたはパスワードが正しくありません。')
+      if (error) {
+        setError('メールアドレスまたはパスワードが正しくありません。')
+        setLoading(false)
+      } else {
+        // --- 修正箇所：遷移先をダッシュボードに変更 ---
+        router.push('/dashboard')
+        // Next.jsの仕様で、たまに画面遷移が遅れることがあるので
+        // 念のためloadingを戻さずそのままにします
+      }
+    } catch (err) {
+      setError('予期せぬエラーが発生しました。')
       setLoading(false)
-    } else {
-      router.push('/db-test')
     }
   }
 
@@ -32,8 +40,22 @@ export default function LoginPage() {
       <div className={styles.card}>
         <h2 className={styles.logoText}>COALINX <span className={styles.logoSub}>ADMIN</span></h2>
         <form onSubmit={handleLogin}>
-          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className={styles.input} />
-          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required className={styles.input} />
+          <input 
+            type="email" 
+            placeholder="Email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            required 
+            className={styles.input} 
+          />
+          <input 
+            type="password" 
+            placeholder="Password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+            className={styles.input} 
+          />
           {error && <p className={styles.error}>{error}</p>}
           <button type="submit" disabled={loading} className={styles.button}>
             {loading ? '認証中...' : 'ログイン'}

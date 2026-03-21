@@ -1,0 +1,109 @@
+.container {
+  min-height: 100vh;
+  background-color: #f7fafc;
+  padding: 40px 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.header {
+  max-width: 900px;
+  margin: 0 auto 40px;
+}
+
+.welcomeText {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2d3748;
+  margin-bottom: 8px;
+}
+
+.subText {
+  color: #718096;
+  font-size: 16px;
+}
+
+.menuGrid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+/* スマホ対応：画面が狭いときは1列に */
+@media (max-width: 500px) {
+  .menuGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.menuCard {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  position: relative;
+}
+
+.menuCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: #e2e8f0;
+}
+
+.iconWrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.cardInfo {
+  flex-grow: 1;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a202c;
+  margin: 0 0 4px 0;
+}
+
+.cardDesc {
+  font-size: 14px;
+  color: #718096;
+  margin: 0;
+}
+
+.arrow {
+  color: #cbd5e0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.menuCard:hover .arrow {
+  color: #4a90e2;
+}
+
+/* 以前お渡ししたCSSに追加・修正 */
+.arrowWrapper {
+  color: #cbd5e1;
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+
+.menuCard:hover .arrowIcon {
+  color: #4A90E2;
+  transform: translateX(5px); /* ホバーした時に少し右に動く */
+}
