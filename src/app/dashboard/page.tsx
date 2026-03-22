@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import styles from "./dashboard.module.css";
-// FaChevronRight（右矢印アイコン）を追加で読み込み
-import { FaTasks, FaWallet, FaChartBar, FaCog, FaChevronRight } from "react-icons/fa";
+// FaSyncAlt を追加、FaChartBar は使わないので削除
+import { FaTasks, FaWallet, FaSyncAlt, FaCog, FaChevronRight } from "react-icons/fa";
 
 export default function DashboardPage() {
   const menuItems = [
@@ -10,7 +10,7 @@ export default function DashboardPage() {
       id: 1,
       title: "タスクマネージャー",
       description: "ToDo管理やスケジュールの確認",
-      path: "/db-test", // src/app/db-test/ に対応
+      path: "/db-test",
       icon: <FaTasks />,
       color: "#4A90E2",
     },
@@ -18,23 +18,23 @@ export default function DashboardPage() {
       id: 2,
       title: "支払い管理",
       description: "音声入力での支出管理と分析",
-      path: "/payments", // src/app/payments/ に対応
+      path: "/payments",
       icon: <FaWallet />,
       color: "#48BB78",
     },
     {
       id: 3,
-      title: "データ分析",
-      description: "月ごとの統計レポートを表示",
-      path: "/payments", // 暫定的に支払い管理へ
-      icon: <FaChartBar />,
+      title: "サブスク管理", // タイトル変更
+      description: "継続サービスの支払いや解約を管理", // 説明変更
+      path: "/subscriptions", // 作成したサブスク管理のパスへ（適宜修正してください）
+      icon: <FaSyncAlt />, // アイコンを更新アイコンへ
       color: "#ED8936",
     },
     {
       id: 4,
       title: "設定",
       description: "アカウントとアプリの基本設定",
-      path: "/settings", // 今後作成する用
+      path: "/settings",
       icon: <FaCog />,
       color: "#718096",
     },
