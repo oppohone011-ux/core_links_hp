@@ -129,7 +129,7 @@ export default function Page() {
           onClick={handleAddNew}
           style={{ background: '#333', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', fontSize: '14px' }}
         >
-          ＋ 新規サブスクを追加
+          ＋ 新規追加
         </button>
       </div>
 
