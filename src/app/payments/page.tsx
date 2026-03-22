@@ -132,9 +132,14 @@ export default function PaymentsPage() {
     } catch (e) { setStatus("❌ 保存失敗"); }
   };
 
-  /// --- 修正点：更新処理 ---
+ // --- 更新処理（爆速版：楽観的更新） ---
   const handleUpdate = async (id: string, updatedData: any) => {
-    setStatus("🔄 更新中..."); // ステータス表示を切り替え
+    // 【1】まず手元のデータを更新（これでグラフやリストが即座に動く）
+    setDbRecords(prev => prev.map(rec => 
+      rec.id === id ? { ...rec, ...updatedData, amount: Number(updatedData.amount) } : rec
+    ));
+
+    setStatus("🔄 更新中..."); 
     try {
       const res = await fetch("/api/payments", {
         method: "PATCH",
@@ -152,26 +157,43 @@ export default function PaymentsPage() {
 
       const result = await res.json();
       if (result.success) {
-        await fetchRecords(); // データを再読み込み
-        setStatus("✅ 更新しました！"); // 成功メッセージを表示
-        
-        // 3秒後に元の表示に戻す
-        setTimeout(() => setStatus("待機中"), 3000);
+        // 【2】成功時は fetchRecords() を呼ばない！
+        setStatus("✅ 更新完了"); 
+        setTimeout(() => setStatus("待機中"), 1500);
       } else {
-        setStatus("❌ 更新に失敗しました");
+        // 失敗した時だけDBから最新を取って戻す
+        fetchRecords();
+        setStatus("❌ 更新失敗");
       }
     } catch (e) { 
-      setStatus("❌ エラーが発生しました");
-      console.error(e);
+      fetchRecords();
+      setStatus("❌ エラー");
     }
   };
 
+  // --- 削除処理（爆速版：楽観的更新） ---
   const handleDelete = async (id: string) => {
     if (!confirm("削除しますか？")) return;
+
+    // 【1】まず画面から消す（ユーザーを待たせない）
+    setDbRecords(prev => prev.filter(rec => rec.id !== id));
+    
+    setStatus("🗑️ 削除中...");
     try {
       const res = await fetch(`/api/payments?id=${id}`, { method: "DELETE" });
-      if ((await res.json()).success) fetchRecords();
-    } catch (e) { alert("削除失敗"); }
+      const result = await res.json();
+      if (result.success) {
+        setStatus("✅ 削除完了");
+        setTimeout(() => setStatus("待機中"), 1500);
+      } else {
+        // 失敗したら復活させる
+        fetchRecords();
+        alert("削除に失敗しました");
+      }
+    } catch (e) {
+      fetchRecords();
+      setStatus("❌ 削除失敗");
+    }
   };
 
   // --- 修正点：入力中の値を即座にステートに反映させる ---
