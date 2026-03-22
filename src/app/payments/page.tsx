@@ -23,18 +23,29 @@ export default function PaymentsPage() {
 
   useEffect(() => { fetchRecords(); }, []);
 
-  // --- 年間推移の集計 (1月〜12月の固定表示) ---
+  // --- 年間推移の集計 (修正版：完了・未完了の積み上げ) ---
   const yearlyData = useMemo(() => {
     const months = [];
     const currentYear = new Date().getFullYear(); 
     for (let i = 0; i < 12; i++) {
       const mStr = `${currentYear}-${String(i + 1).padStart(2, '0')}`;
-      const total = dbRecords
-        .filter(r => r.due_date && String(r.due_date).startsWith(mStr))
+      const monthlyRecords = dbRecords.filter(r => r.due_date && String(r.due_date).startsWith(mStr));
+      
+      // 完了済みの合計
+      const completed = monthlyRecords
+        .filter(r => r.is_completed)
         .reduce((sum, r) => sum + Number(r.amount || 0), 0);
+      
+      // 未完了の合計
+      const pending = monthlyRecords
+        .filter(r => !r.is_completed)
+        .reduce((sum, r) => sum + Number(r.amount || 0), 0);
+
       months.push({
         name: `${i + 1}月`,
-        amount: total,
+        completed: completed, // 完了
+        pending: pending,     // 未完了
+        total: completed + pending, // ツールチップ用
         fullMonth: mStr
       });
     }
@@ -197,31 +208,31 @@ export default function PaymentsPage() {
         </section>
       )}
 
-      {/* グラフ */}
+      {/* グラフセクション：テキストラベルを削除 */}
       <section className={styles.chartSection}>
         <h2 className={styles.sectionHeading}>📈 年間支払い推移</h2>
-        <div style={{ width: '100%', height: 220, marginTop: '20px' }}>
+        <div style={{ width: '100%', height: 250, marginTop: '20px' }}>
           <ResponsiveContainer>
             <BarChart data={yearlyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
               <XAxis dataKey="name" fontSize={12} tickLine={false} axisLine={false} />
-              <YAxis fontSize={12} tickLine={false} axisLine={false} />
+              <YAxis fontSize={12} tickLine={false} axisLine={false} tickFormatter={(val) => `${val/1000}k`} />
               <Tooltip 
                 cursor={{fill: '#f1f5f9'}}
                 contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
-                formatter={(value) => [`${Number(value).toLocaleString()} 円`, '合計']}
+                formatter={(value, name) => {
+                  const label = name === "completed" ? "完了済み" : "未完了";
+                  return [`${Number(value).toLocaleString()} 円`, label];
+                }}
               />
-              <Bar dataKey="amount" radius={[6, 6, 0, 0]}>
-                {yearlyData.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={entry.fullMonth === selectedMonth ? '#3182ce' : '#cbd5e0'} 
-                  />
-                ))}
-              </Bar>
+              {/* 未完了（赤） */}
+              <Bar dataKey="pending" stackId="a" fill="#f56565" radius={[4, 4, 0, 0]} />
+              {/* 完了済み（緑） */}
+              <Bar dataKey="completed" stackId="a" fill="#48bb78" radius={[0, 0, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
+        {/* ここにあった凡例の div を削除しました */}
       </section>
 
       {/* レポート */}
