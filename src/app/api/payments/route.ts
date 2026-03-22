@@ -82,13 +82,22 @@ export async function POST(req: Request) {
   }
 }
 
-// --- 3. ステータス更新 (PATCH) ---
+// --- 3. ステータス・内容更新 (PATCH) ---
 export async function PATCH(req: Request) {
   try {
-    const { id, is_completed } = await req.json();
+    const body = await req.json();
+    const { id, content, amount, due_date, payment_method, bank_account, is_completed } = body;
+
     const { data, error } = await supabase
       .from('payments')
-      .update({ is_completed })
+      .update({ 
+        content, 
+        amount: Number(amount), // 確実に数値として保存
+        due_date, 
+        payment_method, 
+        bank_account, 
+        is_completed 
+      })
       .eq('id', id)
       .select();
 

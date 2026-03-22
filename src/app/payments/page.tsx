@@ -121,8 +121,9 @@ export default function PaymentsPage() {
     } catch (e) { setStatus("❌ 保存失敗"); }
   };
 
-  // --- 修正点：更新処理 ---
+  /// --- 修正点：更新処理 ---
   const handleUpdate = async (id: string, updatedData: any) => {
+    setStatus("🔄 更新中..."); // ステータス表示を切り替え
     try {
       const res = await fetch("/api/payments", {
         method: "PATCH",
@@ -130,19 +131,28 @@ export default function PaymentsPage() {
         body: JSON.stringify({ 
           id, 
           content: updatedData.content,
-          amount: Number(updatedData.amount), // 数値に変換
+          amount: Number(updatedData.amount),
           due_date: updatedData.due_date,
           payment_method: updatedData.payment_method,
           bank_account: updatedData.bank_account,
           is_completed: updatedData.is_completed
         }),
       });
-      if ((await res.json()).success) {
-        fetchRecords();
+
+      const result = await res.json();
+      if (result.success) {
+        await fetchRecords(); // データを再読み込み
+        setStatus("✅ 更新しました！"); // 成功メッセージを表示
+        
+        // 3秒後に元の表示に戻す
+        setTimeout(() => setStatus("待機中"), 3000);
       } else {
-        alert("更新に失敗しました");
+        setStatus("❌ 更新に失敗しました");
       }
-    } catch (e) { alert("更新失敗"); }
+    } catch (e) { 
+      setStatus("❌ エラーが発生しました");
+      console.error(e);
+    }
   };
 
   const handleDelete = async (id: string) => {
