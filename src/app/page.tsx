@@ -2,6 +2,7 @@ import { client } from "@/libs/client";
 import styles from "./Home.module.css";
 import Link from "next/link"; 
 import type { Metadata } from 'next';
+import AdminLink from "./AdminLink";
 
 // --- SEO設定（Metadata） ---
 export const metadata: Metadata = {
@@ -57,7 +58,7 @@ export default async function Home() {
       <li><Link href="/about">About</Link></li>
       <li><Link href="/dx">DX</Link></li>
       <li><Link href="/contact">Contact</Link></li>
-      <li><Link href="/login" className={styles.adminLink}>Dashboard</Link></li>
+      <AdminLink /> {/* ←これに差し替える */}
     </ul>
   </nav>
 </header>
