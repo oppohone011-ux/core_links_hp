@@ -10,19 +10,21 @@ function AdminLinkContent() {
   const [showDashboard, setShowDashboard] = useState(false);
 
   useEffect(() => {
-    // 1. URLに合言葉があるかチェック
-    const isUrlAdmin = searchParams.get('mode') === 'admin_core111';
-    
-    // 2. ブラウザのメモリに「管理者フラグ」があるかチェック
-    const isStoredAdmin = localStorage.getItem('is_blog_admin') === 'true';
+    // 1. URLのパラメータをチェック
+    const mode = searchParams.get('mode');
 
-    if (isUrlAdmin) {
-      // 合言葉があれば、ブラウザに保存して表示する
+    if (mode === 'admin_core111') {
+      // 合言葉がある場合：管理者モードをONにして保存
       localStorage.setItem('is_blog_admin', 'true');
       setShowDashboard(true);
-    } else if (isStoredAdmin) {
-      // 合言葉がなくても、過去に保存されていれば表示する
-      setShowDashboard(true);
+    } else if (mode === 'logout') {
+      // 【追加】?mode=logout でアクセスすれば強制的に一般モードへ
+      localStorage.removeItem('is_blog_admin');
+      setShowDashboard(false);
+    } else {
+      // 合言葉がない場合：保存されているフラグに従う
+      const isStoredAdmin = localStorage.getItem('is_blog_admin') === 'true';
+      setShowDashboard(isStoredAdmin);
     }
   }, [searchParams]);
 
