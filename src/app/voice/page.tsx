@@ -12,7 +12,6 @@ export default function VoiceInputPage() {
   const [barData, setBarData] = useState<any[]>([]); 
   const [weekData, setWeekData] = useState<any[]>([]); 
   const [pieData, setPieData] = useState<any[]>([]); 
-  // 初期値を空文字で固定
   const [editData, setEditData] = useState({ location: "", item_name: "", amount: 0 });
   
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -70,16 +69,34 @@ export default function VoiceInputPage() {
     recognition.onstart = () => setIsListening(true);
     recognition.onresult = (e: any) => {
       const text = e.results[0][0].transcript;
-      const amount = text.match(/(\d+)/) ? parseInt(text.match(/(\d+)/)[0]) : 0;
-      setEditData({ ...editData, item_name: text.replace(/\d+円?/, "").trim(), amount: amount });
+      const amountMatch = text.match(/(\d+)/);
+      const amount = amountMatch ? parseInt(amountMatch[0]) : 0;
+      setEditData(prev => ({ ...prev, item_name: text.replace(/\d+円?/, "").trim(), amount: amount }));
       setIsListening(false);
     };
     recognition.start();
   };
 
+  // 修正済みのhandleSave
   const handleSave = async () => {
     if (!editData.item_name || !editData.amount) return;
-    await supabase.from("payment_logs").insert([editData]);
+
+    // raw_text を空文字で追加して DB エラーを回避
+    const payload = {
+      location: editData.location || "",
+      item_name: editData.item_name,
+      amount: Number(editData.amount),
+      raw_text: "" 
+    };
+
+    const { error } = await supabase.from("payment_logs").insert([payload]);
+
+    if (error) {
+      console.error("保存失敗:", error.message);
+      alert("保存に失敗しました: " + error.message);
+      return;
+    }
+
     fetchData();
     setEditData({ location: "", item_name: "", amount: 0 });
   };
@@ -88,7 +105,6 @@ export default function VoiceInputPage() {
     setEditingId(log.id);
     const date = new Date(log.created_at);
     const localDateTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-    // 全ての項目に || "" を適用して null を防ぐ
     setTempEdit({ 
       ...log, 
       location: log.location || "", 
@@ -99,11 +115,15 @@ export default function VoiceInputPage() {
 
   const handleUpdate = async () => {
     if (!tempEdit || !tempEdit.item_name || !tempEdit.amount) return;
-    const { id, ...updateData } = tempEdit;
+    const { id, created_at, location, item_name, amount } = tempEdit;
+    
     await supabase.from("payment_logs").update({
-      ...updateData,
-      created_at: new Date(tempEdit.created_at).toISOString()
+      location,
+      item_name,
+      amount: Number(amount),
+      created_at: new Date(created_at).toISOString()
     }).eq("id", id);
+    
     setEditingId(null);
     fetchData();
   };
