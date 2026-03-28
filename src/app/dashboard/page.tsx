@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import styles from "./dashboard.module.css";
-// FaSyncAlt を追加、FaChartBar は使わないので削除
-import { FaTasks, FaWallet, FaSyncAlt, FaCog, FaChevronRight } from "react-icons/fa";
+// FaShieldAlt (禁煙用) を追加
+import { FaTasks, FaWallet, FaSyncAlt, FaCog, FaChevronRight, FaShieldAlt } from "react-icons/fa";
 
 export default function DashboardPage() {
   const menuItems = [
@@ -24,14 +24,22 @@ export default function DashboardPage() {
     },
     {
       id: 3,
-      title: "サブスク管理", // タイトル変更
-      description: "継続サービスの支払いや解約を管理", // 説明変更
-      path: "/subscriptions", // 作成したサブスク管理のパスへ（適宜修正してください）
-      icon: <FaSyncAlt />, // アイコンを更新アイコンへ
-      color: "#ED8936",
+      title: "禁煙バイオモニター", // 新規追加
+      description: "健康回復度と節約資金のリアルタイム監視",
+      path: "/kinen-savings",
+      icon: <FaShieldAlt />,
+      color: "#00ffaa", // 禁煙アプリのメインカラーに合わせました
     },
     {
       id: 4,
+      title: "サブスク管理",
+      description: "継続サービスの支払いや解約を管理",
+      path: "/subscriptions",
+      icon: <FaSyncAlt />,
+      color: "#ED8936",
+    },
+    {
+      id: 5,
       title: "設定",
       description: "アカウントとアプリの基本設定",
       path: "/settings",

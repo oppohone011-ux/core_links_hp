@@ -1,0 +1,161 @@
+/* page.module.css */
+.container {
+  padding: 2rem 1rem;
+  text-align: center;
+  background: #050505;
+  color: #fff;
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wrapper {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.header {
+  font-size: 0.8rem;
+  color: #666;
+  letter-spacing: 0.3rem;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+
+.card {
+  background: #111;
+  padding: 1.5rem;
+  border-radius: 20px;
+  border: 1px solid #222;
+  margin-bottom: 1.5rem;
+}
+
+/* 歩く人のアニメーション */
+@keyframes walk {
+  /* scaleX(-1) を維持したまま、上下の揺れと回転を加える */
+  0%, 100% { transform: scaleX(-1) translateY(0) rotate(-5deg); }
+  50% { transform: scaleX(-1) translateY(-4px) rotate(5deg); }
+}
+
+.walkingArea {
+  width: 100%;
+  height: 50px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.walkingPerson {
+  display: inline-block;
+  font-size: 2rem;
+  animation: walk 0.6s infinite ease-in-out;
+  position: absolute;
+  bottom: 10px;
+  transition: left 1s ease-out;
+  
+  /* ★ アイコン自体を左右反転させて右（ゴール方向）を向かせる */
+  transform: scaleX(-1);
+}
+
+.progressLabelStart {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-size: 0.7rem;
+  color: #444;
+}
+
+.progressLabelEnd {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 1.2rem;
+}
+
+.progressBarTrack {
+  width: 100%;
+  height: 6px;
+  background: #222;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #3498db, #00ffaa);
+  transition: width 1s;
+}
+
+/* パラメーターセクション */
+.paramValueContainer {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.paramValue {
+  font-size: 5rem;
+  font-weight: 900;
+  color: #00ffaa;
+  line-height: 1;
+}
+
+.paramUnit {
+  font-size: 1.5rem;
+  color: #00ffaa;
+  margin-left: 5px;
+}
+
+.statusText {
+  margin-top: 15px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* 下部グリッド */
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.statBox {
+  background: #111;
+  padding: 1.2rem;
+  border-radius: 15px;
+  border: 1px solid #222;
+}
+
+.statLabel {
+  color: #666;
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.statValue {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.refreshBtn {
+  margin-top: 4rem;
+  background: none;
+  border: 1px solid #333;
+  color: #555;
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.refreshBtn:hover {
+  border-color: #666;
+  color: #888;
+}
+
+/* スマホ対応 */
+@media (max-width: 480px) {
+  .paramValue { font-size: 4rem; }
+  .statValue { font-size: 1.2rem; }
+  .walkingPerson { font-size: 1.6rem; }
+}

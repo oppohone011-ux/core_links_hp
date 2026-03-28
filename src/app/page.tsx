@@ -7,9 +7,10 @@ import AdminLink from "./AdminLink";
 // --- SEO設定（Metadata） ---
 export const metadata: Metadata = {
   metadataBase: new URL('https://core-links-hp.vercel.app'),
-  title: '気づけば高火力 器用ボンビーブログ | コアリンクス Corelinks Studio',
-  description: 'コアリンクス（Corelinks Studio）代表が送る、現場仕事からIT・システム開発までの記録。器用貧乏を突き詰めて「高火力」になった男の業務効率化ブログ。',
-  keywords: ['コアリンクス', 'Corelinks Studio', '業務効率化', 'システム開発', '器用貧乏', '高火力'],
+  // 「器用貧乏」を「マルチポテンシャル（多才）」と「実装（カタチにする力）」に変換
+  title: '直感の実装録 | Corelinks Studio', 
+  description: '現場のリアルからIT・システム開発まで。バラバラな経験を繋ぎ合わせ、高火力な仕組みへと昇華させるコアリンクス（Corelinks Studio）代表の思考と技術の記録。',
+  keywords: ['コアリンクス', 'Corelinks Studio', '業務効率化', 'システム開発', '福岡県','佐賀県','唐津市','DX', 'マルチポテンシャル', '高火力'],
   icons: {
     icon: [
       { url: '/icons/favicon.ico?v=1' },
@@ -20,15 +21,15 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: '気づけば高火力 器用ボンビーブログ | コアリンクス',
-    description: '皿洗いからシステム開発まで。コアリンクスが提案する「高火力」なマルチポテンシャルへの道。',
-    siteName: '気づけば高火力 器用ボンビーブログ',
+    title: '直感の実装録 | Corelinks Studio',
+    description: '皿洗いからシステム開発まで。あらゆる経験を「高火力」な武器に変える、マルチポテンシャルな生存戦略。',
+    siteName: '直感の実装録',
     images: [{ url: '/hed.gif' }],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: '気づけば高火力 器用ボンビーブログ | コアリンクス',
+    title: '直感の実装録 | Corelinks Studio',
     images: ['/hed.gif'],
   },
 };
@@ -84,7 +85,7 @@ export default async function Home() {
       {/* 3. コンテンツエリア */}
       <main className={styles.container}>
         {/* セクションタイトル */}
-        <h2 className={styles.sectionTitle}>直感の断片</h2>
+        <h2 className={styles.sectionTitle}>INDEX</h2>
         
         <div className={styles.categoryGrid}>
           {categoriesData.contents.map((category: any, index: number) => {
@@ -170,11 +171,19 @@ export default async function Home() {
 
       {/* 4. フッター：余白とタイポグラフィで魅せる */}
       <footer className={styles.footer}>
+        {/* 背景アニメーション用の要素を追加。これがないと動きません！ */}
+        <div className={styles.footerAnimateBg}>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
         <div className={styles.footerInner}>
           <div className={styles.footerBrand}>
             <div className={styles.footerLogo}>Corelinks Studio</div>
             <p className={styles.footerCatchphrase}>
-              器用貧乏を突き詰め、高火力な未来を実装する。
+              点と線を繋ぎ、高火力な未来を実装する。
             </p>
           </div>
           
