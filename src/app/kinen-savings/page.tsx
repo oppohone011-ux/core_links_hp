@@ -7,7 +7,8 @@ export default function KinenSavingsPage() {
   const [days, setDays] = useState<number | null>(null)
   const [savings, setSavings] = useState(0)
   const [loading, setLoading] = useState(true)
-  const DAILY_COST = 600 
+  
+  const DAILY_COST = 1200 
   const ANNUAL_GOAL_DAYS = 365;
 
   useEffect(() => {
@@ -40,7 +41,6 @@ export default function KinenSavingsPage() {
     fetchKinenData()
   }, [])
 
-  // 読み込み中は何も表示せず、背景（黒）のみにする
   if (loading) return null;
 
   const breathQuality = days ? Math.min(Math.floor((days / 7) * 100), 100) : 0
@@ -68,19 +68,15 @@ export default function KinenSavingsPage() {
               </p>
               <div className={styles.walkingArea}>
                 <span className={styles.progressLabelStart}>START</span>
-                
-                {/* 進行度に合わせてアイコンが進化 */}
                 <div className={styles.walkingPerson} style={{ left: `calc(${annualProgress}% - 1rem)` }}>
                   {annualProgress === 0 ? '💤' : 
-                   annualProgress < 5   ? '🚶‍♂️' : // 最初は徒歩
-                   annualProgress < 15  ? '🏃‍♂️' : // 慣れたらダッシュ
-                   annualProgress < 40  ? '🚲' : // 順調
-                   annualProgress < 80  ? '🚙💨' : // 愛車 X-Trailで爆走
-                   annualProgress < 100 ? '🚀' : // 完遂目前
+                   annualProgress < 5   ? '🚶‍♂️' : 
+                   annualProgress < 15  ? '🏃‍♂️' : 
+                   annualProgress < 40  ? '🚲' : 
+                   annualProgress < 80  ? '🚙💨' : 
+                   annualProgress < 100 ? '🚀' : 
                    '👑'} 
                 </div>
-
-                {/* ゴールアイコンを金貨に変更 */}
                 <span className={styles.progressLabelEnd}>💰</span>
               </div>
               <div className={styles.progressBarTrack}>
@@ -106,8 +102,16 @@ export default function KinenSavingsPage() {
                 <p className={styles.statValue}>{days}日目</p>
               </div>
               <div className={styles.statBox}>
-                <p className={styles.statLabel}>節約合計</p>
+                <p className={styles.statLabel}>回収資金</p>
                 <p className={styles.statValue} style={{ color: '#ffd700' }}>¥{savings.toLocaleString()}</p>
+                
+                {/* 節約効果のテキストを追加 */}
+                <div style={{ marginTop: '10px', borderTop: '1px solid #222', paddingTop: '8px' }}>
+                  <p style={{ fontSize: '0.65rem', color: '#666' }}>※タバコ・コーヒー代込</p>
+                  <p style={{ fontSize: '0.75rem', color: '#00ffaa', fontWeight: 'bold', marginTop: '2px' }}>
+                    1日 約¥{DAILY_COST.toLocaleString()}以上 節約中
+                  </p>
+                </div>
               </div>
             </div>
           </>
