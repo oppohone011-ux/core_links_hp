@@ -365,3 +365,14 @@
 .dateInput::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
+/* 既存の .chartRow の下に追加 */
+@media (max-width: 480px) {
+  .chartRow {
+    grid-template-columns: 1fr; /* スマホでは1列（縦並び）にする */
+  }
+  
+  .amount {
+    font-size: 2.8rem; /* 金額がデカすぎてはみ出すのを防ぐ */
+  }
+}
