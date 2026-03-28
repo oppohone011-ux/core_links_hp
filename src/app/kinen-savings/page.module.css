@@ -2,113 +2,123 @@
 .container {
   padding: 2rem 1rem;
   text-align: center;
-  background: #050505;
+  /* 深みのある漆黒のグラデーション */
+  background: radial-gradient(circle at top, #111 0%, #050505 100%);
   color: #fff;
   min-height: 100vh;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .wrapper {
-  max-width: 500px;
+  max-width: 480px;
   margin: 0 auto;
 }
 
 .header {
-  font-size: 0.8rem;
-  color: #666;
-  letter-spacing: 0.3rem;
-  margin-bottom: 3rem;
+  font-size: 0.75rem;
+  color: #00ffaa;
+  letter-spacing: 0.5rem;
+  margin-bottom: 2.5rem;
   text-transform: uppercase;
+  opacity: 0.8;
+  text-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
 }
 
 .card {
-  background: #111;
-  padding: 1.5rem;
-  border-radius: 20px;
-  border: 1px solid #222;
-  margin-bottom: 1.5rem;
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 1.8rem;
+  border-radius: 24px;
+  /* 上から光が当たっているような細い境界線 */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 1.2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* 歩く人のアニメーション */
-@keyframes walk {
-  /* scaleX(-1) を維持したまま、上下の揺れと回転を加える */
-  0%, 100% { transform: scaleX(-1) translateY(0) rotate(-5deg); }
-  50% { transform: scaleX(-1) translateY(-4px) rotate(5deg); }
+/* NEXT DATA SYNC セクション */
+.updateBarContainer p {
+  font-family: monospace;
+  letter-spacing: 0.1rem;
 }
 
+/* 歩く人のエリア */
 .walkingArea {
   width: 100%;
-  height: 50px;
+  height: 60px;
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  /* 道のようなライン */
+  border-bottom: 1px dashed #222;
+}
+
+@keyframes walk {
+  0%, 100% { transform: scaleX(-1) translateY(0) rotate(-8deg); }
+  50% { transform: scaleX(-1) translateY(-6px) rotate(8deg); }
 }
 
 .walkingPerson {
   display: inline-block;
-  font-size: 2rem;
-  animation: walk 0.6s infinite ease-in-out;
+  font-size: 2.2rem;
+  animation: walk 0.7s infinite ease-in-out;
   position: absolute;
-  bottom: 10px;
-  transition: left 1s ease-out;
-  
-  /* ★ アイコン自体を左右反転させて右（ゴール方向）を向かせる */
+  bottom: 5px;
+  transition: left 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scaleX(-1);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
 }
 
-.progressLabelStart {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  font-size: 0.7rem;
-  color: #444;
-}
-
-.progressLabelEnd {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  font-size: 1.2rem;
-}
-
+/* プログレスバーを「計測器」風に */
 .progressBarTrack {
   width: 100%;
-  height: 6px;
-  background: #222;
-  border-radius: 3px;
+  height: 4px;
+  background: #1a1a1a;
+  border-radius: 2px;
   overflow: hidden;
+  position: relative;
 }
 
 .progressBarFill {
   height: 100%;
-  background: linear-gradient(90deg, #3498db, #00ffaa);
-  transition: width 1s;
+  background: linear-gradient(90deg, #0066ff, #00ffaa);
+  box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
+  transition: width 1.5s ease-in-out;
 }
 
-/* パラメーターセクション */
+/* パラメーターメイン数値 */
 .paramValueContainer {
   display: flex;
   align-items: baseline;
   justify-content: center;
+  margin: 1rem 0;
 }
 
 .paramValue {
-  font-size: 5rem;
+  font-size: 5.5rem;
   font-weight: 900;
   color: #00ffaa;
   line-height: 1;
+  letter-spacing: -2px;
+  /* ネオン発光 */
+  text-shadow: 0 0 20px rgba(0, 255, 170, 0.4);
 }
 
 .paramUnit {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #00ffaa;
-  margin-left: 5px;
+  margin-left: 8px;
+  font-weight: 300;
 }
 
 .statusText {
-  margin-top: 15px;
-  color: #fff;
-  font-weight: bold;
-  font-size: 0.9rem;
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(0, 255, 170, 0.1);
+  border: 1px solid rgba(0, 255, 170, 0.2);
+  border-radius: 4px;
+  color: #00ffaa;
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
 }
 
 /* 下部グリッド */
@@ -119,43 +129,129 @@
 }
 
 .statBox {
-  background: #111;
-  padding: 1.2rem;
-  border-radius: 15px;
-  border: 1px solid #222;
+  background: rgba(30, 30, 30, 0.4);
+  padding: 1.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .statLabel {
-  color: #666;
-  font-size: 0.75rem;
-  margin-bottom: 0.5rem;
+  color: #555;
+  font-size: 0.7rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.1rem;
 }
 
 .statValue {
-  font-size: 1.4rem;
-  font-weight: bold;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #eee;
 }
 
 .refreshBtn {
-  margin-top: 4rem;
-  background: none;
-  border: 1px solid #333;
-  color: #555;
-  padding: 10px 24px;
-  border-radius: 30px;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: 0.3s;
+  margin-top: 5rem;
+  background: transparent;
+  border: 1px solid #222;
+  color: #444;
+  padding: 12px 32px;
+  border-radius: 40px;
+  font-size: 0.7rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  transition: all 0.4s;
 }
 
 .refreshBtn:hover {
-  border-color: #666;
-  color: #888;
+  border-color: #444;
+  color: #00ffaa;
+  background: rgba(0, 255, 170, 0.05);
 }
 
 /* スマホ対応 */
 @media (max-width: 480px) {
-  .paramValue { font-size: 4rem; }
-  .statValue { font-size: 1.2rem; }
-  .walkingPerson { font-size: 1.6rem; }
+  .paramValue { font-size: 4.5rem; }
+  .statValue { font-size: 1.3rem; }
+  .card { padding: 1.5rem 1rem; }
+}
+
+/* --- 追加：フェーズ表示用スタイル --- */
+
+.phaseLabel {
+  font-size: 0.65rem;
+  font-family: 'Courier New', Courier, monospace; /* プログラミング風フォント */
+  letter-spacing: 0.2rem;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+  display: block;
+}
+
+.phaseMsg {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #fff;
+  text-align: left;
+  margin: 0;
+}
+
+.successBadge {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.checkIcon {
+  color: #00ffaa;
+  font-size: 0.8rem;
+  background: rgba(0, 255, 170, 0.1);
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  text-shadow: 0 0 5px rgba(0, 255, 170, 0.8);
+}
+
+.todayTarget {
+  font-size: 0.65rem;
+  color: #00ffaa;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  margin-left: auto; /* 右寄せ */
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* --- 既存スタイルの調整（よりシャープに） --- */
+
+.statBox {
+  background: rgba(20, 20, 20, 0.4);
+  padding: 1.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  /* 内側に少し光を当てる */
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.statValue {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #eee;
+  font-variant-numeric: tabular-nums; /* 数字の幅を一定にする */
+}
+
+/* 更新バーを細く、より精密な印象に */
+.updateBarContainer p {
+  font-size: 0.6rem !important;
+  color: #444 !important;
+  margin-bottom: 6px !important;
 }
