@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import styles from "./dashboard.module.css";
-// FaShieldAlt (禁煙用) を追加
-import { FaTasks, FaWallet, FaSyncAlt, FaCog, FaChevronRight, FaShieldAlt } from "react-icons/fa";
+// ぽけっとログ用に FaMicrophone を追加
+import { FaTasks, FaWallet, FaSyncAlt, FaCog, FaChevronRight, FaShieldAlt, FaMicrophone } from "react-icons/fa";
 
 export default function DashboardPage() {
   const menuItems = [
@@ -16,22 +16,30 @@ export default function DashboardPage() {
     },
     {
       id: 2,
-      title: "支払い管理",
-      description: "音声入力での支出管理と分析",
+      title: "ぽけっとログ", // 新しく独立させて追加
+      description: "爆速音声入力で支出を記録",
+      path: "/voice",
+      icon: <FaMicrophone />, 
+      color: "#22c55e", // ぽけっとログのテーマカラー
+    },
+    {
+      id: 3,
+      title: "禁煙バイオモニター",
+      description: "健康回復度と節約資金のリアルタイム監視",
+      path: "/kinen-savings",
+      icon: <FaShieldAlt />,
+      color: "#00ffaa",
+    },
+    {
+      id: 4,
+      title: "支払い管理", // 既存の管理画面
+      description: "総合的な支出管理と詳細分析",
       path: "/payments",
       icon: <FaWallet />,
       color: "#48BB78",
     },
     {
-      id: 3,
-      title: "禁煙バイオモニター", // 新規追加
-      description: "健康回復度と節約資金のリアルタイム監視",
-      path: "/kinen-savings",
-      icon: <FaShieldAlt />,
-      color: "#00ffaa", // 禁煙アプリのメインカラーに合わせました
-    },
-    {
-      id: 4,
+      id: 5,
       title: "サブスク管理",
       description: "継続サービスの支払いや解約を管理",
       path: "/subscriptions",
@@ -39,7 +47,7 @@ export default function DashboardPage() {
       color: "#ED8936",
     },
     {
-      id: 5,
+      id: 6,
       title: "設定",
       description: "アカウントとアプリの基本設定",
       path: "/settings",
