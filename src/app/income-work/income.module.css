@@ -1,0 +1,465 @@
+/* 全体レイアウト */
+.container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 16px;
+}
+
+.header, .main {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* ヘッダー */
+.header {
+  position: relative;
+  margin-bottom: 24px;
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+}
+
+/* --- 23行目あたりの .title をこれに差し替え --- */
+.title {
+  font-family: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif; /* モダンなフォントを指定 */
+  font-size: 1.75rem;          /* 少し大きく */
+  font-weight: 900;            /* 圧倒的な太さで信頼感を */
+  letter-spacing: -0.04em;     /* 字間をギュッと詰めるのが今のトレンド */
+  margin: 0;
+  line-height: 1.2;
+
+  /* 文字をグラデーションにする魔法（任意で！） */
+  background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.backLink {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: white;
+  color: #64748b;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.backLink:hover {
+  background-color: #f1f5f9;
+  color: #1e293b;
+  transform: translateY(-1px);
+}
+
+/* 3連サマリーカード */
+.summaryGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .summaryGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  padding: 20px;
+  border-radius: 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.totalCard { background: linear-gradient(135deg, #10b981, #059669); }
+.flCard { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.partCard { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+
+.cardLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.cardAmount {
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+/* グラフセクション */
+.chartSection {
+  background: white;
+  border-radius: 24px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.sectionTitle {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #64748b;
+  margin-bottom: 16px;
+  display: block;
+}
+
+/* ボタン */
+.buttonGrid {
+  margin-bottom: 32px;
+}
+
+.primaryBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: #1e293b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(30, 41, 59, 0.2);
+}
+
+.primaryBtn:active { transform: scale(0.96); }
+
+/* モーダル */
+.modalOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 24px 24px 0 0;
+  padding: 32px 24px;
+  animation: slideUp 0.3s ease-out;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modalHeader h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.modalHeader button {
+  background: #f1f5f9;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+/* フォーム */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.formGroup input, 
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #f1f5f9;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  font-size: 1rem;
+  transition: all 0.2s;
+  color: #1e293b;
+  font-family: inherit;
+}
+
+.formGroup textarea {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.formGroup input:focus, 
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.submitBtn {
+  margin-top: 12px;
+  padding: 16px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+
+/* 履歴リスト */
+.listSection {
+  background: white;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.listItem:hover {
+  background-color: #fcfdfe;
+}
+
+.itemInfo {
+  flex: 1;
+  padding-right: 16px;
+}
+
+.itemTitle {
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.itemDate {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.itemMemo {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 8px;
+  padding: 6px 12px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border-left: 3px solid #cbd5e1;
+  line-height: 1.4;
+}
+
+.itemValue {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.itemPrice {
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.badge, .companyBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.badge { background: #f1f5f9; color: #64748b; }
+.companyBadge { background: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
+
+/* 共通アニメーション・その他 */
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  color: #94a3b8;
+}
+
+.spin {
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (min-width: 768px) {
+  .container { padding: 40px 20px; }
+  .modalOverlay {
+    align-items: center;
+    padding: 20px;
+  }
+  .modal {
+    border-radius: 28px;
+    animation: fadeIn 0.2s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deleteBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* --- 既存のListItem周りを以下に差し替え・追加 --- */
+
+/* フリーランスとバイトの左ボーダー色分け */
+.listItemFreelance {
+  border-left: 5px solid #3b82f6; /* 青 */
+}
+
+.listItemPartTime {
+  border-left: 5px solid #8b5cf6; /* 紫 */
+}
+
+/* 完了ステータスのスタイル */
+.completed {
+  opacity: 0.6;
+}
+
+.completed .itemTitle,
+.completed .itemPrice {
+  text-decoration: line-through; /* 打ち消し線 */
+  color: #94a3b8;
+}
+
+/* ステータスバッジ */
+.statusBadge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-left: 8px;
+}
+
+.statusPending {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.statusDone {
+  background-color: #d1fae5;
+  color: #059669;
+}
+
+/* チェックボックスのカスタムスタイル */
+.statusCheck {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  cursor: pointer;
+  accent-color: #10b981;
+}
+
+/* --- 履歴リスト内の配置調整 --- */
+
+.listItem {
+  display: flex;
+  align-items: center; /* 上端ではなく中央で揃える */
+  padding: 20px 16px;  /* 内側に少し余裕を持たせる */
+  /* ...既存のスタイル... */
+}
+
+.statusToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px; /* ★ここで文字との距離をしっかり確保 */
+  cursor: pointer;
+  flex-shrink: 0;    /* 画面が狭くなっても潰れないように固定 */
+}
+
+/* ついでにタイトル周りの微調整 */
+.itemTitle {
+  font-family: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;          /* バッジ同士の隙間も少し広げる */
+  line-height: 1.4;
+}

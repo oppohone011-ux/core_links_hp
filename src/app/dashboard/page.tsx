@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   FaTasks, FaWallet, FaSyncAlt, FaCog, 
-  FaChevronRight, FaShieldAlt, FaMicrophone 
+  FaChevronRight, FaShieldAlt, FaMicrophone,
+  FaCalculator, FaChartLine, FaStore // 新規アイコン
 } from "react-icons/fa";
 import styles from "./dashboard.module.css";
 
@@ -28,10 +29,12 @@ export default function DashboardPage() {
   const menuItems = [
     { id: 1, title: "タスクマネージャー", description: "ToDo管理やスケジュールの確認", path: "/db-test", icon: <FaTasks />, color: "#4A90E2" },
     { id: 2, title: "ぽけっとログ", description: "爆速音声入力で支出を記録", path: "/voice", icon: <FaMicrophone />, color: "#22c55e" },
-    { id: 3, title: "禁煙バイオモニター", description: "健康回復度と節約資金のリアルタイム監視", path: "/kinen-savings", icon: <FaShieldAlt />, color: "#00ffaa" },
-    { id: 4, title: "支払い管理", description: "総合的な支出管理と詳細分析", path: "/payments", icon: <FaWallet />, color: "#48BB78" },
-    { id: 5, title: "サブスク管理", description: "継続サービスの支払いや解約を管理", path: "/subscriptions", icon: <FaSyncAlt />, color: "#ED8936" },
-    { id: 6, title: "設定", description: "アカウントとアプリの基本設定", path: "/settings", icon: <FaCog />, color: "#718096" },
+    { id: 3, title: "禁煙バイオモニター", description: "健康回復度と節約資金の監視", path: "/kinen-savings", icon: <FaShieldAlt />, color: "#00ffaa" },
+    { id: 4, title: "収入管理 (バイト/FL)", description: "時給計算とフリーランス報酬の記録", path: "/income-work", icon: <FaCalculator />, color: "#48BB78" },
+    { id: 5, title: "事業収益分析", description: "中長期的な事業売上と利益の可視化", path: "/business-revenue", icon: <FaChartLine />, color: "#805AD5" },
+    { id: 6, title: "支出・サブスク", description: "支払い管理と固定費の最適化", path: "/payments", icon: <FaSyncAlt />, color: "#ED8936" },
+    { id: 7, title: "案件・マーケット", description: "外部プラットフォームのトレンド分析", path: "/market-mining", icon: <FaStore />, color: "#F56565" },
+    { id: 8, title: "設定", description: "アカウントとアプリの基本設定", path: "/settings", icon: <FaCog />, color: "#718096" },
   ];
 
   return (
