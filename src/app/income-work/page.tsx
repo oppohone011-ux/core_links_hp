@@ -3,11 +3,10 @@
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { 
-  FaChevronLeft, FaPlus, FaSpinner, FaTimes, FaTrashAlt, FaCheckCircle, FaRegCircle 
+  FaChevronLeft, FaPlus, FaSpinner, FaTimes, FaTrashAlt, FaCheckCircle, 
+  FaRegCircle, FaWallet, FaChartPie, FaCalendarAlt, FaBuilding, FaClock, FaStickyNote
 } from "react-icons/fa";
-import { 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend 
-} from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { supabase } from "@/libs/supabase";
 import styles from "./income.module.css";
 
@@ -20,8 +19,12 @@ interface IncomeRecord {
   amount: number;
   hourly_rate?: number | null;
   work_hours?: number | null;
+  start_time?: string | null;
+  end_time?: string | null;
+  break_minutes?: number | null;
+  transport_fees?: number | null;
   memo: string | null;
-  is_completed: boolean; // ★追加
+  is_completed: boolean;
 }
 
 export default function IncomeWorkPage() {
@@ -40,8 +43,12 @@ export default function IncomeWorkPage() {
     amount: "",
     hourlyRate: "",
     hours: "",
+    startTime: "",
+    endTime: "",
+    breakMinutes: "0",
+    transportFees: "0",
     memo: "",
-    is_completed: false // ★追加
+    is_completed: false
   };
   
   const [formData, setFormData] = useState(initialForm);
@@ -68,7 +75,6 @@ export default function IncomeWorkPage() {
     fetchRecords();
   }, []);
 
-  // ステータス更新（チェックボックス用）
   const toggleStatus = async (id: string, currentStatus: boolean) => {
     try {
       const { error } = await supabase
@@ -76,41 +82,53 @@ export default function IncomeWorkPage() {
         .update({ is_completed: !currentStatus })
         .eq("id", id);
       if (error) throw error;
-      // ローカルの状態を更新
       setRecords(records.map(r => r.id === id ? { ...r, is_completed: !currentStatus } : r));
     } catch (err) {
       console.error("Status Update Error:", err);
     }
   };
 
-  // 時給計算
+  // 自動計算ロジック
   useEffect(() => {
-    if (formData.type === "バイト" && formData.hourlyRate && formData.hours) {
-      const calc = Math.floor(Number(formData.hourlyRate) * Number(formData.hours));
-      setFormData(prev => ({ ...prev, amount: calc.toString() }));
-    }
-  }, [formData.hourlyRate, formData.hours, formData.type]);
+    if (formData.type === "バイト" && formData.hourlyRate && formData.startTime && formData.endTime) {
+      const [sH, sM] = formData.startTime.split(':').map(Number);
+      const [eH, eM] = formData.endTime.split(':').map(Number);
+      const startTotal = sH * 60 + sM;
+      const endTotal = eH * 60 + eM;
+      const breakMin = Number(formData.breakMinutes) || 0;
+      const diffMin = endTotal - startTotal - breakMin;
+      const workHours = diffMin / 60;
 
-  // 集計
+      if (workHours > 0) {
+        const wage = Math.floor(Number(formData.hourlyRate) * workHours);
+        const total = wage + (Number(formData.transportFees) || 0);
+        setFormData(prev => ({ 
+          ...prev, 
+          hours: workHours.toFixed(2), 
+          amount: total.toString() 
+        }));
+      }
+    }
+  }, [formData.hourlyRate, formData.startTime, formData.endTime, formData.breakMinutes, formData.transportFees, formData.type]);
+
   const stats = useMemo(() => {
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
-
     const filtered = records.filter(r => {
       const d = new Date(r.date);
       return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
     });
-
     const fl = filtered.filter(r => r.type === "案件").reduce((s, r) => s + r.amount, 0);
     const part = filtered.filter(r => r.type === "バイト").reduce((s, r) => s + r.amount, 0);
-
-    const chart = [...records].reverse().slice(-10).map(r => ({
-      name: r.date.split('-').slice(1).join('/'),
-      "フリーランス": r.type === "案件" ? r.amount : 0,
-      "バイト": r.type === "バイト" ? r.amount : 0,
-    }));
-
-    return { total: fl + part, fl, part, chart };
+    return { 
+      total: fl + part, 
+      fl, 
+      part,
+      chartData: [
+        { name: '案件', value: fl, color: '#3b82f6' },
+        { name: 'バイト', value: part, color: '#8b5cf6' }
+      ].filter(d => d.value > 0)
+    };
   }, [records]);
 
   const handleEdit = (record: IncomeRecord) => {
@@ -123,16 +141,18 @@ export default function IncomeWorkPage() {
       amount: record.amount.toString(),
       hourlyRate: record.hourly_rate?.toString() || "",
       hours: record.work_hours?.toString() || "",
+      startTime: record.start_time || "",
+      endTime: record.end_time || "",
+      breakMinutes: record.break_minutes?.toString() || "0",
+      transportFees: record.transport_fees?.toString() || "0",
       memo: record.memo || "",
-      is_completed: record.is_completed // ★追加
+      is_completed: record.is_completed
     });
     setShowModal(true);
   };
 
   const handleDelete = async () => {
-    if (!editingId) return;
-    if (!confirm("この記録を削除しますか？")) return;
-
+    if (!editingId || !confirm("この記録を削除しますか？")) return;
     setIsSubmitting(true);
     try {
       const { error } = await supabase.from("income_records").delete().eq("id", editingId);
@@ -153,7 +173,6 @@ export default function IncomeWorkPage() {
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return alert("ログインが必要です");
-
       const payload = {
         user_id: session.user.id,
         date: formData.date,
@@ -163,10 +182,13 @@ export default function IncomeWorkPage() {
         amount: Number(formData.amount),
         hourly_rate: formData.type === "バイト" ? Number(formData.hourlyRate) : null,
         work_hours: formData.type === "バイト" ? Number(formData.hours) : null,
+        start_time: formData.type === "バイト" ? formData.startTime : null,
+        end_time: formData.type === "バイト" ? formData.endTime : null,
+        break_minutes: formData.type === "バイト" ? Number(formData.breakMinutes) : null,
+        transport_fees: formData.type === "バイト" ? Number(formData.transportFees) : null,
         memo: formData.memo,
-        is_completed: formData.is_completed // ★追加
+        is_completed: formData.is_completed
       };
-
       if (editingId) {
         const { error } = await supabase.from("income_records").update(payload).eq("id", editingId);
         if (error) throw error;
@@ -174,7 +196,6 @@ export default function IncomeWorkPage() {
         const { error } = await supabase.from("income_records").insert([payload]);
         if (error) throw error;
       }
-
       setShowModal(false);
       setEditingId(null);
       setFormData(initialForm);
@@ -186,12 +207,6 @@ export default function IncomeWorkPage() {
     }
   };
 
-  const openNewModal = () => {
-    setEditingId(null);
-    setFormData(initialForm);
-    setShowModal(true);
-  };
-
   if (!mounted) return null;
 
   return (
@@ -199,56 +214,65 @@ export default function IncomeWorkPage() {
       <header className={styles.header}>
         <h1 className={styles.title}>収入管理・分析</h1>
         <Link href="/dashboard" className={styles.backLink}>
-          <FaChevronLeft size={14} />
-          <span className={styles.backText}>戻る</span>
+          <FaChevronLeft size={14} /> <span>戻る</span>
         </Link>
       </header>
 
       <div className={styles.main}>
-        {/* サマリーカード */}
+        {/* サマリー */}
         <div className={styles.summaryGrid}>
           <div className={`${styles.card} ${styles.totalCard}`}>
-            <span className={styles.cardLabel}>今月の合計収入</span>
+            <span className={styles.cardLabel}>今月の合計</span>
             <span className={styles.cardAmount}>¥{stats.total.toLocaleString()}</span>
           </div>
           <div className={`${styles.card} ${styles.flCard}`}>
-            <span className={styles.cardLabel}>フリーランス案件</span>
+            <span className={styles.cardLabel}>案件</span>
             <span className={styles.cardAmount}>¥{stats.fl.toLocaleString()}</span>
           </div>
           <div className={`${styles.card} ${styles.partCard}`}>
-            <span className={styles.cardLabel}>バイト給与</span>
+            <span className={styles.cardLabel}>バイト</span>
             <span className={styles.cardAmount}>¥{stats.part.toLocaleString()}</span>
           </div>
         </div>
 
-        {/* グラフ */}
-        <section className={styles.chartSection}>
-          <h3 className={styles.sectionTitle}>収益の内訳推移</h3>
-          <div style={{ width: '100%', height: 250 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={stats.chart}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
-                <XAxis dataKey="name" fontSize={10} tickLine={false} axisLine={false} />
-                <YAxis fontSize={10} tickLine={false} axisLine={false} tickFormatter={(v) => `¥${v/1000}k`} />
-                <Tooltip cursor={{fill: '#f8fafc'}} contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}} />
-                <Legend iconType="circle" wrapperStyle={{fontSize: '12px', paddingTop: '10px'}} />
-                <Bar dataKey="フリーランス" stackId="a" fill="#3b82f6" />
-                <Bar dataKey="バイト" stackId="a" fill="#8b5cf6" />
-              </BarChart>
-            </ResponsiveContainer>
+        {/* グラフセクション */}
+        <div className={styles.chartSection}>
+          <span className={styles.sectionTitle}><FaChartPie /> 収入比率分析</span>
+          <div style={{ width: '100%', height: '180px' }}>
+            {stats.chartData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={stats.chartData}
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {stats.chartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            ) : (
+              <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '0.85rem' }}>
+                今月のデータがありません
+              </div>
+            )}
           </div>
-        </section>
-
-        <div className={styles.buttonGrid}>
-          <button className={styles.primaryBtn} onClick={openNewModal}>
-            <FaPlus /> 収入を記録
-          </button>
         </div>
 
-        <section className={styles.listSection}>
-          <h3 className={styles.sectionTitle}>最近の記録（ダブルクリックで編集）</h3>
+        <button className={styles.primaryBtn} onClick={() => { setEditingId(null); setFormData(initialForm); setShowModal(true); }}>
+          <FaPlus /> 収入を記録する
+        </button>
+
+        {/* 履歴リスト */}
+        <section className={styles.listSection} style={{ marginTop: '24px' }}>
+          <h3 className={styles.sectionTitle}>最近の記録</h3>
           {loading ? (
-            <div className={styles.loading}><FaSpinner className={styles.spin} /></div>
+            <div style={{ textAlign: 'center', padding: '40px' }}><FaSpinner className={styles.spin} /></div>
           ) : (
             <div className={styles.list}>
               {records.map((record) => (
@@ -261,20 +285,19 @@ export default function IncomeWorkPage() {
                   `} 
                   onDoubleClick={() => handleEdit(record)}
                 >
-                  {/* ステータスチェックボタン */}
                   <div className={styles.statusToggle} onClick={() => toggleStatus(record.id, record.is_completed)}>
-                    {record.is_completed ? <FaCheckCircle color="#10b981" size={20} /> : <FaRegCircle color="#cbd5e1" size={20} />}
+                    {record.is_completed ? <FaCheckCircle color="#10b981" size={22} /> : <FaRegCircle color="#cbd5e1" size={22} />}
                   </div>
 
                   <div className={styles.itemInfo}>
                     <div className={styles.itemTitle}>
                       {record.title}
                       {record.company_name && <span className={styles.companyBadge}>{record.company_name}</span>}
-                      <span className={`${styles.statusBadge} ${record.is_completed ? styles.statusDone : styles.statusPending}`}>
-                        {record.is_completed ? "完了" : "未完了"}
-                      </span>
                     </div>
-                    <p className={styles.itemDate}>{record.date}</p>
+                    <div className={styles.itemDate}>
+                      <FaCalendarAlt size={10} /> {record.date} 
+                      {record.start_time && <span><FaClock size={10} style={{marginLeft: '8px'}} /> {record.start_time}〜</span>}
+                    </div>
                     {record.memo && <p className={styles.itemMemo}>{record.memo}</p>}
                   </div>
                   <div className={styles.itemValue}>
@@ -287,84 +310,86 @@ export default function IncomeWorkPage() {
         </section>
       </div>
 
+      {/* モーダル */}
       {showModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
-            <div className={styles.modalHeader}>
-              <h2>{editingId ? "記録を編集" : "新規入力"}</h2>
-              <button onClick={() => setShowModal(false)}><FaTimes /></button>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 900 }}>{editingId ? "記録の編集" : "新規入力"}</h2>
+              <button onClick={() => setShowModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}><FaTimes size={20} /></button>
             </div>
+            
             <form onSubmit={handleSubmit} className={styles.form}>
-              {/* ステータス切替（編集時のみ） */}
-              <div className={styles.formGroup} style={{ flexDirection: 'row', alignItems: 'center', gap: '8px' }}>
-                <input 
-                  type="checkbox" 
-                  id="status"
-                  checked={formData.is_completed} 
-                  onChange={e => setFormData({...formData, is_completed: e.target.checked})} 
-                />
-                <label htmlFor="status" style={{ marginBottom: 0 }}>完了としてマーク</label>
+              <div className={styles.formGroup} style={{ background: '#f8fafc', padding: '12px', borderRadius: '16px', flexDirection: 'row', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => setFormData({...formData, is_completed: !formData.is_completed})}>
+                {formData.is_completed ? <FaCheckCircle color="#10b981" size={20} /> : <FaRegCircle color="#cbd5e1" size={20} />}
+                <label style={{ marginBottom: 0, cursor: 'pointer' }}>完了としてマークする</label>
+              </div>
+
+              <div className={styles.row}>
+                <div className={styles.formGroup}>
+                  <label><FaCalendarAlt /> 日付</label>
+                  <input type="date" value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>種別</label>
+                  <select value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})}>
+                    <option value="バイト">バイト</option>
+                    <option value="案件">FL案件</option>
+                    <option value="その他">その他</option>
+                  </select>
+                </div>
               </div>
 
               <div className={styles.formGroup}>
-                <label>日付</label>
-                <input type="date" value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} />
+                <label><FaBuilding /> 会社名 / クライアント</label>
+                <input type="text" value={formData.company_name} onChange={e => setFormData({...formData, company_name: e.target.value})} placeholder="CORE LINKS 案件など" />
               </div>
+
               <div className={styles.formGroup}>
-                <label>カテゴリー</label>
-                <select value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})}>
-                  <option value="バイト">バイト (時給計算)</option>
-                  <option value="案件">FL案件 / 事業</option>
-                  <option value="その他">その他</option>
-                </select>
+                <label>内容 / 業務名</label>
+                <input type="text" required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} placeholder="現場作業・開発など" />
               </div>
-              <div className={styles.formGroup}>
-                <label>会社名 / 支払元</label>
-                <input type="text" value={formData.company_name} onChange={e => setFormData({...formData, company_name: e.target.value})} placeholder="例: 株式会社〇〇" />
-              </div>
-              <div className={styles.formGroup}>
-                <label>内容 / 現場名</label>
-                <input type="text" required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} placeholder="例: 現場A" />
-              </div>
+
               {formData.type === "バイト" && (
-                <div className={styles.row}>
-                  <div className={styles.formGroup}>
-                    <label>時給</label>
-                    <input type="number" value={formData.hourlyRate} onChange={e => setFormData({...formData, hourlyRate: e.target.value})} placeholder="1200" />
+                <div style={{ background: '#f1f5f9', padding: '16px', borderRadius: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <div className={styles.row}>
+                    <div className={styles.formGroup}><label>開始</label><input type="time" value={formData.startTime} onChange={e => setFormData({...formData, startTime: e.target.value})} /></div>
+                    <div className={styles.formGroup}><label>終了</label><input type="time" value={formData.endTime} onChange={e => setFormData({...formData, endTime: e.target.value})} /></div>
                   </div>
-                  <div className={styles.formGroup}>
-                    <label>時間</label>
-                    <input type="number" step="0.1" value={formData.hours} onChange={e => setFormData({...formData, hours: e.target.value})} placeholder="8" />
+                  <div className={styles.row}>
+                    <div className={styles.formGroup}><label>休憩(分)</label><input type="number" value={formData.breakMinutes} onChange={e => setFormData({...formData, breakMinutes: e.target.value})} /></div>
+                    <div className={styles.formGroup}><label>交通費</label><input type="number" value={formData.transportFees} onChange={e => setFormData({...formData, transportFees: e.target.value})} /></div>
+                  </div>
+                  <div className={styles.row}>
+                    <div className={styles.formGroup}><label>時給</label><input type="number" value={formData.hourlyRate} onChange={e => setFormData({...formData, hourlyRate: e.target.value})} /></div>
+                    <div className={styles.formGroup}><label>稼働時間</label><input type="text" readOnly value={formData.hours} className={styles.readOnlyInput} /></div>
                   </div>
                 </div>
               )}
-              <div className={styles.formGroup}>
-                <label>合計金額 (¥)</label>
-                <input type="number" required value={formData.amount} onChange={e => setFormData({...formData, amount: e.target.value})} />
-              </div>
-              
-              <div className={styles.formGroup}>
-                <label>メモ</label>
-                <textarea 
-                  value={formData.memo} 
-                  onChange={e => setFormData({...formData, memo: e.target.value})} 
-                  placeholder="特記事項や備考など"
-                  rows={3}
+
+              <div className={styles.formGroup} style={{ marginTop: '10px' }}>
+                <label style={{ color: '#059669', fontSize: '1rem' }}><FaWallet /> 合計金額 (¥)</label>
+                <input 
+                  type="number" required 
+                  style={{ fontSize: '1.5rem', height: '60px', borderColor: '#10b981' }}
+                  value={formData.amount} 
+                  onChange={e => setFormData({...formData, amount: e.target.value})} 
                 />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label><FaStickyNote /> メモ</label>
+                <textarea value={formData.memo} onChange={e => setFormData({...formData, memo: e.target.value})} rows={2} />
               </div>
 
               <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
                 {editingId && (
-                  <button 
-                    type="button" 
-                    onClick={handleDelete} 
-                    className={styles.deleteBtn}
-                  >
-                    <FaTrashAlt /> 削除
+                  <button type="button" onClick={handleDelete} className={styles.deleteBtn} style={{ width: '60px' }}>
+                    <FaTrashAlt />
                   </button>
                 )}
-                <button type="submit" disabled={isSubmitting} className={styles.submitBtn} style={{ flex: 2 }}>
-                  {isSubmitting ? "保存中..." : (editingId ? "更新する" : "保存する")}
+                <button type="submit" disabled={isSubmitting} className={styles.submitBtn} style={{ flex: 1 }}>
+                  {isSubmitting ? "保存中..." : (editingId ? "更新する" : "記録を保存")}
                 </button>
               </div>
             </form>
