@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"; // ←これを追加！
+
 import { client } from "@/libs/client";
 import styles from "./Home.module.css";
 import Link from "next/link"; 
