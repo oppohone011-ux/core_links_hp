@@ -15,7 +15,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
     <div className={styles.articleWrapper}>
       <header className={styles.articleHeader}>
         <div className={styles.headerInner}>
-          <span className={styles.categoryTag}>高火力！！器用ボンビーブログ。</span>
+          <span className={styles.categoryTag}>直感の、その先を見届けるブログ</span>
           <h1 className={styles.articleTitle}>{post.title}</h1>
           
           <div className={styles.articleDate}>
