@@ -37,9 +37,20 @@ export const metadata: Metadata = {
 export default async function Home() {
   const blogsData = await client.get({ 
     endpoint: "blogs",
-    queries: { limit: 50 } 
+    queries: { limit: 50 },
+    // 追加：キャッシュを持たせず、常に最新のデータを取得しに行く設定
+    customRequestInit: {
+      cache: "no-store",
+    },
   });
-  const categoriesData = await client.get({ endpoint: "categories" });
+  
+  const categoriesData = await client.get({ 
+    endpoint: "categories",
+    // カテゴリー側も念のため最新を追うように設定
+    customRequestInit: {
+      cache: "no-store",
+    },
+  });
 
   return (
     <div className="bg-white min-h-screen">
@@ -147,7 +158,6 @@ export default async function Home() {
                     style={{ backgroundImage: `url(${frontUrl})` }}
                   >
                     <div className={styles.tileOverlay} />
-                    <span className={styles.tileNumber}>0{index + 1}</span>
                     <h3 className={styles.tileTitle}>{category.name}</h3>
                     <div className={styles.viewLabel}>View Posts</div>
                   </div>
