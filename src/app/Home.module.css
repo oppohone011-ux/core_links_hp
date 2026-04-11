@@ -593,3 +593,77 @@
   .footerLinks { flex-direction: column; gap: 24px; margin-bottom: 60px; }
 }
 
+/* --- NEW ARRIVALS: モダン・ミニマルスタイル --- */
+.recentList {
+  margin: 20px 0 80px;
+}
+
+.recentItem {
+  position: relative;
+  border-bottom: 1px solid #f1f5f9;
+  transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+/* マウスを乗せた時の背景の変化 */
+.recentItem:hover {
+  background-color: #fafafa;
+  transform: translateX(10px);
+}
+
+.recentLink {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  padding: 24px 15px;
+  color: #1a1a1a;
+}
+
+.recentPostTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  /* 文字が溢れたら「...」にする */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.recentDate {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-left: 20px;
+  /* 日付を「.」区切りでおしゃれに */
+  font-family: 'Inter', sans-serif;
+}
+
+/* 矢印アイコンの代わりに右端にラインを出す */
+.recentItem::after {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: #fbbf24;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.recentItem:hover::after {
+  opacity: 1;
+  left: 0;
+}
+
+/* モバイル対応：縦並びにせず、文字サイズで調整 */
+@media (max-width: 600px) {
+  .recentPostTitle {
+    font-size: 0.9rem;
+  }
+  .recentLink {
+    padding: 18px 10px;
+  }
+}

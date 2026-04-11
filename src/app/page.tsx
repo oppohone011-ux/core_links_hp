@@ -84,6 +84,23 @@ export default async function Home() {
 
       {/* 3. コンテンツエリア */}
       <main className={styles.container}>
+        {/* --- 新着投稿セクション --- */}
+        <h2 className={styles.sectionTitle}>NEW ARRIVALS</h2>
+        <div className={styles.recentList}>
+          {blogsData.contents.slice(0, 5).map((post: any) => (
+            <div key={post.id} className={styles.recentItem}>
+              <Link href={`/blog/${post.id}`} className={styles.recentLink}>
+                <span className={styles.recentPostTitle}>{post.title}</span>
+                <span className={styles.recentDate}>
+                  {new Date(post.publishedAt || post.createdAt)
+                    .toLocaleDateString('ja-JP')
+                    .replace(/\//g, '.')}
+                </span>
+              </Link>
+            </div>
+          ))}
+        </div>
+
         {/* セクションタイトル */}
         <h2 className={styles.sectionTitle}>INDEX</h2>
         
