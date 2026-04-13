@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css";
 // 追加ここから：Google Analyticsを使うための準備
 import { GoogleAnalytics } from '@next/third-parties/google'
 // 追加ここまで

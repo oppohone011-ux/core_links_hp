@@ -1,10 +1,11 @@
-export const dynamic = "force-dynamic"; // ←これを追加！
+export const dynamic = "force-dynamic"; // ← 必ず一番上に書く！
 
 import { client } from "@/libs/client";
 import styles from "./Home.module.css";
 import Link from "next/link"; 
 import type { Metadata } from 'next';
 import AdminLink from "./AdminLink";
+import HeroCanvas from "./HeroCanvas";
 
 // --- SEO設定（Metadata） ---
 export const metadata: Metadata = {
@@ -79,6 +80,7 @@ export default async function Home() {
 
       {/* 2. サイトタイトルエリア：画像に代わる「サイトの顔」 */}
       <section className={styles.heroSection}>
+        <HeroCanvas />
   <div className={styles.heroInner}>
     <p className={styles.subTitle}>
       {"Multi-Potential LIFE".split("").map((char, i) => (
@@ -124,28 +126,39 @@ export default async function Home() {
               .slice(0, 5);
 
             // カテゴリー画像設定
-            let frontFileName = "default.png";
-            let backFileName = "default-back.png";
+            // カテゴリー画像設定
+let frontFileName = "default.png";
+let backFileName = "default-back.png";
 
-            if (category.name === "IT現場実録日誌") {
-              frontFileName = "it-genba.png";
-              backFileName  = "it-genba-back.png";
-            } else if (category.name === "物販日誌") {
-              frontFileName = "buppan.png";
-              backFileName  = "buppan-back.png";
-            } else if (category.name === "EA開発記録" || category.name === "EA開発＿実践記録") {
-              frontFileName = "ea-dev.png";
-              backFileName  = "ea-dev-back.png";
-            } else if (category.name === "FX_実践記") {
-              frontFileName = "fx-real.png";
-              backFileName  = "fx-real-back.png";
-            } else if (category.name === "日銭稼ぎ（バイト）") {
-              frontFileName = "arbeit.png";
-              backFileName  = "arbeit-back.png";
-            } else if (category.name === "更新情報") {
-              frontFileName = "news.png";
-              backFileName  = "news-back.png";
-            }
+if (category.name === "IT・開発編") {
+  frontFileName = "it-genba.png";
+  backFileName  = "it-genba-back.png";
+} else if (category.name === "物販編") {
+  frontFileName = "buppan.png";
+  backFileName  = "buppan-back.png";
+} else if (category.name === "宇宙の法則") {
+  frontFileName = "fx-real.png"; // ※元々のスピリチュアル枠
+  backFileName  = "fx-real-back.png";
+} else if (category.name === "転職・バイト生活") {
+  frontFileName = "arbeit.png";
+  backFileName  = "arbeit-back.png";
+} else if (category.name === "社会不適合者") {
+  // ここに「社会不適合者の航海図」用の画像があれば設定
+  frontFileName = "misfit-nautical.png"; 
+  backFileName  = "misfit-nautical-back.png";
+} else if (category.name === "脳内カオス") {
+  frontFileName = "chaos.png";
+  backFileName  = "chaos-back.png";
+} else if (category.name === "アイディア") {
+  frontFileName = "idea.png";
+  backFileName  = "idea-back.png";
+} else if (category.name === "未完成の発明品") {
+  frontFileName = "news.png"; // 更新情報などの枠
+  backFileName  = "news-back.png";
+} else if (category.name === "おしらせ") {
+  frontFileName = "osirase.png"; // 更新情報などの枠
+  backFileName  = "osirase-back.png";
+}
 
             
 

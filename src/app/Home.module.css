@@ -193,15 +193,17 @@
   transform: rotate(-1deg);
 }
 
+/* 4. カテゴリータイル の grid 部分を修正 */
 .categoryGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
-  gap: 30px;
+  /* 360pxから300pxに少し詰めることで、PCで4枚並びやすくする */
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 25px; /* 隙間を少しタイトに */
   padding: 20px 0 60px;
 }
 
 .categoryTile {
-  height: 480px;
+  height: 420px; /* 480pxだと縦に長すぎるので少しコンパクトに */
   perspective: 1200px;
 }
 
@@ -226,12 +228,16 @@
 }
 
 .tileFront {
-  background-size: cover;
+  /* 画像の比率を無視して、枠の形に無理やり合わせる（少し歪む可能性があります） */
+  background-size: 100% 100%; 
   background-position: center;
+  background-repeat: no-repeat;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+  padding-bottom: 20px;
 }
 
 .tileOverlay {
@@ -276,12 +282,20 @@
 
 .tileTitle {
   position: relative;
-  font-size: 2.2rem;
+  font-size: 1.8rem; /* 少しサイズ調整 */
   font-weight: 900;
   color: #fff;
   z-index: 2;
-  text-shadow: 0 4px 15px rgba(0,0,0,0.9);
-  margin: 0; 
+  /* 縁取り（ストローク）を入れてアメコミ感を強調 */
+  text-shadow: 
+    2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    0 4px 15px rgba(0,0,0,0.9);
+  margin: 0 15px; 
+  text-align: center;
+  line-height: 1.2;
 }
 
 .tileBack {
@@ -509,93 +523,8 @@
    7. レスポンシブ調整（スマホ版3本線メニュー対応）
    ========================================================================== */
 @media (max-width: 600px) {
-  /* --- 0. 謎の四角（チェックボックス）を確実に隠す --- */
-  .menuCheckbox {
-    display: none !important;
-  }
-
-  /* --- 1. ヘッダー周りのレイアウト調整 --- */
-  .header { padding: 12px 15px; }
-  .logo { font-size: 1rem; z-index: 1100; } /* ロゴをメニューより上に */
-
-  /* --- 2. 3本線ボタンの表示 --- */
-  .menuBtn {
-    display: block; /* スマホでボタンを表示 */
-    width: 25px;
-    height: 20px;
-    position: relative;
-    z-index: 1100;
-    cursor: pointer;
-  }
-  .menuBtn span, .menuBtn span::before, .menuBtn span::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: #111;
-    transition: all 0.3s ease;
-  }
-  .menuBtn span { top: 9px; }
-  .menuBtn span::before { top: -8px; }
-  .menuBtn span::after { top: 8px; }
-
-  /* --- 3. ナビゲーションを画面外へ退避 --- */
-  .nav {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 80%;
-    height: 100vh;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(10px);
-    display: flex;
-    /* align-items: center; を削除、または以下に変更 */
-    align-items: flex-start; /* 上寄せにする */
-    justify-content: center;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1050;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-    padding-top: 100px; /* ★上からの余白を作って位置を調整★ */
-  }
-
-  .nav ul {
-    flex-direction: column;
-    gap: 25px; /* ★メニュー間の間隔を少し詰める（お好みで）★ */
-    text-align: center;
-    padding: 0;
-    width: 100%; /* 中央揃えを維持するため */
-  }
-
-  .nav a {
-    font-size: 1.2rem; /* スマホで押しやすいサイズに */
-    font-weight: 800;
-  }
-
-  /* --- 4. 【仕掛け】チェックが入ったら表示＆×印に変形 --- */
-  .menuCheckbox:checked ~ .nav {
-    right: 0; /* メニューがスッと出てくる */
-  }
-
-  /* 3本線を「×」に変形 */
-  .menuCheckbox:checked + .menuBtn span { background: transparent; }
-  .menuCheckbox:checked + .menuBtn span::before { transform: rotate(45deg); top: 0; }
-  .menuCheckbox:checked + .menuBtn span::after { transform: rotate(-45deg); top: 0; }
-
-  /* --- 5. 既存のコンテンツ調整（そのまま維持） --- */
-  .heroSection { padding: 100px 20px 60px; }
-  .mainTitle { font-size: 2.1rem; line-height: 1.3; }
-  .char { letter-spacing: 0.2em; font-size: 0.7rem; }
-  .heroLine { width: 120px !important; }
-  .sectionTitle { font-size: 1.5rem; margin-top: 10px; }
-  .categoryGrid { grid-template-columns: 1fr; gap: 20px; padding: 10px 0 40px; }
-  .categoryTile { height: 400px; }
-  .footer { padding: 80px 20px 40px; }
-  .footerLinks { flex-direction: column; gap: 24px; margin-bottom: 60px; }
-}
-
-/* --- NEW ARRIVALS: 直感・ダイナミックアイコンスタイル --- */
-.recentList {
-  margin: 20px 0 80px;
+  .categoryTile { height: 350px; } /* スマホではさらにコンパクトに */
+  .tileTitle { font-size: 1.5rem; }
 }
 
 .recentItem {
@@ -689,4 +618,28 @@
   .recentPostTitle { font-size: 0.9rem; }
   .recentLink { padding: 18px 10px; }
   .recentItem:hover { transform: translateX(5px); }
+}
+
+.heroSection {
+  position: relative; /* 子要素の基準点にする */
+  padding: 160px 20px 100px;
+  background-color: #ffffff;
+  text-align: center;
+  overflow: hidden;
+  perspective: 1200px;
+}
+
+.heroCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* 文字の後ろ */
+  pointer-events: none; /* マウス操作を透過させる */
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1; /* canvasより前面に表示 */
 }
