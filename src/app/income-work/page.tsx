@@ -34,6 +34,7 @@ export default function IncomeWorkPage() {
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [viewDate, setViewDate] = useState(new Date());
 
   const initialForm = {
     date: new Date().toISOString().split('T')[0],
@@ -112,24 +113,37 @@ export default function IncomeWorkPage() {
   }, [formData.hourlyRate, formData.startTime, formData.endTime, formData.breakMinutes, formData.transportFees, formData.type]);
 
   const stats = useMemo(() => {
-    const currentMonth = new Date().getMonth();
-    const currentYear = new Date().getFullYear();
-    const filtered = records.filter(r => {
+    const targetMonth = viewDate.getMonth();
+    const targetYear = viewDate.getFullYear();
+
+    const filtered = records.filter((r) => {
       const d = new Date(r.date);
-      return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+      return d.getMonth() === targetMonth && d.getFullYear() === targetYear;
     });
-    const fl = filtered.filter(r => r.type === "案件").reduce((s, r) => s + r.amount, 0);
-    const part = filtered.filter(r => r.type === "バイト").reduce((s, r) => s + r.amount, 0);
-    return { 
-      total: fl + part, 
-      fl, 
+
+    // 各種別の集計
+    const fl = filtered
+      .filter((r) => r.type === "案件")
+      .reduce((s, r) => s + r.amount, 0);
+    const part = filtered
+      .filter((r) => r.type === "バイト")
+      .reduce((s, r) => s + r.amount, 0);
+    const other = filtered
+      .filter((r) => r.type !== "案件" && r.type !== "バイト")
+      .reduce((s, r) => s + r.amount, 0);
+
+    return {
+      total: fl + part + other,
+      fl,
       part,
+      other,
       chartData: [
-        { name: '案件', value: fl, color: '#3b82f6' },
-        { name: 'バイト', value: part, color: '#8b5cf6' }
-      ].filter(d => d.value > 0)
+        { name: "案件", value: fl, color: "#3b82f6" },
+        { name: "バイト", value: part, color: "#8b5cf6" },
+        { name: "その他", value: other, color: "#94a3b8" },
+      ].filter((d) => d.value > 0),
     };
-  }, [records]);
+  }, [records, viewDate]);
 
   const handleEdit = (record: IncomeRecord) => {
     setEditingId(record.id);
@@ -209,7 +223,7 @@ export default function IncomeWorkPage() {
 
   if (!mounted) return null;
 
-  return (
+ return (
     <div className={styles.container}>
       <header className={styles.header}>
         <h1 className={styles.title}>収入管理・分析</h1>
@@ -219,10 +233,35 @@ export default function IncomeWorkPage() {
       </header>
 
       <div className={styles.main}>
+        
+        {/* --- ここから追加：月切り替えコントローラー --- */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          marginBottom: '16px',
+          padding: '12px 16px',
+          background: '#fff',
+          borderRadius: '16px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+        }}>
+          <button type="button" onClick={() => setViewDate(new Date(viewDate.setMonth(viewDate.getMonth() - 1)))} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
+            <FaChevronLeft />
+          </button>
+          <div style={{ fontWeight: 'bold', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <FaCalendarAlt color="#64748b" />
+            {viewDate.getFullYear()}年 {viewDate.getMonth() + 1}月
+          </div>
+          <button type="button" onClick={() => setViewDate(new Date(viewDate.setMonth(viewDate.getMonth() + 1)))} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
+            <FaChevronLeft style={{ transform: 'rotate(180deg)' }} />
+          </button>
+        </div>
+        {/* --- ここまで追加 --- */}
+
         {/* サマリー */}
         <div className={styles.summaryGrid}>
           <div className={`${styles.card} ${styles.totalCard}`}>
-            <span className={styles.cardLabel}>今月の合計</span>
+            <span className={styles.cardLabel}>{viewDate.getMonth() + 1}月の合計</span>
             <span className={styles.cardAmount}>¥{stats.total.toLocaleString()}</span>
           </div>
           <div className={`${styles.card} ${styles.flCard}`}>
@@ -232,6 +271,11 @@ export default function IncomeWorkPage() {
           <div className={`${styles.card} ${styles.partCard}`}>
             <span className={styles.cardLabel}>バイト</span>
             <span className={styles.cardAmount}>¥{stats.part.toLocaleString()}</span>
+          </div>
+          {/* ↓ これを追加 */}
+          <div className={`${styles.card} ${styles.otherCard}`} style={{ background: '#64748b', color: '#fff' }}>
+            <span className={styles.cardLabel}>その他</span>
+            <span className={styles.cardAmount}>¥{stats.other.toLocaleString()}</span>
           </div>
         </div>
 
